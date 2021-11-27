@@ -1,12 +1,13 @@
 import React from 'react'
-import { Container, Wrapper } from './style'
+import { Container, Wrapper, Title } from './style'
+import { Navigation } from '../../components'
 
 function Navbar(): React.ReactElement {
   return (
     <Container>
       <Wrapper>
-        {/* <AppLogo />
-        <Navigation /> */}
+        <Title>Blog</Title>
+        <Navigation />
       </Wrapper>
     </Container>
   )
