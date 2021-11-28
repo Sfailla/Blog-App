@@ -10,6 +10,7 @@ declare module 'styled-components' {
 declare module 'react' {
   interface Attributes {
     css?: CSSProp | CSSObject
+    $on?: CSSProp | CSSObject
   }
 }
 
@@ -21,4 +22,6 @@ type NonNullProperties<Type> = {
 
 type Await<Type> = Type extends Promise<infer Value> ? Await<Value> : Type
 
-export { NonNullProperties, Await }
+type ChildrenPropType = { children: React.ReactNode }
+
+export { NonNullProperties, Await, ChildrenPropType }
