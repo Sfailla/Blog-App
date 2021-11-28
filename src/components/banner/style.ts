@@ -12,6 +12,16 @@ export const Container = styled.div`
   background-color: ${({ theme }) => theme.background.secondary};
   box-shadow: inset 0 8px 8px -8px rgb(0 0 0 / 30%), inset 0 -8px 8px -8px rgb(0 0 0 / 30%);
   ${flex()};
+  position: relative;
+`
+
+export const ToggleContainer = styled.div`
+  width: 10rem;
+  height: 2.5rem;
+  position: absolute;
+  top: 5rem;
+  right: 2rem;
+  ${flex('space-between', 'center')};
 `
 
 export const TextWrapper = styled.div`

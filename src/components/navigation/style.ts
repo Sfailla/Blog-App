@@ -3,7 +3,7 @@ import { flex } from '../../styles/mixins'
 import { DesignSystem } from '../../styles/shared'
 
 const {
-  typography: { link },
+  typography: { link, gradientText },
   color
 } = DesignSystem
 
@@ -20,5 +20,8 @@ export const NavItem = styled.li`
   ${link()};
   &:not(:last-child) {
     margin-right: 1rem;
+  }
+  &:hover {
+    ${gradientText()};
   }
 `

@@ -9,7 +9,7 @@ const {
 export const Container = styled.div`
   width: 100%;
   height: 5.6rem;
-  padding: 0.5rem 1.6rem;
+  padding: 0.5rem 2rem;
   background-color: ${({ theme }) => theme.background.primary};
   ${flex()};
 `
