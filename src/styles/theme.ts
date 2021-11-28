@@ -1,5 +1,3 @@
-export type ThemeType = typeof theme
-
 export const theme = {
   light: {
     background: {
@@ -7,16 +5,23 @@ export const theme = {
       secondary: '#008080'
     },
     text: {
-      primary: '#19202D'
+      primary: '#19202D',
+      secondary: '#008080',
+      heading: '#FFFFFF'
     }
   },
   dark: {
     background: {
-      primary: '#161B2E',
-      secondary: '#060C20'
+      primary: '#060C20',
+      secondary: '#112240'
     },
     text: {
-      primary: '#FFFFFF'
+      primary: '#FFFFFF',
+      secondary: '#61B3FB',
+      heading: '#61B3FB'
     }
   }
 }
+
+// secondary: '#1D2335'
+// secondary: '#64ffda'

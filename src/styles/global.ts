@@ -16,7 +16,7 @@ export const GlobalStyles = createGlobalStyle`
   body {
     margin: 0;
     font-size: 1.5rem;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Segoe UI', 'Oxygen',
       'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
       sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -26,5 +26,9 @@ export const GlobalStyles = createGlobalStyle`
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+  }
+
+  html, body, body > div {
+    height: 100%;
   }
 `
