@@ -1,4 +1,10 @@
-import { css } from 'styled-components'
+import styled, { css } from 'styled-components'
+
+export const LayoutWrapper = styled.div`
+  width: 100%;
+  max-width: 114rem;
+  margin: 0 auto;
+`
 
 // Design System for Project
 export const DesignSystem = {
@@ -8,7 +14,8 @@ export const DesignSystem = {
       lightviolet: '#939Bf4',
       darkblue: '#19202D',
       deepblue: '#5964E0',
-      midnight: '#121721'
+      midnight: '#121721',
+      teal: '#00B0B9'
     },
     secondary: {
       white: '#FFFFFF',
