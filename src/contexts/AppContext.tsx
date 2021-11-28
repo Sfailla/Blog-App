@@ -19,8 +19,11 @@ export function useContext(): AppContextInterface {
   return context
 }
 
+const prefersDark: string = '(prefers-color-scheme: light)'
+const getPreferredTheme = () => (window.matchMedia(prefersDark).matches ? 'dark' : 'light')
+
 export function AppProvider({ children }: { children: React.ReactNode }): React.ReactElement {
-  const [mode, setMode] = React.useState<string>('light')
+  const [mode, setMode] = React.useState<string>(getPreferredTheme())
   const contextValues = React.useMemo<AppContextInterface>(
     () => ({ mode, setMode }),
     [mode, setMode]
