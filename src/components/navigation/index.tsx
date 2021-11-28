@@ -1,8 +1,16 @@
 import React from 'react'
-import { Container } from './style'
+import { NavContainer, NavList, NavItem } from './style'
 
 function Navigation(): React.ReactElement {
-  return <Container>Navigation</Container>
+  return (
+    <NavContainer>
+      <NavList>
+        <NavItem>Home</NavItem>
+        <NavItem>Signin</NavItem>
+        <NavItem>Signout</NavItem>
+      </NavList>
+    </NavContainer>
+  )
 }
 
 export default Navigation

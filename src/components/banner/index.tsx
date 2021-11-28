@@ -1,10 +1,13 @@
 import React from 'react'
-import { Container } from './style'
+import { Container, TextWrapper, Title, Subtitle } from './style'
 
 function Banner() {
   return (
     <Container>
-      <h3>this is a banner</h3>
+      <TextWrapper>
+        <Title>On Record</Title>
+        <Subtitle>A collection of thoughts and information</Subtitle>
+      </TextWrapper>
     </Container>
   )
 }
