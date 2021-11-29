@@ -1,4 +1,5 @@
 import styled from 'styled-components/macro'
+import { Link } from 'react-router-dom'
 import { flex } from '../../styles/mixins'
 import { DesignSystem } from '../../styles/shared'
 
@@ -15,7 +16,7 @@ export const NavList = styled.ul`
   list-style: none;
   ${flex('flex-start', 'center')};
 `
-export const NavItem = styled.li`
+export const NavLink = styled(Link)`
   color: ${color.secondary.darkgrey};
   ${link()};
   &:not(:last-child) {
