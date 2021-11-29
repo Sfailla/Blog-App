@@ -20,7 +20,7 @@ export function useContext(): AppContextInterface {
   return context
 }
 
-const prefersDark: string = '(prefers-color-scheme: light)'
+const prefersDark: string = '(prefers-color-scheme: dark)'
 const getPreferredTheme = () => (window.matchMedia(prefersDark).matches ? 'dark' : 'light')
 
 export function AppProvider({ children }: ChildrenPropType): React.ReactElement {
