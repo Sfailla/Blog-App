@@ -46,13 +46,14 @@ export const DesignSystem = {
     },
     link() {
       return css`
+        font-weight: 500;
         text-decoration: none;
         cursor: pointer;
       `
     },
     gradientText() {
       return css`
-        background: linear-gradient(to right, #1fa2ff, #12d8fa, #a6ffcb);
+        background: linear-gradient(to right, #7f7fd5, #86a8e7, #91eae4);
         color: transparent;
         background-clip: text;
         -webkit-background-clip: text;

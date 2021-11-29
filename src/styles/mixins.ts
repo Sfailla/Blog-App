@@ -1,6 +1,6 @@
 import { css } from 'styled-components'
 
-type cssParamType = Parameters<typeof css>
+type CssType = Parameters<typeof css>
 
 // Set Breakpoints for Responsive Layout
 export const breakpoints = {
@@ -17,7 +17,7 @@ const keys = Object.keys(breakpoints) as (keyof typeof breakpoints)[]
 export const media = keys.reduce((accumulator, label) => {
   const mediaSize = breakpoints[label]
 
-  accumulator[label] = (...args: cssParamType) => css`
+  accumulator[label] = (...args: CssType) => css`
     @media all and (max-width: ${mediaSize}px) {
       ${css(...args)};
     }
@@ -29,9 +29,9 @@ export const flex = (
   justify: string = 'center',
   align: string = 'center',
   direction: string = 'row'
-): string => `
-    display: flex;
-    justify-content: ${justify};
-    align-items: ${align};
-    flex-direction: ${direction};
+) => css`
+  display: flex;
+  justify-content: ${justify};
+  align-items: ${align};
+  flex-direction: ${direction};
 `
