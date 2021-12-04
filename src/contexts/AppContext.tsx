@@ -10,7 +10,7 @@ interface AppContextInterface {
 
 const AppContext = React.createContext<AppContextInterface | null>(null)
 
-export function useContext(): AppContextInterface {
+export function useAppContext(): AppContextInterface {
   const context = React.useContext(AppContext)
 
   if (!context) {
