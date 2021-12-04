@@ -1,13 +1,9 @@
 import React from 'react'
-import { Container, ToggleContainer, TextWrapper, Title, Subtitle } from './style'
-import { Toggle } from '../../components'
+import { Container, TextWrapper, Title, Subtitle } from './style'
 
 function Banner() {
   return (
     <Container>
-      <ToggleContainer>
-        <Toggle />
-      </ToggleContainer>
       <TextWrapper>
         <Title>On Record</Title>
         <Subtitle>A collection of thoughts and information</Subtitle>

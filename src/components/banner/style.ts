@@ -15,15 +15,6 @@ export const Container = styled.div`
   position: relative;
 `
 
-export const ToggleContainer = styled.div`
-  width: 10rem;
-  height: 2.5rem;
-  position: absolute;
-  top: 5rem;
-  right: 2rem;
-  ${flex('space-between', 'center')};
-`
-
 export const TextWrapper = styled.div`
   text-align: center;
 `
