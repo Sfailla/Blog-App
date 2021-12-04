@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 import { Container, TextWrapper, Title, Subtitle } from './style'
 
-function Banner() {
+function Banner(): ReactElement {
   return (
     <Container>
       <TextWrapper>

@@ -1,18 +1,19 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 import { Container } from './style'
-import { Homepage, Signup } from '../../pages'
+import { Homepage, SignUp, SignIn } from '../../pages'
 import { Navbar } from '../../components'
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
-function App(): React.ReactElement {
+function App(): ReactElement {
   return (
     <Container>
       <Router>
         <Navbar />
         <Routes>
           <Route path="/" element={<Homepage />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/signin" element={<SignIn />} />
         </Routes>
       </Router>
     </Container>

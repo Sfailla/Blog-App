@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 import { Container } from './style'
 
-function ArticleFeed() {
+function ArticleFeed(): ReactElement {
   return (
     <Container>
       <span>This is the Article Feed</span>

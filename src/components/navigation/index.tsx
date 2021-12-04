@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 import { NavContainer, NavList, NavLink } from './style'
 
-function Navigation(): React.ReactElement {
+function Navigation(): ReactElement {
   return (
     <NavContainer>
       <NavList>

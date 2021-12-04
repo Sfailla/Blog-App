@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 import { Container, ContentWrapper, Wrapper, VerticalDivider, Title } from './style'
 import { Navigation, Toggle } from '../../components'
 
-function Navbar(): React.ReactElement {
+function Navbar(): ReactElement {
   return (
     <Container>
       <Wrapper>

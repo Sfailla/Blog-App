@@ -3,7 +3,7 @@ import { DesignSystem } from '../../styles/shared'
 
 const {
   color,
-  typography: { gradientText, subheading }
+  typography: { subheading }
 } = DesignSystem
 
 export const Container = styled.div`
@@ -49,8 +49,10 @@ export const Input = styled.input`
   height: 5rem;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
+  font-size: 1.4rem;
   border: 1px solid ${color.secondary.darkgrey};
   background-color: transparent;
+  color: ${({ theme }) => theme.text.primary};
   &::placeholder {
   }
 `
