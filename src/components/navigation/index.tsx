@@ -6,8 +6,8 @@ function Navigation(): React.ReactElement {
     <NavContainer>
       <NavList>
         <NavLink to="/">Home</NavLink>
-        <NavLink to="/signin">Sign in</NavLink>
         <NavLink to="/signup">Sign up</NavLink>
+        <NavLink to="/signin">Sign in</NavLink>
       </NavList>
     </NavContainer>
   )
