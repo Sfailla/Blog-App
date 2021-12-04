@@ -13,7 +13,8 @@ export const theme = {
   dark: {
     background: {
       primary: '#060C20',
-      secondary: '#112240'
+      // secondary: '#112240',
+      secondary: '#171D2F'
     },
     text: {
       primary: '#FFFFFF',

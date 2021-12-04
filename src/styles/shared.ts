@@ -38,10 +38,10 @@ export const DesignSystem = {
     },
     subheading() {
       return css`
-        font-family: 'Lato', sans-serif;
+        font-family: 'Roboto', sans-serif;
         text-transform: uppercase;
-        font-weight: bold;
-        letter-spacing: 0.5px;
+        font-weight: 400;
+        letter-spacing: 1px;
       `
     },
     link() {
@@ -53,6 +53,7 @@ export const DesignSystem = {
     },
     gradientText() {
       return css`
+        display: inline-block;
         background: linear-gradient(to right, #7f7fd5, #86a8e7, #91eae4);
         color: transparent;
         background-clip: text;
