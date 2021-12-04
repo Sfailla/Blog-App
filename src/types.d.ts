@@ -9,7 +9,7 @@ declare module 'styled-components' {
 
 declare module 'react' {
   interface Attributes {
-    css?: CSSProp | CSSObject
+    css?: ThemedCssFunction<DefaultTheme>
     $on?: CSSProp | CSSObject
   }
 }
