@@ -14,7 +14,6 @@ export const Container = styled.div`
 
 export const ContentWrapper = styled.div`
   max-width: 60rem;
-  min-height: 35rem;
   margin: 0 auto;
   padding: 0 2rem;
 `
