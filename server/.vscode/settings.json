@@ -1,0 +1,5 @@
+{
+  "prettier.arrowParens": "avoid",
+  "prettier.singleQuote": true,
+  "editor.fontSize": 14
+}
