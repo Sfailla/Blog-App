@@ -1,10 +1,13 @@
 import React, { ReactElement } from 'react'
-import { Container } from './style'
+import { Container, GridContainer, ArticleContainer, TagContainer } from './style'
 
 function ArticleFeed(): ReactElement {
   return (
     <Container>
-      <span>This is the Article Feed</span>
+      <GridContainer>
+        <ArticleContainer></ArticleContainer>
+        <TagContainer></TagContainer>
+      </GridContainer>
     </Container>
   )
 }
