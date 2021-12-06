@@ -8,6 +8,15 @@ export const LayoutWrapper = styled.div`
 
 // Design System for Project
 export const DesignSystem = {
+  layout: {
+    normalWrapper() {
+      return css`
+        width: 100%;
+        max-width: 114rem;
+        margin: 0 auto;
+      `
+    }
+  },
   color: {
     primary: {
       violet: '#9E7F66',
