@@ -3,10 +3,9 @@ const AuthController = require('../controllers/user')
 const { Router } = require('express')
 const { authenticateJWT, requiredRole } = require('../middleware/index')
 const UserModel = require('../models/user')
-const AuthTokenModel = require('../models/authToken')
 const ProfileModel = require('../models/profile')
 
-const authService = new UserDatabaseService(UserModel, AuthTokenModel, ProfileModel)
+const authService = new UserDatabaseService(UserModel, ProfileModel)
 const authController = new AuthController(authService)
 
 const {
@@ -51,9 +50,6 @@ router.get('/admin/get-users', authenticateJWT, requiredRole('admin'), getAllUse
 
 // get specific user
 router.get('/admin/user/:id', authenticateJWT, requiredRole('admin'), getUserById)
-
-// revoke token
-router.put('/admin/revoke-token/:token', requiredRole('admin'), revokeToken)
 
 // delete user
 router.delete('/admin/user/:id', authenticateJWT, requiredRole('admin'), deleteUser)

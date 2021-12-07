@@ -12,9 +12,9 @@ const {
 } = require('../helpers/user-auth')
 
 class UserDatabaseService {
-  constructor(userModel, tokenModel, profileModel) {
+  constructor(userModel, profileModel) {
     this.userModel = userModel
-    this.tokenModel = tokenModel
+    // this.tokenModel = tokenModel
     this.profileModel = profileModel
   }
 
@@ -74,7 +74,7 @@ class UserDatabaseService {
   deleteUserTokenOnLogout = async (res, authUser, token) => {
     const userId = authUser.id
     await res.clearCookie('refreshToken')
-    await this.tokenModel.findOneAndDelete({ user: userId, token })
+    // await this.tokenModel.findOneAndDelete({ user: userId, token })
   }
 
   getUserByEmailAndPassword = async (fields, req) => {
