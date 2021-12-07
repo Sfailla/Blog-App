@@ -3,7 +3,9 @@ import { DesignSystem } from '../../styles/shared'
 import { flex } from '../../styles/mixins'
 
 const {
-  layout: { normalWrapper }
+  layout: { normalWrapper },
+  typography: { subheading },
+  color
 } = DesignSystem
 
 export const Container = styled.div`
@@ -48,3 +50,38 @@ export const Tab = styled.li`
   color: ${({ theme }) => theme.text.secondary};
 `
 export const Content = styled.ul``
+
+export const Title = styled.h2`
+  height: 4.2rem;
+  font-size: 1.6rem;
+  font-weight: 400;
+  padding: 0.8rem 1.5rem;
+  color: ${({ theme }) => theme.text.secondary};
+  ${flex('flex-start', 'center')};
+`
+export const TagContent = styled.ul`
+  /* background-color: lightblue; */
+  padding: 1rem 1.5rem;
+  min-height: 25rem;
+  ${flex('flex-start', 'flex-start')};
+`
+
+export const Tag = styled.li`
+  width: fit-content;
+  height: 2.5rem;
+  padding: 1rem;
+  ${flex()};
+  ${subheading()}
+  font-size: 1.2rem;
+  font-weight: 500;
+  /* color: ${({ theme }) => theme.text.secondary};
+  border: ${({ theme }) => `2px solid ${theme.text.secondary}`}; */
+  color: ${color.secondary.darkgrey};
+  border: 2px solid ${color.secondary.darkgrey};
+  border-radius: 2rem;
+  cursor: pointer;
+
+  &:not(:last-child) {
+    margin-right: 0.5rem;
+  }
+`

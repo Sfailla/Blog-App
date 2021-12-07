@@ -7,11 +7,14 @@ import {
   TagContainer,
   TabContainer,
   Tab,
-  Content
+  Content,
+  Title,
+  TagContent,
+  Tag
 } from './style'
 import { ArticleCard } from '../../components'
 
-function ArticleFeed({ articles }: { articles: Article[] }): ReactElement {
+function ArticleFeed({ articles, tags }: { articles: Article[]; tags: string[] }): ReactElement {
   return (
     <Container>
       <GridContainer>
@@ -28,10 +31,16 @@ function ArticleFeed({ articles }: { articles: Article[] }): ReactElement {
             ) : (
               <p>Loading...</p>
             )}
-            {articles.length > 0 && <ArticleCard key={articles[0]?.id} article={articles[0]} />}
           </Content>
         </ArticlesContainer>
-        <TagContainer></TagContainer>
+        <TagContainer>
+          <Title>Popular Tags:</Title>
+          <TagContent>
+            {tags.map(tag => (
+              <Tag key={tag}>{tag}</Tag>
+            ))}
+          </TagContent>
+        </TagContainer>
       </GridContainer>
     </Container>
   )
