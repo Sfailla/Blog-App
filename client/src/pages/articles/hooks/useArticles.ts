@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useCallback, useState } from 'react'
 import { Article } from '../../../../types'
 
 export default function useArticles(): {
@@ -10,23 +10,21 @@ export default function useArticles(): {
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
 
-  const fetchArticles: () => Promise<void> = async () => {
+  const fetchArticles: () => void = useCallback(async () => {
     setLoading(true)
     try {
       const response = await fetch('/articles')
       const data = await response.json()
       console.log(data)
-      setArticles(data)
+      setArticles(data.articles)
     } catch (error: any) {
       setError(error.message)
     } finally {
       setLoading(false)
     }
-  }
-
-  useEffect(() => {
-    fetchArticles()
   }, [])
+
+  useEffect(() => fetchArticles(), [fetchArticles])
 
   return { articles, loading, articleError: error }
 }

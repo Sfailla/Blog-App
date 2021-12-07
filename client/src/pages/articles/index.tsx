@@ -1,4 +1,4 @@
-import { ReactElement } from 'react'
+import React, { ReactElement } from 'react'
 import { Container } from './style'
 
 import { Banner, ArticleFeed } from '../../components'

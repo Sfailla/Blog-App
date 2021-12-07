@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react'
 import { LayoutWrapper } from '../../styles/shared'
 import { Container, ContentWrapper, Title, FormContainer, FormGroup, Label, Input } from './style'
 
-interface Props {}
+// interface Props {}
 
 export default function SignIn(): ReactElement {
   return (
