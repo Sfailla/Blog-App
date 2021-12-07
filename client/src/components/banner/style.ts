@@ -8,11 +8,10 @@ const {
 
 export const Container = styled.div`
   width: 100%;
-  height: 17rem;
+  min-height: 17rem;
   background-color: ${({ theme }) => theme.background.secondary};
   box-shadow: inset 0 8px 8px -8px rgb(0 0 0 / 30%), inset 0 -8px 8px -8px rgb(0 0 0 / 30%);
   ${flex()};
-  position: relative;
 `
 
 export const TextWrapper = styled.div`
