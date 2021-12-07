@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react'
 import { Container } from './style'
-import { Homepage, SignUp, SignIn } from '../../pages'
+import { ArticlesPage, SignUp, SignIn } from '../../pages'
 import { Navbar } from '../../components'
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
@@ -11,7 +11,7 @@ function App(): ReactElement {
       <Router>
         <Navbar />
         <Routes>
-          <Route path="/" element={<Homepage />} />
+          <Route path="/" element={<ArticlesPage />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
         </Routes>
