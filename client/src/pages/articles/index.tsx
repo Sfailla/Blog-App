@@ -10,7 +10,7 @@ function ArticlesPage(): ReactElement {
   return (
     <Container>
       <Banner />
-      <ArticleFeed articles={articles} />
+      <ArticleFeed articles={articles} tags={['sports', 'hunting', 'dancing']} />
     </Container>
   )
 }
