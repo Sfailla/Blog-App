@@ -15,8 +15,8 @@ export type Article = {
   title: string
   description: string
   body: string
-  image?: string
-  tags?: string[]
+  image: string
+  tags: string[]
   createdAt: string
   updatedAt: string
   isFavorite?: boolean

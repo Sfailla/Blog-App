@@ -1,4 +1,4 @@
-///// STYLED COMPONENTS TYPES /////
+///// GLOBAL TYPE DECLARATIONS /////
 import { CSSProp } from 'styled-components'
 import theme from './styles/theme'
 
@@ -9,7 +9,7 @@ declare module 'styled-components' {
 
 declare module 'react' {
   interface Attributes {
-    css?: ThemedCssFunction<DefaultTheme>
+    css?: CSSProp<Theme>
     $on?: CSSProp | CSSObject
   }
 }
