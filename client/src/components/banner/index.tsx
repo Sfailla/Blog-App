@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react'
 import { Container, TextWrapper, Title, Subtitle } from './style'
 
-function Banner(): ReactElement {
+export default function Banner(): ReactElement {
   return (
     <Container>
       <TextWrapper>
@@ -11,5 +11,3 @@ function Banner(): ReactElement {
     </Container>
   )
 }
-
-export default Banner

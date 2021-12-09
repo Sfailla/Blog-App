@@ -1,36 +1,39 @@
 import React from 'react'
+// import styled from 'styled-components/macro'
 import { Article } from '../../../../types'
 import {
   Container,
-  Header,
-  AuthorDetails,
+  Wrapper,
+  ArticlePreview,
+  ArticleMeta,
   AuthorName,
   Avatar,
   CreatedDate,
-  FavoriteWrapper,
+  Favorites,
   FavoriteCount
 } from './style'
 
 interface Props {
   article: Article
-  key: string
 }
 
-function ArticleCard({ article }: Props) {
+export default function ArticleCard({ article }: Props) {
   return (
     <Container>
-      <Header>
-        <AuthorDetails>
-          <Avatar src={article.image} />
-          <AuthorName>{article.author.username}</AuthorName>
-          <CreatedDate>{article.createdAt}</CreatedDate>
-        </AuthorDetails>
-        <FavoriteWrapper>
-          <FavoriteCount>{article.favoritedCount}</FavoriteCount>
-        </FavoriteWrapper>
-      </Header>
+      <ArticlePreview>
+        <Wrapper css={{ paddingTop: '50px' }}>
+          <ArticleMeta>
+            <Avatar src={article.image} />
+            <Wrapper>
+              <AuthorName>{article.author.username}</AuthorName>
+              <CreatedDate>{article.createdAt}</CreatedDate>
+            </Wrapper>
+          </ArticleMeta>
+          <Favorites>
+            <FavoriteCount>{article.favoritedCount}</FavoriteCount>
+          </Favorites>
+        </Wrapper>
+      </ArticlePreview>
     </Container>
   )
 }
-
-export default ArticleCard

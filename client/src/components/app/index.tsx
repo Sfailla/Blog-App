@@ -5,7 +5,7 @@ import { Navbar } from '../../components'
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
-function App(): ReactElement {
+export default function App(): ReactElement {
   return (
     <Container>
       <Router>
@@ -19,5 +19,3 @@ function App(): ReactElement {
     </Container>
   )
 }
-
-export default App

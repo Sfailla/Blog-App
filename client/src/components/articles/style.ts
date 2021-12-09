@@ -74,10 +74,8 @@ export const Tag = styled.li`
   ${subheading()}
   font-size: 1.2rem;
   font-weight: 500;
-  /* color: ${({ theme }) => theme.text.secondary};
-  border: ${({ theme }) => `2px solid ${theme.text.secondary}`}; */
   color: ${color.secondary.darkgrey};
-  border: 2px solid ${color.secondary.darkgrey};
+  border: 1px solid ${color.secondary.darkgrey};
   border-radius: 2rem;
   cursor: pointer;
 

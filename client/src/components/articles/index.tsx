@@ -14,7 +14,12 @@ import {
 } from './style'
 import { ArticleCard } from '../../components'
 
-function ArticleFeed({ articles, tags }: { articles: Article[]; tags: string[] }): ReactElement {
+interface Props {
+  articles: Article[]
+  tags: string[]
+}
+
+export default function ArticleFeed({ articles, tags }: Props): ReactElement {
   return (
     <Container>
       <GridContainer>
@@ -45,5 +50,3 @@ function ArticleFeed({ articles, tags }: { articles: Article[]; tags: string[] }
     </Container>
   )
 }
-
-export default ArticleFeed

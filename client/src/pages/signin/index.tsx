@@ -7,13 +7,7 @@ import { Container, ContentWrapper, Title, FormContainer, FormGroup, Label, Inpu
 export default function SignIn(): ReactElement {
   return (
     <Container>
-      <LayoutWrapper
-        css={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}
-      >
+      <LayoutWrapper>
         <ContentWrapper>
           <Title>Sign In</Title>
           <FormContainer>

@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react'
 import { Container, ContentWrapper, Wrapper, VerticalDivider, Title } from './style'
 import { Navigation, Toggle } from '../../components'
 
-function Navbar(): ReactElement {
+export default function Navbar(): ReactElement {
   return (
     <Container>
       <Wrapper>
@@ -16,5 +16,3 @@ function Navbar(): ReactElement {
     </Container>
   )
 }
-
-export default Navbar

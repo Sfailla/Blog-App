@@ -10,11 +10,13 @@ interface ToggleContextInterface {
 
 const ToggleContext = React.createContext({} as ToggleContextInterface)
 
-function Toggle(): ReactElement {
+export default function Toggle(): ReactElement {
   const { mode, setMode } = useAppContext()
   const isLight: boolean = mode === 'light'
   const [on, setOn] = useState<boolean>(isLight)
+
   const toggle: () => void = useCallback(() => setOn(on => !on), [])
+
   const value: ToggleContextInterface = useMemo(() => ({ on, toggle }), [on, toggle])
 
   useEffect(() => setMode(on ? 'dark' : 'light'), [on, setMode])
@@ -46,5 +48,3 @@ function ToggleButton({ ...props }: { [x: string]: unknown }): ReactElement {
   const { on, toggle } = useContext(ToggleContext)
   return <ToggleSwitch on={on} toggle={toggle} {...props} />
 }
-
-export default Toggle

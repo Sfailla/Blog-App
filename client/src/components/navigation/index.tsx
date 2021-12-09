@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react'
 import { NavContainer, NavList, NavLink } from './style'
 
-function Navigation(): ReactElement {
+export default function Navigation(): ReactElement {
   return (
     <NavContainer>
       <NavList>
@@ -12,5 +12,3 @@ function Navigation(): ReactElement {
     </NavContainer>
   )
 }
-
-export default Navigation

@@ -4,7 +4,7 @@ import { Container } from './style'
 import { Banner, ArticleFeed } from '../../components'
 import useArticles from './hooks/useArticles'
 
-function ArticlesPage(): ReactElement {
+export default function ArticlesPage(): ReactElement {
   const { articles } = useArticles()
 
   return (
@@ -14,5 +14,3 @@ function ArticlesPage(): ReactElement {
     </Container>
   )
 }
-
-export default ArticlesPage

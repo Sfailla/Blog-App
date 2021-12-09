@@ -4,16 +4,10 @@ import { Container, ContentWrapper, Title, FormContainer, FormGroup, Label, Inpu
 
 // interface Props {}
 
-export default function Signup({}): ReactElement {
+export default function Signup(): ReactElement {
   return (
     <Container>
-      <LayoutWrapper
-        css={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}
-      >
+      <LayoutWrapper>
         <ContentWrapper>
           <Title>Sign Up</Title>
           <FormContainer>
