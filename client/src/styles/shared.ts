@@ -30,7 +30,8 @@ export const DesignSystem = {
       white: '#FFFFFF',
       lightgrey: '#F4F6F8',
       grey: '#9DAEC2',
-      darkgrey: '#6E8098'
+      darkgrey: '#6E8098',
+      aqua: '#64ffda'
     }
   },
   shadow: {
