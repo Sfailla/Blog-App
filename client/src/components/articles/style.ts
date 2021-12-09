@@ -60,7 +60,6 @@ export const Title = styled.h2`
   ${flex('flex-start', 'center')};
 `
 export const TagContent = styled.ul`
-  /* background-color: lightblue; */
   padding: 1rem 1.5rem;
   min-height: 25rem;
   ${flex('flex-start', 'flex-start')};

@@ -7,10 +7,10 @@ import {
   TagContainer,
   TabContainer,
   Tab,
+  Tag,
   Content,
   Title,
-  TagContent,
-  Tag
+  TagContent
 } from './style'
 import { ArticleCard } from '../../components'
 
