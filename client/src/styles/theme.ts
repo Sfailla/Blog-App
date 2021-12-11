@@ -12,14 +12,17 @@ export const theme = {
       heading: '#FFFFFF' // white
     },
     tag: {
-      small: '#a3a0a0' // neon green
+      small: '#0085FF' // neon blue
+    },
+    link: {
+      main: '#0000EE',
+      hover: '#8957e5' // blue
     }
   },
   dark: {
     background: {
       primary: '#060C20', // dark blue
       secondary: '#112240'
-      // secondary: '#171D2F' // charcoal grey
     },
     text: {
       primary: '#FFFFFF',
@@ -29,7 +32,11 @@ export const theme = {
       heading: '#61B3FB'
     },
     tag: {
-      small: '#58ff69d4' // neon green
+      small: '#0085FF' // neon blue
+    },
+    link: {
+      main: '#8957e5', // neon purple
+      hover: '#0000EE' // blue
     }
   }
 }

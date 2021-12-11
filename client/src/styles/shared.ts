@@ -32,16 +32,32 @@ export const DesignSystem = {
       grey: '#9DAEC2',
       darkgrey: '#6E8098',
       aqua: '#64ffda'
+    },
+    neon: {
+      blue: '#0085FF',
+      // green: '#a3a0a0',
+      green: '#3fb950',
+      // red: '#e92c2c'
+      red: '#da3633',
+      purple: '#8860d2'
     }
   },
   shadow: {
     small: '0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)'
   },
   typography: {
-    heading() {
+    heading_lg() {
       return css`
         font-family: 'Arimo', sans-serif;
         font-weight: bold;
+        text-transform: capitalize;
+        letter-spacing: 1px;
+      `
+    },
+    heading_sm() {
+      return css`
+        font-family: 'Roboto', sans-serif;
+        font-weight: 500;
         text-transform: uppercase;
         letter-spacing: 1px;
       `
