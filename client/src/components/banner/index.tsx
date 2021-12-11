@@ -5,7 +5,7 @@ export default function Banner(): ReactElement {
   return (
     <Container>
       <TextWrapper>
-        <Title>On Record</Title>
+        <Title>Off The Record</Title>
         <Subtitle>A collection of thoughts and information</Subtitle>
       </TextWrapper>
     </Container>

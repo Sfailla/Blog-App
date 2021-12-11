@@ -33,14 +33,12 @@ export const ArticlesContainer = styled.div`
 export const TagContainer = styled.div`
   width: 100%;
   height: 100%;
-  /* background: lightpink; */
 `
 
 export const TabContainer = styled.ul`
   width: 100%;
   height: 4.2rem;
   border-bottom: 2px solid #9daec2;
-  /* border-bottom: 2px solid #30363d; */
 `
 export const Tab = styled.li`
   width: 11.2rem;

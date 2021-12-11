@@ -3,7 +3,7 @@ import { flex } from '../../styles/mixins'
 import { DesignSystem } from '../../styles/shared'
 
 const {
-  typography: { heading, gradientText }
+  typography: { heading_lg, gradientText }
 } = DesignSystem
 
 export const Container = styled.div`
@@ -20,7 +20,7 @@ export const TextWrapper = styled.div`
 
 export const Title = styled.h1`
   font-size: 3.5rem;
-  ${heading()};
+  ${heading_lg()};
   ${gradientText()};
 `
 

@@ -1,10 +1,11 @@
 import styled from 'styled-components/macro'
+import { Link } from 'react-router-dom'
 import { DesignSystem } from '../../../styles/shared'
 import { flex } from '../../../styles/mixins'
 
 const {
   color,
-  typography: { subheading }
+  typography: { subheading, heading_sm }
 } = DesignSystem
 
 export const Container = styled.li`
@@ -12,6 +13,7 @@ export const Container = styled.li`
   height: fit-content;
   list-style: none;
   padding: 2rem 0;
+  border-bottom: 1px solid ${color.secondary.grey};
 `
 
 export const ArticlePreview = styled.div`
@@ -22,16 +24,18 @@ export const ArticleMeta = styled.div`
   display: flex;
 `
 export const Wrapper = styled.div`
-  margin-bottom: 1rem;
   ${flex('space-between')};
 `
 export const ContentWrapper = styled.div``
 
 export const AuthorName = styled.h4`
   font-size: 1.4rem;
-  font-weight: 400;
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.text.secondary};
+  ${heading_sm()}
+  cursor: pointer;
+  color: ${color.neon.blue};
+  &:hover {
+    color: ${({ theme }) => theme.link.hover};
+  }
 `
 export const Avatar = styled.img`
   width: 35px;
@@ -46,13 +50,17 @@ export const CreatedDate = styled.span`
 export const Favorites = styled.div`
   width: 5rem;
   height: 3rem;
-  border: ${({ theme }) => `1px solid ${theme.text.secondary}`};
+  border: 1px solid ${color.neon.blue};
+  cursor: pointer;
   border-radius: 5px;
+  &:hover {
+    background-color: ${color.neon.blue};
+  }
 `
 export const FavoriteCount = styled.span``
 
 export const ArticleBody = styled.div`
-  margin-bottom: 1.5rem;
+  margin: 2rem 0;
 `
 
 export const ArticleTitle = styled.h1`
@@ -64,23 +72,38 @@ export const ArticleTitle = styled.h1`
 
 export const ArticleDescription = styled.p``
 
-export const ArticleLink = styled.a``
+export const ArticleLink = styled(Link)`
+  display: block;
+  margin-bottom: 1rem;
+  color: ${({ theme }) => theme.link.main};
+  text-decoration: none;
+  &:hover {
+    color: ${({ theme }) => theme.link.hover};
+  }
+` as typeof Link
+
 export const TagsContainer = styled.div`
   display: flex;
+  margin-bottom: 1rem;
 `
 
-export const SmallTag = styled.li`
+export const SmallTag = styled.span`
   width: fit-content;
   height: 2rem;
   padding: 1rem;
+  font-size: 1rem;
   ${flex()};
   ${subheading()}
-  font-size: 1rem;
   font-weight: 400;
   color: ${({ theme }) => theme.tag.small};
   border: 1px solid ${({ theme }) => theme.tag.small};
   border-radius: 2rem;
   cursor: pointer;
+
+  &:hover {
+    background-color: ${color.neon.blue};
+    color: ${color.secondary.white};
+  }
 
   &:not(:last-child) {
     margin-right: 0.5rem;

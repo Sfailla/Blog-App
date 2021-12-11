@@ -3,7 +3,7 @@ import { flex } from '../../styles/mixins'
 import { DesignSystem } from '../../styles/shared'
 
 const {
-  typography: { heading },
+  typography: { heading_lg },
   color
 } = DesignSystem
 
@@ -37,5 +37,5 @@ export const VerticalDivider = styled.span`
 export const Title = styled.h1`
   color: ${({ theme }) => theme.text.secondary};
   font-size: 2rem;
-  ${heading()};
+  ${heading_lg()};
 `
