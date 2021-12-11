@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react'
-import { Article } from '../../../types'
+import { Article, Tag } from '../../../types'
 import {
   Container,
   GridContainer,
@@ -7,16 +7,16 @@ import {
   TagContainer,
   TabContainer,
   Tab,
-  Tag,
+  TagLink,
   Content,
   Title,
-  TagContent
+  TagSection
 } from './style'
 import { ArticleCard } from '../../components'
 
 interface Props {
   articles: Article[]
-  tags: string[]
+  tags: Tag[]
 }
 
 export default function ArticleFeed({ articles, tags }: Props): ReactElement {
@@ -38,14 +38,14 @@ export default function ArticleFeed({ articles, tags }: Props): ReactElement {
             )}
           </Content>
         </ArticlesContainer>
-        <TagContainer>
+        <TagSection>
           <Title>Popular Tags:</Title>
-          <TagContent>
-            {tags.map(tag => (
-              <Tag key={tag}>{tag}</Tag>
+          <TagContainer>
+            {tags.map((tag, index) => (
+              <TagLink key={index}>{tag}</TagLink>
             ))}
-          </TagContent>
-        </TagContainer>
+          </TagContainer>
+        </TagSection>
       </GridContainer>
     </Container>
   )

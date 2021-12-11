@@ -30,7 +30,7 @@ export const ArticlesContainer = styled.div`
   height: 100%;
   padding: 0 1.5rem;
 `
-export const TagContainer = styled.div`
+export const TagSection = styled.div`
   width: 100%;
   height: 100%;
 `
@@ -57,24 +57,31 @@ export const Title = styled.h2`
   color: ${({ theme }) => theme.text.secondary};
   ${flex('flex-start', 'center')};
 `
-export const TagContent = styled.ul`
+export const TagContainer = styled.ul`
   padding: 1rem 1.5rem;
   min-height: 25rem;
   ${flex('flex-start', 'flex-start')};
+  flex-wrap: wrap;
+  gap: 0;
 `
 
-export const Tag = styled.li`
+export const TagLink = styled.li`
   width: fit-content;
   height: 2.5rem;
   padding: 1rem;
   ${flex()};
   ${subheading()}
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 500;
   color: ${color.secondary.darkgrey};
   border: 1px solid ${color.secondary.darkgrey};
   border-radius: 2rem;
   cursor: pointer;
+
+  &:hover {
+    color: ${color.neon.red};
+    border: 1px solid ${color.neon.red};
+  }
 
   &:not(:last-child) {
     margin-right: 0.5rem;
