@@ -26,7 +26,7 @@ const optionalAuth = async (req, res, next) => {
       req.user = null
     }
 
-    return await next()
+    return next()
   } catch (error) {
     console.log('opt auth error')
     if (error.name === 'TokenExpiredError' || error.name === 'JsonWebTokenError') {

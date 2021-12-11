@@ -9,6 +9,7 @@ const crypto = require('crypto')
  */
 
 const makeAuthUser = user => {
+  console.log(user)
   const { id, username, email, role } = user
   return { id, username, email, role }
 }
@@ -59,7 +60,8 @@ const findAndRetrieveCookie = (req, value) => {
 const generateAuthToken = user => {
   const credentials = {
     userId: user.id,
-    username: user.username
+    username: user.username,
+    role: user.role
   }
   const exp = { expiresIn: process.env.ACCESS_TOKEN_EXP }
   return sign(credentials, process.env.ACCESS_TOKEN_SECRET, exp)
@@ -67,7 +69,7 @@ const generateAuthToken = user => {
 
 const generateRefreshToken = user => {
   const credentials = {
-    id: user.id,
+    userId: user.id,
     username: user.username,
     role: user.role
   }

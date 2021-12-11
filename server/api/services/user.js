@@ -14,7 +14,6 @@ const {
 class UserDatabaseService {
   constructor(userModel, profileModel) {
     this.userModel = userModel
-    // this.tokenModel = tokenModel
     this.profileModel = profileModel
   }
 
@@ -53,7 +52,7 @@ class UserDatabaseService {
   refreshUserTokens = async (req, res) => {
     const getRefreshToken = await this.readRefreshTokenCookie(req)
     const verifiedToken = await verifyToken(getRefreshToken, process.env.REFRESH_TOKEN_SECRET)
-    const user = await this.userModel.findOne({ _id: verifiedToken.id })
+    const user = await this.userModel.findOne({ _id: verifiedToken.userId })
 
     if (!getRefreshToken || !verifiedToken || !user) {
       const errMsg = 'error refreshing token'
@@ -72,9 +71,8 @@ class UserDatabaseService {
   }
 
   deleteUserTokenOnLogout = async (res, authUser, token) => {
-    const userId = authUser.id
     await res.clearCookie('refreshToken')
-    // await this.tokenModel.findOneAndDelete({ user: userId, token })
+    // await res.clearCookie('accessToken')
   }
 
   getUserByEmailAndPassword = async (fields, req) => {
