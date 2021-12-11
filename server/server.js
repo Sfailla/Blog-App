@@ -23,7 +23,7 @@ app.use(helmet())
 app.use(cookieParser(process.env.SESSION_COOKIE_SECRET))
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
-app.use(cors({ origin: 'http://localhost:3000/api' }))
+app.use(cors({ origin: 'http://localhost:3000' }))
 
 makeDbConnection()
 // uncomment this line whenever your ready for client code
