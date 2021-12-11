@@ -1,6 +1,6 @@
 ///// TYPES /////
 
-type Author = {
+export type Author = {
   name?: null
   bio?: null
   image?: null
@@ -21,6 +21,19 @@ export type Article = {
   updatedAt: string
   isFavorite?: boolean
   favoritedCount?: number
+}
+
+export type Tag = {
+  tags: string[]
+}
+
+export type User = {
+  user: {
+    id: string
+    username: string
+    email: string
+    role: string
+  }
 }
 
 export type NonNullProperties<Type> = {
