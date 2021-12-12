@@ -75,8 +75,8 @@ export const ArticleDescription = styled.p``
 export const ArticleLink = styled(Link)`
   display: block;
   margin-bottom: 1rem;
-  color: ${({ theme }) => theme.link.main};
   text-decoration: none;
+  color: ${color.neon.blue};
   &:hover {
     color: ${({ theme }) => theme.link.hover};
   }

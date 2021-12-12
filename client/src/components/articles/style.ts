@@ -62,7 +62,8 @@ export const TagContainer = styled.ul`
   min-height: 25rem;
   ${flex('flex-start', 'flex-start')};
   flex-wrap: wrap;
-  gap: 0;
+  row-gap: 5px;
+  align-content: flex-start;
 `
 
 export const TagLink = styled.li`

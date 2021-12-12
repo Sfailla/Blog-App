@@ -2,13 +2,13 @@ export const theme = {
   light: {
     background: {
       primary: '#FFFFFF', // white
-      secondary: '#008080' // teal
+      secondary: '#105151' // teal
     },
     text: {
       primary: '#19202D', // almost black
       primaryLight: '#19202D', // almost black
-      secondary: '#008080', // teal
-      secondaryLight: '#008080',
+      secondary: '#105151', // teal
+      secondaryLight: '#105151',
       heading: '#FFFFFF' // white
     },
     tag: {
