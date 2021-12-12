@@ -26,8 +26,6 @@ app.use(express.json())
 app.use(cors({ origin: 'http://localhost:3000' }))
 
 makeDbConnection()
-// uncomment this line whenever your ready for client code
-// app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/v1/users', userApiRoutes)
 app.use('/api/v1/articles', articleApiRoutes)
@@ -40,12 +38,9 @@ app.get('/', (req, res) => {
 
 // error and 404 handler middleware
 app.use(notFoundHandler)
-// dev error handler
-// will print stacktrace
 app.use(errorHandler)
 
-// production error handler
-// no stacktraces leaked to user
+// no stacktraces leaked to user in production
 if (isProduction) {
   app.use((err, req, res, next) => {
     res.status(err.status || 500)
