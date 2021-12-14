@@ -1,3 +1,5 @@
+export type ThemeType = typeof theme
+
 export const theme = {
   light: {
     background: {
