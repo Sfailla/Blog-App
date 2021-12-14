@@ -1,11 +1,15 @@
 import React, { ReactElement, ReactNode, useContext, createContext, useMemo, useState } from 'react'
 import { ThemeProvider } from 'styled-components'
-import { theme } from '../styles/theme'
+import { theme, ThemeType } from '../styles/theme'
 
-type Context = {
-  mode: string
-  setMode: (mode: string) => void
+type PreferredMode = 'light' | 'dark'
+
+interface Context {
+  mode: PreferredMode
+  setMode: React.Dispatch<React.SetStateAction<PreferredMode>>
 }
+
+type ThemeMode = ThemeType['light'] | ThemeType['dark']
 
 const AppContext = createContext<Context | null>(null)
 
@@ -19,10 +23,8 @@ export function useAppContext() {
   return context
 }
 
-type PreferredMode = () => 'light' | 'dark'
-
 const prefersDark: string = '(prefers-color-scheme: dark)'
-const getPreferredTheme: PreferredMode = () =>
+const getPreferredTheme: () => PreferredMode = () =>
   window.matchMedia(prefersDark).matches ? 'dark' : 'light'
 
 interface Props {
@@ -30,10 +32,9 @@ interface Props {
 }
 
 export function AppProvider({ children }: Props): ReactElement {
-  const [mode, setMode] = useState<string>(getPreferredTheme())
-  const contextValues = useMemo(() => ({ mode, setMode }), [mode, setMode])
-
-  const themeMode = mode === 'light' ? theme.light : theme.dark
+  const [mode, setMode] = useState<PreferredMode>(getPreferredTheme())
+  const contextValues: Context = useMemo(() => ({ mode, setMode }), [mode, setMode])
+  const themeMode: ThemeMode = theme[mode]
 
   return (
     <AppContext.Provider value={contextValues}>
