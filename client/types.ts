@@ -1,6 +1,6 @@
 ///// TYPES /////
 
-export type Author = {
+export interface Author {
   name?: null
   bio?: null
   image?: null
@@ -8,7 +8,7 @@ export type Author = {
   id: string
 }
 
-export type Article = {
+export interface Article {
   id: string
   author: Author
   slug: string
@@ -23,17 +23,19 @@ export type Article = {
   favoritedCount?: number
 }
 
-export type Tag = {
+export interface Tag {
   tags: string[]
 }
 
-export type User = {
-  user: {
-    id: string
-    username: string
-    email: string
-    role: string
-  }
+export interface User {
+  user: UserFields
+}
+
+export interface UserFields {
+  id: string
+  username: string
+  email: string
+  role: string
 }
 
 export type NonNullProperties<Type> = {

@@ -1,15 +1,12 @@
 ///// GLOBAL TYPE DECLARATIONS /////
-import { CSSProp } from 'styled-components'
-import theme from './styles/theme'
-
+import {} from 'styled-components'
+import { ThemeType } from './styles/theme' // Import type from above file
 declare module 'styled-components' {
-  type Theme = typeof theme
-  export interface DefaultTheme extends Theme {}
+  export interface DefaultTheme extends ThemeType.mode {} // extends the global DefaultTheme with our ThemeType.
 }
 
 declare module 'react' {
   interface Attributes {
-    css?: CSSProp<Theme>
-    $on?: CSSProp | CSSObject
+    css?: any
   }
 }
