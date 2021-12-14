@@ -4,3 +4,16 @@
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom'
 import '@testing-library/user-event'
+
+// mock window.matchMedia to prevent error due to not being available in jestDom
+beforeAll(() => {
+  Object.defineProperty(window, 'matchMedia', {
+    value: () => {
+      return {
+        matches: false,
+        addListener: () => {},
+        removeListener: () => {}
+      }
+    }
+  })
+})
