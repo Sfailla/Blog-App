@@ -62,7 +62,7 @@ export const TagContainer = styled.ul`
   min-height: 25rem;
   ${flex('flex-start', 'flex-start')};
   flex-wrap: wrap;
-  row-gap: 5px;
+  row-gap: 10px;
   align-content: flex-start;
 `
 
