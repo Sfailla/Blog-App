@@ -31,7 +31,7 @@ export const Switch = styled.div`
   background-color: ${color.secondary.white};
 `
 
-export const Slider = styled.span`
+export const Slider = styled.span<{ $on: boolean }>`
   display: block;
   cursor: pointer;
   width: ${TOGGLE_CONTROL_SIZE}px;

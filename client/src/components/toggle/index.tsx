@@ -3,12 +3,16 @@ import { useAppContext } from '../../contexts/AppContext'
 import { Container, Switch, Slider, Label } from './style'
 import { SunIcon, MoonIcon } from '../../assets/svg'
 
-interface ToggleContextInterface {
+interface ToggleInterface {
   on: boolean
   toggle: () => void
 }
 
-const ToggleContext = React.createContext({} as ToggleContextInterface)
+interface StyledProps extends ToggleInterface {
+  $on?: boolean
+}
+
+const ToggleContext = React.createContext({} as ToggleInterface)
 
 export default function Toggle(): ReactElement {
   const { mode, setMode } = useAppContext()
@@ -17,7 +21,7 @@ export default function Toggle(): ReactElement {
 
   const toggle: () => void = useCallback(() => setOn(on => !on), [])
 
-  const value: ToggleContextInterface = useMemo(() => ({ on, toggle }), [on, toggle])
+  const value: ToggleInterface = useMemo(() => ({ on, toggle }), [on, toggle])
 
   useEffect(() => setMode(on ? 'dark' : 'light'), [on, setMode])
 
@@ -36,15 +40,15 @@ export default function Toggle(): ReactElement {
   )
 }
 
-function ToggleSwitch({ on, toggle }: ToggleContextInterface): ReactElement {
+function ToggleButton({ ...props }: { [x: string]: unknown }): ReactElement {
+  const { on, toggle } = useContext(ToggleContext)
+  return <ToggleSwitch on={on} toggle={toggle} {...props} />
+}
+
+function ToggleSwitch({ on, toggle }: StyledProps): ReactElement {
   return (
     <Switch onClick={toggle} data-testid="toggle-switch">
       <Slider $on={on} />
     </Switch>
   )
-}
-
-function ToggleButton({ ...props }: { [x: string]: unknown }): ReactElement {
-  const { on, toggle } = useContext(ToggleContext)
-  return <ToggleSwitch on={on} toggle={toggle} {...props} />
 }
