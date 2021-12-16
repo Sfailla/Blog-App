@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { Mode } from '../../../../types/shared'
-import { useAppContext } from '../../../contexts/AppProviders'
+import { useThemeContext } from '../../../context/theme-context'
 
 interface UseToggle {
   mode: Mode
@@ -8,7 +8,7 @@ interface UseToggle {
 }
 
 export function useToggle(): UseToggle {
-  const { mode, setMode } = useAppContext()
+  const { mode, setMode } = useThemeContext()
 
   const toggle: () => void = useCallback(() => {
     setMode(mode === 'light' ? 'dark' : 'light')
