@@ -1,16 +1,16 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { GlobalStyles } from './styles/global'
-import { App } from './components'
+import App from './app'
 import reportWebVitals from './reportWebVitals'
-import { AppProvider } from './contexts/AppProviders'
+import { AppProviders } from './context'
 
 ReactDOM.render(
   <React.StrictMode>
     <GlobalStyles />
-    <AppProvider>
+    <AppProviders>
       <App />
-    </AppProvider>
+    </AppProviders>
   </React.StrictMode>,
   document.getElementById('⚛️')
 )
