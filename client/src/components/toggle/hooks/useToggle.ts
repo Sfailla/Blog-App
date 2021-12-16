@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { Mode } from '../../../../types/shared'
-import { useAppContext } from '../../../contexts/AppContext'
+import { useAppContext } from '../../../contexts/AppProviders'
 
 interface UseToggle {
   mode: Mode

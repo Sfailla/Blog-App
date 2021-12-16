@@ -1,7 +1,7 @@
 import { FunctionComponent, ReactElement } from 'react'
 import { render, RenderOptions, RenderResult } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { AppProvider } from '../contexts/AppContext'
+import { AppProvider } from '../contexts/AppProviders'
 
 type CustomRenderOptions = Omit<RenderOptions, 'wrapper'>
 

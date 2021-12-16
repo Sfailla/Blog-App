@@ -5,7 +5,7 @@ import Toggle from './index'
 // USETOGGLE HOOK IMPORTS
 import { renderHook, act } from '@testing-library/react-hooks'
 import { useToggle } from './hooks/useToggle'
-import { AppProvider } from '../../contexts/AppContext'
+import { AppProvider } from '../../contexts/AppProviders'
 
 describe('Toggle', () => {
   test('toggle triggers light/dark mode colors', async () => {
