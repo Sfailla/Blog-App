@@ -20,7 +20,7 @@ export const Label = styled.label`
   ${flex()};
 `
 
-export const Switch = styled.div`
+export const Switch = styled.button`
   width: ${TOGGLE_WIDTH}px;
   height: ${TOGGLE_HEIGHT}px;
   border: 1px solid ${color.secondary.darkgrey};
