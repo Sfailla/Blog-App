@@ -1,4 +1,4 @@
-///// TYPES /////
+///// SHARED TYPES /////
 
 export interface Author {
   name?: null
@@ -37,6 +37,13 @@ export interface UserFields {
   email: string
   role: string
 }
+
+export type Mode = 'light' | 'dark'
+
+export type RestProps = React.DetailedHTMLProps<
+  React.LabelHTMLAttributes<HTMLLabelElement>,
+  HTMLLabelElement
+>
 
 export type NonNullProperties<Type> = {
   [Key in keyof Type]-?: Exclude<Type[Key], null | undefined>
