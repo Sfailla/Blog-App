@@ -1,6 +1,6 @@
 import { useEffect, useCallback, useState } from 'react'
 import { AxiosRequestConfig, AxiosResponse } from 'axios'
-import { Article, Tag } from '../../../../types'
+import { Article, Tag } from '../../../../types/shared'
 import { axiosInstance } from '../../../axios'
 import { endpoints } from '../../../axios/constants'
 
