@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import { ReactElement } from 'react'
 import { Container } from './style'
 import { ArticlesPage, SignUp, SignIn } from '../../pages'
 import { Navbar } from '../../components'

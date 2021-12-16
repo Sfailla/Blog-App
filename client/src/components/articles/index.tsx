@@ -1,5 +1,5 @@
-import React, { ReactElement } from 'react'
-import { Article, Tag } from '../../../types'
+import { ReactElement } from 'react'
+import { Article, Tag } from '../../../types/shared'
 import {
   Container,
   GridContainer,
