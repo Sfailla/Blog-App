@@ -1,12 +1,13 @@
 import { ReactElement } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { ArticlesPage, SignUp, SignIn } from '../../pages'
+import { Container } from './style'
 
 export default function UnauthenticatedApp(): ReactElement {
   return (
-    <div>
+    <Container>
       <AppRoutes />
-    </div>
+    </Container>
   )
 }
 
