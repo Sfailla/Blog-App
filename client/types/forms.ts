@@ -1,7 +1,9 @@
 export type FieldValues = Record<string, string>
 
-export type OptionalFieldValues = Partial<Record<keyof FieldValues, string>>
+export type OptionalFieldValues = Partial<Record<string, keyof FieldValues>>
 
-export type Validate = (values: FieldValues) => OptionalFieldValues
+export type ValidationErrors = OptionalFieldValues & {
+  error?: string
+}
 
-export interface ValidationErrors extends OptionalFieldValues {}
+export type Validate = (values: FieldValues) => ValidationErrors
