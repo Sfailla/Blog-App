@@ -6,6 +6,10 @@ export const LayoutWrapper = styled.div`
   margin: 0 auto;
 `
 
+export const vars = {
+  headerHeight: '5.6rem'
+}
+
 // Design System for Project
 export const DesignSystem = {
   layout: {
@@ -81,6 +85,7 @@ export const DesignSystem = {
       return css`
         display: inline-block;
         background: linear-gradient(to right, #7f7fd5, #86a8e7, #91eae4);
+        /* background: linear-gradient(to right, #10b981, #3b82f6, #8b5cf6); */
         color: transparent;
         background-clip: text;
         -webkit-background-clip: text;
