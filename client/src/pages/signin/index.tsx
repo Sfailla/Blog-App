@@ -1,24 +1,70 @@
 import React, { ReactElement } from 'react'
 import { LayoutWrapper } from '../../styles/shared'
-import { Container, ContentWrapper, Title, FormContainer, FormGroup, Label, Input } from './style'
+import { RegisterButton } from '../../components/buttons'
+import { useFormValidation } from '../../hooks'
+import { useAuth } from '../../context/useAuth'
+import {
+  Container,
+  ButtonContainer,
+  ContentWrapper,
+  Title,
+  FormContainer,
+  FormGroup,
+  Label,
+  Input
+} from './style'
 
 // interface Props {}
 
+const initialValues = {
+  email: '',
+  password: ''
+}
+
 export default function SignIn(): ReactElement {
+  const { values, handleChange, handleSubmit } = useFormValidation(
+    initialValues,
+    // validateSignup,
+    () => ({}),
+    submit
+  )
+
+  const { login } = useAuth()
+
+  function submit(): void {
+    console.log('form submitted', { values })
+    login(values)
+  }
+
   return (
     <Container>
       <LayoutWrapper>
         <ContentWrapper>
           <Title>Sign In</Title>
-          <FormContainer>
+          <FormContainer onSubmit={handleSubmit}>
             <FormGroup>
               <Label>Email</Label>
-              <Input type="email" placeholder="enter email..." />
+              <Input
+                type="email"
+                name="email"
+                value={values.email}
+                onChange={handleChange}
+                placeholder="enter email..."
+              />
             </FormGroup>
             <FormGroup>
               <Label>Password</Label>
-              <Input type="password" placeholder="enter password..." />
+              <Input
+                type="password"
+                name="password"
+                value={values.password}
+                onChange={handleChange}
+                placeholder="enter password..."
+              />
             </FormGroup>
+            <ButtonContainer>
+              <RegisterButton type="submit">Sign In</RegisterButton>
+            </ButtonContainer>
           </FormContainer>
         </ContentWrapper>
       </LayoutWrapper>

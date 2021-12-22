@@ -55,3 +55,9 @@ export const Input = styled.input`
   &::placeholder {
   }
 `
+
+export const ButtonContainer = styled.div`
+  width: auto;
+  height: auto;
+  margin-top: 3rem;
+`

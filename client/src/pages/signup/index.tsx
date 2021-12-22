@@ -1,9 +1,19 @@
-import React, { ReactElement } from 'react'
+import { ReactElement } from 'react'
 import { LayoutWrapper } from '../../styles/shared'
-import { Container, ContentWrapper, Title, FormContainer, FormGroup, Label, Input } from './style'
-
+import { useAuth } from '../../context/useAuth'
 import { useFormValidation } from '../../hooks'
 import { validateSignup } from './validation'
+import { RegisterButton } from '../../components/buttons'
+import {
+  Container,
+  ButtonContainer,
+  ContentWrapper,
+  Title,
+  FormContainer,
+  FormGroup,
+  Label,
+  Input
+} from './style'
 
 const initialValues = {
   username: '',
@@ -18,8 +28,11 @@ export default function Signup(): ReactElement {
     submit
   )
 
+  const { register } = useAuth()
+
   function submit(): void {
-    console.log('form submitted')
+    console.log('form submitted', { values })
+    register(values)
   }
 
   return (
@@ -58,6 +71,9 @@ export default function Signup(): ReactElement {
                 placeholder="enter password..."
               />
             </FormGroup>
+            <ButtonContainer>
+              <RegisterButton type="submit">Sign Up</RegisterButton>
+            </ButtonContainer>
           </FormContainer>
         </ContentWrapper>
       </LayoutWrapper>

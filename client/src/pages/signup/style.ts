@@ -47,11 +47,17 @@ export const Input = styled.input`
   width: 100%;
   height: 5rem;
   padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
+  border-radius: 5px;
   font-size: 1.4rem;
   border: 1px solid ${color.secondary.darkgrey};
   background-color: transparent;
   color: ${({ theme }) => theme.text.primary};
   &::placeholder {
   }
+`
+
+export const ButtonContainer = styled.div`
+  width: auto;
+  height: auto;
+  margin-top: 3rem;
 `
