@@ -19,6 +19,9 @@ export const theme = {
     link: {
       main: '#0000EE',
       hover: '#8957e5' // blue
+    },
+    button: {
+      normal: '#105151'
     }
   },
   dark: {
@@ -39,6 +42,9 @@ export const theme = {
     link: {
       main: '#8957e5', // neon purple
       hover: '#0000EE' // blue
+    },
+    button: {
+      normal: '#0f8fff'
     }
   }
 }
