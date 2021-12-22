@@ -18,7 +18,7 @@ export default function useArticles(): {
   const fetchArticles: () => void = useCallback(async () => {
     setLoading(true)
     const request: AxiosRequestConfig = {
-      url: `/${endpoints.articles}`,
+      url: `${endpoints.articles}`,
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     }
@@ -30,7 +30,7 @@ export default function useArticles(): {
   const fetchTags: () => void = useCallback(async () => {
     setLoading(true)
     const request: AxiosRequestConfig = {
-      url: `/${endpoints.tags}`,
+      url: `${endpoints.tags}`,
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     }
