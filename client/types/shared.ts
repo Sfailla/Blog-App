@@ -1,4 +1,4 @@
-///// SHARED TYPES /////
+///// SHARED INTERFACES & TYPES /////
 
 export interface Author {
   name?: null
@@ -27,9 +27,7 @@ export interface Tag {
   tags: string[]
 }
 
-export interface User {
-  user: UserFields
-}
+export type User = UserFields | null
 
 export interface UserFields {
   id: string
