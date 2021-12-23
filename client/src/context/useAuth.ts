@@ -41,6 +41,7 @@ export function useAuth(): UseAuth {
     }
 
     const response: AxiosResponse = await axiosInstance(request)
+    console.log(response.data.user)
     setUser(response.data.user)
     setLoading(false)
   }

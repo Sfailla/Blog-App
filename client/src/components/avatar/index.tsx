@@ -1,9 +1,9 @@
 import { ReactElement } from 'react'
-import { User } from '../../../types/shared'
+import { UserFields } from '../../../types/shared'
 import { Container, AvatarLogo, AvatarName } from './style'
 
 interface Props {
-  user: User
+  user: UserFields
 }
 
 export default function Avatar({ user }: Props): ReactElement {
@@ -11,7 +11,7 @@ export default function Avatar({ user }: Props): ReactElement {
   return (
     <Container>
       <AvatarLogo></AvatarLogo>
-      {/* <AvatarName>{user.username}</AvatarName> */}
+      <AvatarName>{user.username}</AvatarName>
     </Container>
   )
 }

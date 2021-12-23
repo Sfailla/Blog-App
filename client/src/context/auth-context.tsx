@@ -9,7 +9,7 @@ interface Props {
 }
 
 interface AuthContextValues {
-  user: User | null
+  user: User
   register: (fields: FieldValues) => void
   login: (fields: FieldValues) => void
   // logout: () => void
