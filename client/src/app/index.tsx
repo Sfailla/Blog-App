@@ -1,12 +1,12 @@
 import { ReactElement } from 'react'
 import { Container } from './style'
 import { Navbar } from '../components'
-import { useAuth } from '../context/useAuth'
 import AuthenticatedApp from './authenticated'
 import UnauthenticatedApp from './unauthenticated'
+import { useAuthContext } from '../context/auth-context'
 
 export default function App(): ReactElement {
-  const { user } = useAuth()
+  const { user } = useAuthContext()
   return (
     <Container>
       <Navbar />

@@ -1,8 +1,7 @@
-import React, { ReactElement } from 'react'
+import { ReactElement } from 'react'
 import { LayoutWrapper } from '../../styles/shared'
 import { RegisterButton } from '../../components/buttons'
 import { useFormValidation } from '../../hooks'
-import { useAuth } from '../../context/useAuth'
 import {
   Container,
   ButtonContainer,
@@ -13,6 +12,7 @@ import {
   Label,
   Input
 } from './style'
+import { useAuthContext } from '../../context/auth-context'
 
 // interface Props {}
 
@@ -29,7 +29,7 @@ export default function SignIn(): ReactElement {
     submit
   )
 
-  const { login } = useAuth()
+  const { login } = useAuthContext()
 
   function submit(): void {
     console.log('form submitted', { values })

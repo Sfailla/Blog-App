@@ -1,7 +1,6 @@
 import { ReactElement } from 'react'
 import { NavContainer, NavList, NavLink } from './style'
 import { Avatar } from '../'
-// import { useAuth } from '../../context/useAuth'
 import { useAuthContext } from '../../context/auth-context'
 
 export default function Navigation(): ReactElement {

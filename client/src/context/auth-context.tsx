@@ -28,6 +28,8 @@ export function useAuthContext() {
 
 export function AuthProvider(props: Props): ReactElement {
   const { user, register, login } = useAuth()
+  console.log('context is called', { user })
+
   const contextValues = useMemo(() => ({ user, register, login }), [user, register, login])
 
   return <AuthContext.Provider value={contextValues} {...props} />

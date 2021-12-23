@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode } from 'react'
+import { ReactElement, ReactNode } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { ThemeProvider } from './theme-context'
 import { AuthProvider } from './auth-context'

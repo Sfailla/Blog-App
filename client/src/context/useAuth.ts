@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { AxiosRequestConfig, AxiosResponse } from 'axios'
 import { axiosInstance } from '../axios'
 import { User } from '../../types/shared'
@@ -23,7 +23,8 @@ export function useAuth(): UseAuth {
       url: `${endpoints.auth}/register`,
       data: fields,
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true
     }
 
     const response: AxiosResponse = await axiosInstance(request)
@@ -37,14 +38,22 @@ export function useAuth(): UseAuth {
       url: `${endpoints.auth}/login`,
       data: fields,
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true
     }
 
     const response: AxiosResponse = await axiosInstance(request)
-    console.log(response.data.user)
     setUser(response.data.user)
     setLoading(false)
   }
+
+  useEffect(() => {
+    async function getUserSession(key: string) {
+      const cookie = decodeURIComponent(document.cookie)
+      console.log({ cookie })
+    }
+    getUserSession('refreshToken')
+  }, [])
 
   return {
     user,
