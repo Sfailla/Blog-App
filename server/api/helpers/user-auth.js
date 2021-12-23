@@ -45,9 +45,11 @@ const random_uuid = encryptionLength => {
 
 const signAndSetCookie = (res, name, value) => {
   let options = {
-    maxAge: 7 * 24 * 60 * 60 * 1000, // would expire after 1 week
+    maxAge: 24 * 60 * 60 * 1000, // would expire after 1 day [24hrs]
     httpOnly: true, // The cookie only accessible by the web server
-    signed: true // Indicates if the cookie should be signed
+    signed: true, // Indicates if the cookie should be signed
+    sameSite: 'strict' // prevents against xss attacks
+
     // secure: true // request must come from webserver
   }
   res.cookie(name, value, options)

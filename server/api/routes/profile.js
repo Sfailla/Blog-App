@@ -2,7 +2,7 @@ const express = require('express')
 const ProfileController = require('../controllers/profile')
 const ProfileDbService = require('../services/profile')
 const ProfileModel = require('../models/profile')
-const authenticateJWT = require('../middleware/route/authenticate')
+const auth = require('../middleware/route/authenticate')
 
 const router = express.Router()
 
@@ -13,10 +13,10 @@ const { getProfile, followUser, unfollowUser, updateUserProfile } = profileContr
 
 router.get('/:username', getProfile)
 
-router.post('/:username/follow', authenticateJWT, followUser)
+router.post('/:username/follow', auth.required, followUser)
 
-router.put('/update-profile', authenticateJWT, updateUserProfile)
+router.put('/update-profile', auth.required, updateUserProfile)
 
-router.delete('/:username/unfollow', authenticateJWT, unfollowUser)
+router.delete('/:username/unfollow', auth.required, unfollowUser)
 
 module.exports = router

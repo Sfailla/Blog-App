@@ -138,6 +138,23 @@ class UserDatabaseService {
       return { err: new ValidationError(401, 'unauthorized request') }
     }
   }
+
+  getSessionUser = async req => {
+    if (!req.user) {
+      const errMsg = 'user does not match our records'
+      const err = new ValidationError(400, errMsg)
+      return { err }
+    }
+
+    let user = await this.userModel.findOne({ _id: req.user.id })
+    if (!user) {
+      const errMsg = 'user does not match our records'
+      const err = new ValidationError(400, errMsg)
+      return { err }
+    }
+
+    return { user: makeAuthUser(user) }
+  }
 }
 
 module.exports = UserDatabaseService

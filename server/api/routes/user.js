@@ -1,7 +1,7 @@
 const UserDatabaseService = require('../services/user')
 const AuthController = require('../controllers/user')
 const { Router } = require('express')
-const { authenticateJWT, requiredRole } = require('../middleware/index')
+const { auth, requiredRole } = require('../middleware/index')
 const UserModel = require('../models/user')
 const ProfileModel = require('../models/profile')
 
@@ -16,7 +16,7 @@ const {
   getUserById,
   deleteUser,
   refreshTokens,
-  revokeToken
+  getSessionUser
 } = authController
 
 const router = Router()
@@ -39,6 +39,9 @@ router.get('/logout', requiredRole('user'), logoutUser)
 // refresh token
 router.get('/refresh-tokens', requiredRole('user'), refreshTokens)
 
+// get session user
+router.get('/session', auth.required, requiredRole('user'), getSessionUser)
+
 /**
  * =======================
  * == ADMIN ONLY ROUTES ==
@@ -46,12 +49,12 @@ router.get('/refresh-tokens', requiredRole('user'), refreshTokens)
  */
 
 // get all users
-router.get('/admin/get-users', authenticateJWT, requiredRole('admin'), getAllUsers)
+router.get('/admin/get-users', auth.required, requiredRole('admin'), getAllUsers)
 
 // get specific user
-router.get('/admin/user/:id', authenticateJWT, requiredRole('admin'), getUserById)
+router.get('/admin/user/:id', auth.required, requiredRole('admin'), getUserById)
 
 // delete user
-router.delete('/admin/user/:id', authenticateJWT, requiredRole('admin'), deleteUser)
+router.delete('/admin/user/:id', auth.required, requiredRole('admin'), deleteUser)
 
 module.exports = router
