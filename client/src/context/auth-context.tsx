@@ -12,7 +12,7 @@ interface AuthContextValues {
   user: User
   register: (fields: FieldValues) => void
   login: (fields: FieldValues) => void
-  // logout: () => void
+  logout: () => void
 }
 
 const AuthContext = createContext<AuthContextValues>({} as AuthContextValues)
@@ -27,10 +27,12 @@ export function useAuthContext() {
 }
 
 export function AuthProvider(props: Props): ReactElement {
-  const { user, register, login } = useAuth()
-  console.log('context is called', { user })
+  const { user, register, login, logout } = useAuth()
 
-  const contextValues = useMemo(() => ({ user, register, login }), [user, register, login])
+  const contextValues = useMemo(
+    () => ({ user, register, login, logout }),
+    [user, register, login, logout]
+  )
 
   return <AuthContext.Provider value={contextValues} {...props} />
 }

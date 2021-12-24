@@ -9,6 +9,7 @@ export interface UseAuth {
   user: User
   register: (fields: FieldValues) => void
   login: (fields: FieldValues) => void
+  logout: () => void
   loading: boolean
 }
 
@@ -47,18 +48,45 @@ export function useAuth(): UseAuth {
     setLoading(false)
   }
 
-  useEffect(() => {
-    async function getUserSession(key: string) {
-      const cookie = decodeURIComponent(document.cookie)
-      console.log({ cookie })
+  async function logout(): Promise<void> {
+    setLoading(true)
+    const request: AxiosRequestConfig = {
+      url: `${endpoints.auth}/logout`,
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true
     }
-    getUserSession('refreshToken')
+
+    await axiosInstance(request)
+    setUser(null)
+    setLoading(false)
+  }
+
+  useEffect(() => {
+    async function getUserSession() {
+      setLoading(true)
+      const request: AxiosRequestConfig = {
+        url: `${endpoints.auth}/refresh-tokens`,
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true
+      }
+
+      const response: AxiosResponse = await axiosInstance(request)
+      console.log({ response })
+      if (response.data.user) {
+        setUser(response.data.user)
+      }
+      setLoading(false)
+    }
+    getUserSession()
   }, [])
 
   return {
     user,
     register,
     login,
+    logout,
     loading
   }
 }
