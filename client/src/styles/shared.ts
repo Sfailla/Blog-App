@@ -6,14 +6,12 @@ export const LayoutWrapper = styled.div`
   margin: 0 auto;
 `
 
-export const vars = {
-  headerHeight: '5.6rem'
-}
+export const headerHeight = '5.6rem'
 
 // Design System for Project
 export const DesignSystem = {
   layout: {
-    normalWrapper() {
+    mainWrapper() {
       return css`
         width: 100%;
         max-width: 114rem;
@@ -35,7 +33,11 @@ export const DesignSystem = {
       lightgrey: '#F4F6F8',
       grey: '#9DAEC2',
       darkgrey: '#6E8098',
-      aqua: '#64ffda'
+      aqua: '#64ffda',
+      magenta: '#ff0097'
+    },
+    text: {
+      medium: '#3a4a61'
     },
     neon: {
       blue: '#0085FF',
@@ -47,7 +49,7 @@ export const DesignSystem = {
     }
   },
   shadow: {
-    small: '0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)'
+    sm: '0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)'
   },
   typography: {
     heading_lg() {
