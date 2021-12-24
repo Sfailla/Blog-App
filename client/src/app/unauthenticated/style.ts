@@ -1,7 +1,7 @@
 import styled from 'styled-components/macro'
-import { vars } from '../../styles/shared'
+import { headerHeight } from '../../styles/shared'
 
 export const Container = styled.div`
   width: 100%;
-  height: calc(100% - ${vars.headerHeight});
+  height: calc(100% - ${headerHeight});
 `
