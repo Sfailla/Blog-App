@@ -18,3 +18,11 @@ export const RegisterButton = styled(Button)`
   width: 100%;
   max-width: 13rem;
 `
+
+export const LogoutButton = styled(Button)`
+  width: 100%;
+  height: 3rem;
+  max-width: 13rem;
+  font-size: 1.4rem;
+  border-radius: 5px;
+`

@@ -15,6 +15,9 @@ export const NavContainer = styled.div`
 export const NavList = styled.ul`
   list-style: none;
   ${flex('flex-start', 'center')};
+  & > button {
+    margin-left: 1rem;
+  }
 `
 export const NavLink = styled(Link)`
   color: ${color.secondary.darkgrey};

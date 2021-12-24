@@ -1,3 +1,3 @@
-import { RegisterButton } from './style'
+export { RegisterButton, LogoutButton } from './style'
 
-export { RegisterButton }
+// export { RegisterButton, LogoutButton }

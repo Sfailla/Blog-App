@@ -7,10 +7,9 @@ interface Props {
 }
 
 export default function Avatar({ user }: Props): ReactElement {
-  console.log(user)
   return (
     <Container>
-      <AvatarLogo></AvatarLogo>
+      <AvatarLogo />
       <AvatarName>{user.username}</AvatarName>
     </Container>
   )

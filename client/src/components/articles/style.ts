@@ -3,7 +3,7 @@ import { DesignSystem } from '../../styles/shared'
 import { flex } from '../../styles/mixins'
 
 const {
-  layout: { normalWrapper },
+  layout: { mainWrapper },
   typography: { subheading },
   color
 } = DesignSystem
@@ -18,7 +18,7 @@ export const Container = styled.div`
 export const GridContainer = styled.div`
   width: 100%;
   height: calc(100% - 2rem);
-  ${normalWrapper()};
+  ${mainWrapper()};
   margin-top: 2rem;
   display: grid;
   grid-template-columns: 3fr 1fr;
