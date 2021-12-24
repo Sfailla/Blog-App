@@ -40,17 +40,8 @@ class UserDatabaseService {
     return { profile }
   }
 
-  createRefreshTokenCookie = async (res, token) => signAndSetCookie(res, 'refreshToken', token)
-
-  readRefreshTokenCookie = async req => await findAndRetrieveCookie(req, 'refreshToken')
-
-  createUserTokens = async user => {
-    const { token, refreshToken } = generateTokens(user)
-    return { token, refreshToken }
-  }
-
   refreshUserTokens = async (req, res) => {
-    const getRefreshToken = await this.readRefreshTokenCookie(req)
+    const getRefreshToken = findAndRetrieveCookie(req)
     const verifiedToken = await verifyToken(getRefreshToken, process.env.REFRESH_TOKEN_SECRET)
     const user = await this.userModel.findOne({ _id: verifiedToken.userId })
 
@@ -59,33 +50,33 @@ class UserDatabaseService {
       return { err: new ValidationError(401, errMsg) }
     }
 
-    const { token, refreshToken } = await this.createUserTokens(user)
-    await this.createRefreshTokenCookie(res, refreshToken)
+    const { token, refreshToken } = generateTokens(user)
+    signAndSetCookie(res, refreshToken)
     return { token, refreshToken, user }
   }
 
   destroyRefreshTokenOnLogout = (req, res) => {
-    res.clearCookie('refreshToken')
+    res.clearCookie('refresh-token')
     res.set('x-auth-token', null)
+    res.set('x-refresh-token', null)
     req.user = null
-  }
-
-  deleteUserTokenOnLogout = async (res, authUser, token) => {
-    await res.clearCookie('refreshToken')
-    // await res.clearCookie('accessToken')
   }
 
   getUserByEmailAndPassword = async (fields, req) => {
     const trimmedRequest = trimRequest(fields)
     const { user, err } = await this.getUserByEmail(trimmedRequest.email)
     req.user = user
+
     if (err) return { err }
+
     const isValidPassword = await comparePasswordBcrypt(trimmedRequest.password, user.password)
+
     if (!isValidPassword) {
       const errMsg = 'user password does not match our records'
       const err = new ValidationError(400, errMsg)
       return { err }
     }
+
     return { user: makeAuthUser(user) }
   }
 
@@ -102,6 +93,7 @@ class UserDatabaseService {
   getUserById = async userId => {
     if (userId && isValidObjId(userId)) {
       let user = await this.userModel.findOne({ _id: userId })
+
       if (!user) {
         const errMsg = 'user does not match our records'
         const err = new ValidationError(400, errMsg)
@@ -117,11 +109,13 @@ class UserDatabaseService {
 
   getAllUsers = async () => {
     const users = await this.userModel.find({})
+
     if (!users) {
       const errMsg = 'error retrieving users'
       const err = new ValidationError(400, errMsg)
       return { err }
     }
+
     const copiedUsers = users.map(user => makeAuthUser(user))
     return { users: copiedUsers }
   }
@@ -131,8 +125,10 @@ class UserDatabaseService {
       const user = await this.userModel.findOneAndDelete({
         _id: userId
       })
+
       const errMsg = 'error retrieving user from database'
       if (!user) return { err: new ValidationError(400, errMsg) }
+
       return { user: makeAuthUser(user) }
     } else {
       return { err: new ValidationError(401, 'unauthorized request') }
@@ -141,12 +137,14 @@ class UserDatabaseService {
 
   getSessionUser = async req => {
     if (!req.user) {
-      const errMsg = 'user does not match our records'
-      const err = new ValidationError(400, errMsg)
-      return { err }
+      const message = 'no authenticated user'
+      return { message }
     }
 
+    console.log({ user: req.user })
+
     let user = await this.userModel.findOne({ _id: req.user.id })
+
     if (!user) {
       const errMsg = 'user does not match our records'
       const err = new ValidationError(400, errMsg)

@@ -1,36 +1,25 @@
-const { verifyToken, findAndRetrieveCookie } = require('../../helpers/user-auth')
 const checkUserPermissions = require('../utils/checkPermissions')
-const { ValidationError } = require('../utils/errors')
+const { ValidationError, RequiredParameterError } = require('../utils/errors')
 
 const requiredRole = userRole => async (req, res, next) => {
   try {
     if (!userRole) {
       const errMsg = 'must provide authorization role'
-      throw new ValidationError(422, errMsg)
+      throw new RequiredParameterError(422, errMsg)
+    }
+
+    if (!req.user) {
+      const errMsg = 'must be logged in to access this route'
+      throw new ValidationError(401, errMsg)
     }
 
     let userData
 
-    if (req.user) {
-      userData = {
-        id: req.user.id,
-        role: req.user.role,
-        userRole
-      }
-    } else if (!req.user) {
-      const refreshToken = findAndRetrieveCookie(req, 'refreshToken')
-
-      if (!refreshToken) {
-        const errMsg = 'no refresh token. user must log in again'
-        throw new ValidationError(401, errMsg)
-      }
-      const verifiedToken = await verifyToken(refreshToken, process.env.REFRESH_TOKEN_SECRET)
-      userData = {
-        id: verifiedToken.id,
-        role: verifiedToken.role,
-        userRole
-      }
-      req.user = verifiedToken
+    userData = {
+      id: req.user.id,
+      username: req.user.username,
+      role: req.user.role,
+      userRole
     }
 
     await checkUserPermissions(userData, ValidationError, next)

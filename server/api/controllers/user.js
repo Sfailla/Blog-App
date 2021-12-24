@@ -1,3 +1,5 @@
+const { generateTokens, signAndSetCookie } = require('../helpers/user-auth')
+
 module.exports = class AuthController {
   constructor(databaseService) {
     this.service = databaseService
@@ -10,15 +12,16 @@ module.exports = class AuthController {
   registerUser = async (req, res, next) => {
     try {
       const { user, err } = await this.service.createUser(req.body)
-      const { token, refreshToken } = await this.service.createUserTokens(user)
+      const { token, refreshToken } = generateTokens(user)
 
       if (err) throw err
 
       await this.service.createProfile(user)
-      await this.service.createRefreshTokenCookie(res, refreshToken)
 
       res.set('x-auth-token', token)
       res.set('x-refresh-token', refreshToken)
+      signAndSetCookie(res, refreshToken)
+
       return await res.status(201).json({
         message: `successfully created user: ${user.username}`,
         user
@@ -33,9 +36,9 @@ module.exports = class AuthController {
       const { user, err } = await this.service.getUserByEmailAndPassword(req.body, req)
       if (err) throw err
 
-      const { token, refreshToken } = await this.service.createUserTokens(user)
-      await this.service.createRefreshTokenCookie(res, refreshToken)
+      const { token, refreshToken } = generateTokens(user)
 
+      signAndSetCookie(res, refreshToken)
       res.set('x-auth-token', token)
       res.set('x-refresh-token', refreshToken)
 
@@ -90,6 +93,9 @@ module.exports = class AuthController {
   refreshTokens = async (req, res, next) => {
     try {
       const { token, refreshToken, user, err } = await this.service.refreshUserTokens(req, res)
+
+      console.log({ token, refreshToken })
+
       if (err) throw err
       res.set('x-auth-token', token)
       res.set('x-refresh-token', refreshToken)
@@ -104,12 +110,12 @@ module.exports = class AuthController {
   }
 
   getSessionUser = async (req, res, next) => {
-    const { user, err } = await this.service.getSessionUser(req)
+    const { user, message, err } = await this.service.getSessionUser(req)
 
-    console.log('getSessionUser', user, err)
+    console.log('getSessionUser', user, message)
 
     if (err) throw err
 
-    return await res.status(200).json({ user })
+    return await res.status(200).json({ user, message })
   }
 }

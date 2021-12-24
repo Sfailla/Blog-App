@@ -9,7 +9,6 @@ const crypto = require('crypto')
  */
 
 const makeAuthUser = user => {
-  console.log(user)
   const { id, username, email, role } = user
   return { id, username, email, role }
 }
@@ -20,7 +19,7 @@ const makeUserProfile = async (profile, user) => {
     username: profile.username,
     name: profile.name,
     bio: profile.bio,
-    image: profile.image,
+    avatar: profile.image,
     favorites: profile.favorites,
     following: profile.following,
     isFollowing: user ? await profile.isFollowing(user._id) : false
@@ -43,7 +42,7 @@ const random_uuid = encryptionLength => {
   return crypto.randomBytes(encryptionLength).toString('hex')
 }
 
-const signAndSetCookie = (res, name, value) => {
+const signAndSetCookie = (res, value) => {
   let options = {
     maxAge: 24 * 60 * 60 * 1000, // would expire after 1 day [24hrs]
     httpOnly: true, // The cookie only accessible by the web server
@@ -52,11 +51,11 @@ const signAndSetCookie = (res, name, value) => {
 
     // secure: true // request must come from webserver
   }
-  res.cookie(name, value, options)
+  res.cookie('refresh-token', value, options)
 }
 
-const findAndRetrieveCookie = (req, value) => {
-  return req.signedCookies[value]
+const findAndRetrieveCookie = req => {
+  return req.signedCookies['refresh-token']
 }
 
 const generateAuthToken = user => {
