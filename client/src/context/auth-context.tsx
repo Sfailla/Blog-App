@@ -10,6 +10,8 @@ interface Props {
 
 interface AuthContextValues {
   user: User
+  // token: string
+  // isAuthenticated: boolean
   register: (fields: FieldValues) => void
   login: (fields: FieldValues) => void
   logout: () => void

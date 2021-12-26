@@ -1,13 +1,35 @@
 import axios, { AxiosRequestConfig } from 'axios'
-import { baseUrl } from './constants'
+import { baseUrl, endpoints } from './constants'
 
 interface JwtHeader {
-  Authorization?: string
+  'x-auth-token'?: string
 }
 
 export function getJWTHeader(token: string): JwtHeader {
-  return { Authorization: `x-auth-token ${token}` }
+  return { 'x-auth-token': token }
 }
 
-const config: AxiosRequestConfig = { baseURL: baseUrl }
+const config: AxiosRequestConfig = { baseURL: baseUrl, withCredentials: true }
+
 export const axiosInstance = axios.create(config)
+
+axiosInstance.interceptors.response.use(
+  response => {
+    console.log(response)
+    return response
+  },
+  error => {
+    // if (error.response.status === 401) {
+
+    // }
+    if (error.response.status === 403) {
+      return axiosInstance.get(`${endpoints.auth}/refresh-tokens`).then(res => {
+        const token = res.data.token
+        axiosInstance.defaults.headers.common['x-auth-token'] = token
+        error.config.headers['x-auth-token'] = token
+        return axiosInstance(error.config)
+      })
+    }
+    return Promise.reject(error)
+  }
+)

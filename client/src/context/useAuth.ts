@@ -24,8 +24,7 @@ export function useAuth(): UseAuth {
       url: `${endpoints.auth}/register`,
       data: fields,
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      withCredentials: true
+      headers: { 'Content-Type': 'application/json' }
     }
 
     const response: AxiosResponse = await axiosInstance(request)
@@ -39,12 +38,11 @@ export function useAuth(): UseAuth {
       url: `${endpoints.auth}/login`,
       data: fields,
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      withCredentials: true
+      headers: { 'Content-Type': 'application/json' }
     }
 
     const response: AxiosResponse = await axiosInstance(request)
-    setUser(response.data.user)
+    setUser(response.data)
     setLoading(false)
   }
 
@@ -53,8 +51,7 @@ export function useAuth(): UseAuth {
     const request: AxiosRequestConfig = {
       url: `${endpoints.auth}/logout`,
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-      withCredentials: true
+      headers: { 'Content-Type': 'application/json' }
     }
 
     await axiosInstance(request)
@@ -66,17 +63,13 @@ export function useAuth(): UseAuth {
     async function getUserSession() {
       setLoading(true)
       const request: AxiosRequestConfig = {
-        url: `${endpoints.auth}/refresh-tokens`,
+        url: `${endpoints.auth}/session`,
         method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-        withCredentials: true
+        headers: { 'Content-Type': 'application/json' }
       }
 
       const response: AxiosResponse = await axiosInstance(request)
-      console.log({ response })
-      if (response.data.user) {
-        setUser(response.data.user)
-      }
+      setUser(response.data.user)
       setLoading(false)
     }
     getUserSession()
