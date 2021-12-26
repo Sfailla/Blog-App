@@ -24,7 +24,9 @@ module.exports = class AuthController {
 
       return await res.status(201).json({
         message: `successfully created user: ${user.username}`,
-        user
+        user,
+        token,
+        refreshToken
       })
     } catch (error) {
       return next(error)
@@ -42,7 +44,7 @@ module.exports = class AuthController {
       res.set('x-auth-token', token)
       res.set('x-refresh-token', refreshToken)
 
-      return await res.status(200).json({ user })
+      return await res.status(200).json({ user, token, refreshToken })
     } catch (error) {
       return next(error)
     }
@@ -66,10 +68,8 @@ module.exports = class AuthController {
   }
 
   getAllUsers = async (req, res, next) => {
-    console.log('route hit')
     try {
       const { users, err } = await this.service.getAllUsers()
-      console.log({ users, err })
       if (err) throw err
       return await res.status(200).json({ users })
     } catch (error) {
@@ -94,8 +94,6 @@ module.exports = class AuthController {
     try {
       const { token, refreshToken, user, err } = await this.service.refreshUserTokens(req, res)
 
-      console.log({ token, refreshToken })
-
       if (err) throw err
       res.set('x-auth-token', token)
       res.set('x-refresh-token', refreshToken)
@@ -111,11 +109,8 @@ module.exports = class AuthController {
 
   getSessionUser = async (req, res, next) => {
     const { user, message, err } = await this.service.getSessionUser(req)
-
-    console.log('getSessionUser', user, message)
-
+    console.log({ err })
     if (err) throw err
-
     return await res.status(200).json({ user, message })
   }
 }

@@ -28,6 +28,7 @@ const required = async (req, res, next) => {
 
 const optional = async (req, res, next) => {
   const token = req.header('x-auth-token')
+  console.log({ token })
   if (token && token !== 'null') {
     try {
       const verifiedUser = await verifyToken(token, process.env.ACCESS_TOKEN_SECRET)
@@ -40,6 +41,7 @@ const optional = async (req, res, next) => {
       const user = await UserModel.findById(verifiedUser.userId)
       req.user = makeAuthUser(user)
     } catch (error) {
+      console.log('error', { error })
       if (error.name === 'TokenExpiredError' || error.name === 'JsonWebTokenError') {
         error.status = 403
         await next(error)

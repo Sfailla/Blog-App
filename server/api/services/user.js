@@ -136,12 +136,12 @@ class UserDatabaseService {
   }
 
   getSessionUser = async req => {
+    console.log({ user: req.user })
+
     if (!req.user) {
       const message = 'no authenticated user'
-      return { message }
+      return { user: null, message }
     }
-
-    console.log({ user: req.user })
 
     let user = await this.userModel.findOne({ _id: req.user.id })
 
@@ -151,7 +151,8 @@ class UserDatabaseService {
       return { err }
     }
 
-    return { user: makeAuthUser(user) }
+    const message = 'user is authenticated'
+    return { user: makeAuthUser(user), message }
   }
 }
 

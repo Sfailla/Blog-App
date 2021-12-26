@@ -34,13 +34,13 @@ router.post('/register', registerUser)
 router.post('/login', loginUser)
 
 // logout user
-router.get('/logout', auth.required, requiredRole('user'), logoutUser)
+router.get('/logout', logoutUser)
 
 // refresh token
 router.get('/refresh-tokens', refreshTokens)
 
 // get session user
-router.get('/session', auth.optional, getSessionUser)
+router.get('/session', auth.required, getSessionUser)
 
 /**
  * =======================
