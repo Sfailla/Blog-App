@@ -1,11 +1,22 @@
 import { ReactElement } from 'react'
+import { Routes, Route } from 'react-router-dom'
+import { ArticlesPage } from '../../pages'
+import { Container } from '../style'
 
-interface Props {}
+// interface Props {}
 
-export default function AuthenticatedApp({}: Props): ReactElement {
+export default function AuthenticatedApp(): ReactElement {
   return (
-    <div>
-      <span>Authenticated App</span>
-    </div>
+    <Container>
+      <AppRoutes />
+    </Container>
+  )
+}
+
+function AppRoutes() {
+  return (
+    <Routes>
+      <Route path="/" element={<ArticlesPage />} />
+    </Routes>
   )
 }
