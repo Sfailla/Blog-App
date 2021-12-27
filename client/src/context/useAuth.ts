@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { AxiosRequestConfig, AxiosResponse } from 'axios'
 import { axiosInstance } from '../axios'
 import { User } from '../../types/shared'
@@ -15,20 +16,22 @@ export interface UseAuth {
 
 export function useAuth(): UseAuth {
   const [user, setUser] = React.useState<User>(null)
-  const [error, setError] = React.useState<string>('')
   const [loading, setLoading] = React.useState<boolean>(false)
+  // const [error, setError] = React.useState<string>('')
+
+  const navigate = useNavigate()
 
   async function register(fields: FieldValues): Promise<void> {
     setLoading(true)
     const request: AxiosRequestConfig = {
       url: `${endpoints.auth}/register`,
       data: fields,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' }
+      method: 'POST'
     }
 
     const response: AxiosResponse = await axiosInstance(request)
     setUser(response.data.user)
+    navigate('/')
     setLoading(false)
   }
 
@@ -37,12 +40,12 @@ export function useAuth(): UseAuth {
     const request: AxiosRequestConfig = {
       url: `${endpoints.auth}/login`,
       data: fields,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' }
+      method: 'POST'
     }
 
     const response: AxiosResponse = await axiosInstance(request)
-    setUser(response.data)
+    setUser(response.data.user)
+    navigate('/')
     setLoading(false)
   }
 
@@ -50,8 +53,7 @@ export function useAuth(): UseAuth {
     setLoading(true)
     const request: AxiosRequestConfig = {
       url: `${endpoints.auth}/logout`,
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
+      method: 'GET'
     }
 
     await axiosInstance(request)
