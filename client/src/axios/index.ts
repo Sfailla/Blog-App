@@ -9,7 +9,11 @@ export function getJWTHeader(token: string): JwtHeader {
   return { 'x-auth-token': token }
 }
 
-const config: AxiosRequestConfig = { baseURL: baseUrl, withCredentials: true }
+const config: AxiosRequestConfig = {
+  baseURL: baseUrl,
+  withCredentials: true,
+  headers: { 'Content-Type': 'application/json' }
+}
 
 export const axiosInstance = axios.create(config)
 
@@ -19,9 +23,7 @@ axiosInstance.interceptors.response.use(
     return response
   },
   error => {
-    // if (error.response.status === 401) {
-
-    // }
+    // if (error.response.status === 401) {}
     if (error.response.status === 403) {
       return axiosInstance.get(`${endpoints.auth}/refresh-tokens`).then(res => {
         const token = res.data.token
