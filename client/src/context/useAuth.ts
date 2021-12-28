@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AxiosRequestConfig, AxiosResponse } from 'axios'
 import { axiosInstance } from '../axios'
@@ -15,9 +15,10 @@ export interface UseAuth {
 }
 
 export function useAuth(): UseAuth {
-  const [user, setUser] = React.useState<User>(null)
-  const [loading, setLoading] = React.useState<boolean>(false)
-  // const [error, setError] = React.useState<string>('')
+  const [user, setUser] = useState<User>(null)
+  const [loading, setLoading] = useState<boolean>(false)
+  const isAuthenticated = localStorage.getItem('auth-flag')
+  // const [error, setError] = useState<string>('')
 
   const navigate = useNavigate()
 
@@ -31,6 +32,7 @@ export function useAuth(): UseAuth {
 
     const response: AxiosResponse = await axiosInstance(request)
     setUser(response.data.user)
+    localStorage.setItem('auth-flag', response.data.user.id)
     navigate('/')
     setLoading(false)
   }
@@ -45,6 +47,7 @@ export function useAuth(): UseAuth {
 
     const response: AxiosResponse = await axiosInstance(request)
     setUser(response.data.user)
+    localStorage.setItem('auth-flag', response.data.user.id)
     navigate('/')
     setLoading(false)
   }
@@ -58,6 +61,7 @@ export function useAuth(): UseAuth {
 
     await axiosInstance(request)
     setUser(null)
+    localStorage.removeItem('auth-flag')
     setLoading(false)
   }
 
@@ -65,17 +69,18 @@ export function useAuth(): UseAuth {
     async function getUserSession() {
       setLoading(true)
       const request: AxiosRequestConfig = {
-        url: `${endpoints.auth}/session`,
+        url: `${endpoints.auth}/refresh-tokens`,
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       }
-
       const response: AxiosResponse = await axiosInstance(request)
       setUser(response.data.user)
       setLoading(false)
     }
-    getUserSession()
-  }, [])
+    if (isAuthenticated) {
+      getUserSession()
+    }
+  }, [isAuthenticated])
 
   return {
     user,
