@@ -25,7 +25,7 @@ const {
 
 const router = Router()
 
-router.get('/', auth.optional, getArticles)
+router.get('/', getArticles)
 
 router.get('/:article', auth.required, getArticle)
 

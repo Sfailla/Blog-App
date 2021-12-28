@@ -13,7 +13,6 @@ const required = async (req, res, next) => {
     }
 
     const user = await UserModel.findById(verifiedUser.userId)
-    console.log({ user })
     req.user = makeAuthUser(user)
 
     await next()
@@ -28,7 +27,6 @@ const required = async (req, res, next) => {
 
 const optional = async (req, res, next) => {
   const token = req.header('x-auth-token')
-  console.log({ token })
   if (token && token !== 'null') {
     try {
       const verifiedUser = await verifyToken(token, process.env.ACCESS_TOKEN_SECRET)
