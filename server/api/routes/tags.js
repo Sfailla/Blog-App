@@ -1,13 +1,11 @@
-const express = require('express');
-const ArticleModel = require('../models/article');
-const TagsController = require('../controllers/tags');
+const express = require('express')
+const ArticleModel = require('../models/article')
+const TagsController = require('../controllers/tags')
 
-const tagsController = new TagsController(ArticleModel);
+const router = express.Router()
 
-const router = express.Router();
+const tagsController = new TagsController(ArticleModel)
 
-const { getAllTags } = tagsController;
+router.get('/', tagsController.getAllTags)
 
-router.get('/', getAllTags);
-
-module.exports = router;
+module.exports = router
