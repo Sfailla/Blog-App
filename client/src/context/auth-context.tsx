@@ -2,6 +2,7 @@ import React, { createContext, ReactElement, ReactNode, useMemo } from 'react'
 import { FieldValues } from '../../types/forms'
 import { User } from '../../types/shared'
 import { useAuth } from './useAuth'
+import { FullPageSpinner } from '../components'
 
 interface Props {
   children: ReactNode
@@ -10,8 +11,6 @@ interface Props {
 
 interface AuthContextValues {
   user: User
-  // token: string
-  // isAuthenticated: boolean
   register: (fields: FieldValues) => void
   login: (fields: FieldValues) => void
   logout: () => void
@@ -37,7 +36,7 @@ export function AuthProvider(props: Props): ReactElement {
   )
 
   if (loading) {
-    return <div>Loading...</div>
+    return <FullPageSpinner />
   }
 
   return <AuthContext.Provider value={contextValues} {...props} />
