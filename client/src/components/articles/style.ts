@@ -21,7 +21,7 @@ export const GridContainer = styled.div`
   ${mainWrapper()};
   margin-top: 2rem;
   display: grid;
-  grid-template-columns: 3fr 1fr;
+  grid-template-columns: 3fr 27.5rem;
   grid-template-rows: 1fr;
 `
 
@@ -34,20 +34,6 @@ export const TagSection = styled.div`
   width: 100%;
   height: 100%;
 `
-
-export const TabContainer = styled.ul`
-  width: 100%;
-  height: 4.2rem;
-  border-bottom: 2px solid #9daec2;
-`
-export const Tab = styled.li`
-  width: 11.2rem;
-  height: 4.2rem;
-  padding: 8px 1.5rem;
-  ${flex()};
-  color: ${({ theme }) => theme.text.secondary};
-`
-export const Content = styled.ul``
 
 export const Title = styled.h2`
   height: 4.2rem;
@@ -87,4 +73,9 @@ export const TagLink = styled.li`
   &:not(:last-child) {
     margin-right: 0.5rem;
   }
+`
+
+export const ArtContainer = styled.div`
+  width: 100%;
+  height: 100%;
 `

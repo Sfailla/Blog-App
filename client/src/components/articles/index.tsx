@@ -1,41 +1,45 @@
 import { ReactElement } from 'react'
 import { Article, Tag } from '../../../types/shared'
+import { TabbedArticleFeed, ArticleList } from '../../components'
 import {
   Container,
   GridContainer,
   ArticlesContainer,
   TagContainer,
-  TabContainer,
-  Tab,
   TagLink,
-  Content,
   Title,
   TagSection
 } from './style'
-import { ArticleCard } from '../../components'
+
+import { useAuthContext } from '../../context/auth-context'
 
 interface Props {
   articles: Article[]
+  userArticles: Article[]
   tags: Tag[]
 }
 
-export default function ArticleFeed({ articles, tags }: Props): ReactElement {
+export default function ArticleFeed({ articles, userArticles, tags }: Props): ReactElement {
+  const { user } = useAuthContext()
+
   return (
     <Container>
       <GridContainer>
         <ArticlesContainer>
-          <TabContainer>
-            <Tab>Global Feed</Tab>
-          </TabContainer>
-          <Content>
-            {articles.length > 0 ? (
-              articles.map(article => {
-                return <ArticleCard key={article.id} article={article} />
-              })
-            ) : (
-              <p>Loading...</p>
-            )}
-          </Content>
+          {user ? (
+            <TabbedArticleFeed
+              titleList={['All Articles', 'My Articles']}
+              componentList={[
+                <ArticleList articles={articles} />,
+                <ArticleList articles={userArticles} />
+              ]}
+            />
+          ) : (
+            <TabbedArticleFeed
+              titleList={['All Articles']}
+              componentList={[<ArticleList articles={articles} />]}
+            />
+          )}
         </ArticlesContainer>
         <TagSection>
           <Title>Popular Tags:</Title>

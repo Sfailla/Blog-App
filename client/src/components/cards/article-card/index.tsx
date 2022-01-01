@@ -1,4 +1,3 @@
-import React from 'react'
 import { Article } from '../../../../types/shared'
 import {
   Container,
@@ -27,7 +26,11 @@ export default function ArticleCard({ article }: Props) {
   return (
     <Container>
       <ArticlePreview>
-        <Wrapper>
+        <Wrapper
+          css={{
+            flexDirection: 'column'
+          }}
+        >
           <ArticleMeta>
             <Avatar src={article.image} />
             <ContentWrapper>
