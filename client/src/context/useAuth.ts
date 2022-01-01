@@ -66,7 +66,7 @@ export function useAuth(): UseAuth {
   }
 
   useEffect(() => {
-    async function getUserSession() {
+    async function checkUserSession() {
       setLoading(true)
       const request: AxiosRequestConfig = {
         url: `${endpoints.auth}/refresh-tokens`,
@@ -77,7 +77,7 @@ export function useAuth(): UseAuth {
       setLoading(false)
     }
     if (isAuthenticated) {
-      getUserSession()
+      checkUserSession()
     }
   }, [isAuthenticated])
 
