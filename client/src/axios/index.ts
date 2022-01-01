@@ -18,19 +18,14 @@ const config: AxiosRequestConfig = {
 export const axiosInstance = axios.create(config)
 
 axiosInstance.interceptors.response.use(
-  (response: AxiosResponse<any>) => {
-    console.log(response)
-    return response
-  },
-  error => {
-    // if (error.response.status === 401) {}
+  (response: AxiosResponse<any>) => response,
+  async error => {
     if (error.response.status === 403) {
-      return axiosInstance.get(`${endpoints.auth}/refresh-tokens`).then(res => {
-        const token: string = res.data.token
-        axiosInstance.defaults.headers.common['x-auth-token'] = token
-        error.config.headers['x-auth-token'] = token
-        return axiosInstance(error.config)
-      })
+      const errorResponse = await axiosInstance.get(`${endpoints.auth}/refresh-tokens`)
+      const token: string = errorResponse.data.token
+      axiosInstance.defaults.headers.common['x-auth-token'] = token
+      error.config.headers['x-auth-token'] = token
+      return axiosInstance(error.config)
     }
     return Promise.reject(error)
   }
