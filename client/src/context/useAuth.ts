@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { AxiosRequestConfig, AxiosResponse } from 'axios'
+import { useNavigate } from 'react-router-dom'
 import { axiosInstance } from '../axios'
 import { User } from '../../types/shared'
 import { FieldValues } from '../../types/forms'
@@ -70,8 +70,7 @@ export function useAuth(): UseAuth {
       setLoading(true)
       const request: AxiosRequestConfig = {
         url: `${endpoints.auth}/refresh-tokens`,
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' }
+        method: 'GET'
       }
       const response: AxiosResponse = await axiosInstance(request)
       setUser(response.data.user)
