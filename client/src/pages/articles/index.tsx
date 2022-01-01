@@ -5,12 +5,12 @@ import { Banner, ArticleFeed } from '../../components'
 import useArticles from './hooks/useArticles'
 
 export default function ArticlesPage(): ReactElement {
-  const { articles, tags } = useArticles()
+  const { articles, userArticles, tags } = useArticles()
 
   return (
     <Container>
       <Banner />
-      <ArticleFeed articles={articles} tags={tags} />
+      <ArticleFeed articles={articles} userArticles={userArticles} tags={tags} />
     </Container>
   )
 }
