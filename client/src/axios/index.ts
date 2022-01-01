@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from 'axios'
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import { baseUrl, endpoints } from './constants'
 
 interface JwtHeader {
@@ -18,7 +18,7 @@ const config: AxiosRequestConfig = {
 export const axiosInstance = axios.create(config)
 
 axiosInstance.interceptors.response.use(
-  response => {
+  (response: AxiosResponse<any>) => {
     console.log(response)
     return response
   },
@@ -26,7 +26,7 @@ axiosInstance.interceptors.response.use(
     // if (error.response.status === 401) {}
     if (error.response.status === 403) {
       return axiosInstance.get(`${endpoints.auth}/refresh-tokens`).then(res => {
-        const token = res.data.token
+        const token: string = res.data.token
         axiosInstance.defaults.headers.common['x-auth-token'] = token
         error.config.headers['x-auth-token'] = token
         return axiosInstance(error.config)
