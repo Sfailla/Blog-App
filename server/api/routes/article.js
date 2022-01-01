@@ -11,7 +11,7 @@ const articleController = new ArticleController(articleService)
 const {
   unfavoriteArticle,
   favoriteArticle,
-  getArticle,
+  getUserArticle,
   getArticles,
   getComments,
   createArticle,
@@ -27,9 +27,9 @@ const router = Router()
 
 router.get('/', getArticles)
 
-router.get('/:article', auth.required, getArticle)
+router.get('/user/articles/:article', auth.required, getUserArticle)
 
-router.get('/user/article', auth.required, getUserArticles)
+router.get('/user/articles', auth.required, getUserArticles)
 
 router.get('/:article/comment', getComments)
 

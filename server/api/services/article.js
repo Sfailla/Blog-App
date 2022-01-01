@@ -137,8 +137,7 @@ module.exports = class ArticleDatabaseService {
 
   // get articles by slug
   getArticleBySlug = async (user, slug) => {
-    const query = { slug }
-    const article = await this.article.findOne({ ...query }).populate({
+    const article = await this.article.findOne({ slug }).populate({
       path: 'author',
       model: 'User',
       select: ['username', 'name', 'bio', 'image']

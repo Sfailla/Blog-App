@@ -39,7 +39,6 @@ const optional = async (req, res, next) => {
       const user = await UserModel.findById(verifiedUser.userId)
       req.user = makeAuthUser(user)
     } catch (error) {
-      console.log('error', { error })
       if (error.name === 'TokenExpiredError' || error.name === 'JsonWebTokenError') {
         error.status = 403
         await next(error)

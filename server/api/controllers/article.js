@@ -33,6 +33,16 @@ module.exports = class ArticleController {
     }
   }
 
+  getArticle = async (req, res, next) => {
+    try {
+      const { article, err } = await this.service.getArticleBySlug(null, req.params.article)
+      if (err) throw err
+      return await res.status(200).json({ article })
+    } catch (error) {
+      return next(error)
+    }
+  }
+
   getUserArticles = async (req, res, next) => {
     try {
       const { articles, articlesCount, err } = await this.service.getArticlesByUser(req.user, {
@@ -47,7 +57,8 @@ module.exports = class ArticleController {
     }
   }
 
-  getArticle = async (req, res, next) => {
+  getUserArticle = async (req, res, next) => {
+    console.log({ user: req.user })
     try {
       const { article, err } = await this.service.getArticleBySlug(req.user, req.params.article)
       if (err) throw err
