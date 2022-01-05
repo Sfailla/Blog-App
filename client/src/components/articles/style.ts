@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro'
 import { DesignSystem } from '../../styles/shared'
-import { flex } from '../../styles/mixins'
+import { flex, media } from '../../styles/mixins'
 
 const {
   layout: { mainWrapper },
@@ -23,16 +23,27 @@ export const GridContainer = styled.div`
   display: grid;
   grid-template-columns: 3fr 27.5rem;
   grid-template-rows: 1fr;
+  ${media.md`
+    grid-template-columns: 1fr;
+    grid-template-rows: min-content 1fr;
+  `}
 `
 
-export const ArticlesContainer = styled.div`
+export const ArticlesSection = styled.div`
   width: 100%;
   height: 100%;
   padding: 0 1.5rem;
+  ${media.md`
+    grid-row: 2 / 3;
+  `};
 `
 export const TagSection = styled.div`
   width: 100%;
   height: 100%;
+  ${media.md`
+    height: auto;
+    grid-row: 1 / 2;
+  `};
 `
 
 export const Title = styled.h2`
@@ -50,6 +61,9 @@ export const TagContainer = styled.ul`
   flex-wrap: wrap;
   row-gap: 10px;
   align-content: flex-start;
+  ${media.md`
+    min-height: 15rem;
+  `};
 `
 
 export const TagLink = styled.li`
@@ -73,9 +87,4 @@ export const TagLink = styled.li`
   &:not(:last-child) {
     margin-right: 0.5rem;
   }
-`
-
-export const ArtContainer = styled.div`
-  width: 100%;
-  height: 100%;
 `

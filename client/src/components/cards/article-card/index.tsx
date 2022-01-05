@@ -26,11 +26,7 @@ export default function ArticleCard({ article }: Props) {
   return (
     <Container>
       <ArticlePreview>
-        <Wrapper
-          css={{
-            flexDirection: 'column'
-          }}
-        >
+        <Wrapper>
           <ArticleMeta>
             <Avatar src={article.image} />
             <ContentWrapper>

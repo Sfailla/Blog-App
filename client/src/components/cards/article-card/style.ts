@@ -1,7 +1,7 @@
 import styled from 'styled-components/macro'
 import { Link } from 'react-router-dom'
 import { DesignSystem } from '../../../styles/shared'
-import { flex } from '../../../styles/mixins'
+import { flex, media } from '../../../styles/mixins'
 
 const {
   color,
@@ -25,6 +25,13 @@ export const ArticleMeta = styled.div`
 `
 export const Wrapper = styled.div`
   ${flex('space-between')};
+  &:first-child {
+  }
+  &:last-child {
+    ${media.lg`
+      ${flex('flex-start', 'center', 'column-reverse')};
+    `};
+  }
 `
 export const ContentWrapper = styled.div``
 
@@ -61,6 +68,9 @@ export const FavoriteCount = styled.span``
 
 export const ArticleBody = styled.div`
   margin: 2rem 0;
+  ${media.lg`
+    text-align: center;
+  `};
 `
 
 export const ArticleTitle = styled.h1`

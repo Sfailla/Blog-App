@@ -4,7 +4,7 @@ import { TabbedArticleFeed, ArticleList } from '../../components'
 import {
   Container,
   GridContainer,
-  ArticlesContainer,
+  ArticlesSection,
   TagContainer,
   TagLink,
   Title,
@@ -25,7 +25,7 @@ export default function ArticleFeed({ articles, userArticles, tags }: Props): Re
   return (
     <Container>
       <GridContainer>
-        <ArticlesContainer>
+        <ArticlesSection>
           {user ? (
             <TabbedArticleFeed
               titleList={['All Articles', 'My Articles']}
@@ -40,7 +40,7 @@ export default function ArticleFeed({ articles, userArticles, tags }: Props): Re
               componentList={[<ArticleList articles={articles} />]}
             />
           )}
-        </ArticlesContainer>
+        </ArticlesSection>
         <TagSection>
           <Title>Popular Tags:</Title>
           <TagContainer>
