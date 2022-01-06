@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import { AxiosRequestConfig, AxiosResponse } from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { axiosInstance } from '../axios'
-import { User } from '../../types/shared'
-import { FieldValues } from '../../types/forms'
+import { User } from '../types/shared'
+import { FieldValues } from '../types/forms'
 import { endpoints } from '../axios/constants'
 
 export interface UseAuth {
@@ -12,13 +12,14 @@ export interface UseAuth {
   login: (fields: FieldValues) => void
   logout: () => void
   loading: boolean
+  error: string
 }
 
 export function useAuth(): UseAuth {
   const [user, setUser] = useState<User>(null)
   const [loading, setLoading] = useState<boolean>(false)
   const isAuthenticated = localStorage.getItem('auth-flag')
-  // const [error, setError] = useState<string>('')
+  const [error, setError] = useState<string>('')
 
   const navigate = useNavigate()
 
@@ -44,12 +45,16 @@ export function useAuth(): UseAuth {
       data: fields,
       method: 'POST'
     }
-
     const response: AxiosResponse = await axiosInstance(request)
-    setUser(response.data.user)
-    localStorage.setItem('auth-flag', response.data.user.id)
-    navigate('/')
-    setLoading(false)
+    if (response.data?.error) {
+      setError(response.data.error.message)
+      setLoading(false)
+    } else {
+      setUser(response.data.user)
+      localStorage.setItem('auth-flag', response.data.user.id)
+      navigate('/')
+      setLoading(false)
+    }
   }
 
   async function logout(): Promise<void> {
@@ -86,6 +91,7 @@ export function useAuth(): UseAuth {
     register,
     login,
     logout,
-    loading
+    loading,
+    error
   }
 }

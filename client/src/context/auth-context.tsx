@@ -1,6 +1,6 @@
 import React, { createContext, ReactElement, ReactNode, useMemo } from 'react'
-import { FieldValues } from '../../types/forms'
-import { User } from '../../types/shared'
+import { FieldValues } from '../types/forms'
+import { User } from '../types/shared'
 import { useAuth } from './useAuth'
 import { FullPageSpinner } from '../components'
 
@@ -14,6 +14,7 @@ interface AuthContextValues {
   register: (fields: FieldValues) => void
   login: (fields: FieldValues) => void
   logout: () => void
+  error: string
 }
 
 const AuthContext = createContext<AuthContextValues>({} as AuthContextValues)
@@ -28,11 +29,11 @@ export function useAuthContext() {
 }
 
 export function AuthProvider(props: Props): ReactElement {
-  const { user, register, login, logout, loading } = useAuth()
+  const { user, register, login, logout, loading, error } = useAuth()
 
   const contextValues = useMemo(
-    () => ({ user, register, login, logout, loading }),
-    [user, register, login, logout, loading]
+    () => ({ user, register, login, logout, loading, error }),
+    [user, register, login, logout, loading, error]
   )
 
   if (loading) {
