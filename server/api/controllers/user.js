@@ -5,10 +5,6 @@ module.exports = class AuthController {
     this.service = databaseService
   }
 
-  // may need below to expose tokens to client
-  // res.set('Access-Control-Expose-Headers', 'x-auth-token', 'x-refresh-token');
-  // res.set('Access-Control-Allow-Headers', 'x-auth-token', 'x-refresh-token');
-
   registerUser = async (req, res, next) => {
     try {
       const { user, err } = await this.service.createUser(req.body)
@@ -22,12 +18,12 @@ module.exports = class AuthController {
       res.set('x-refresh-token', refreshToken)
       signAndSetCookie(res, refreshToken)
 
-      return await res.status(201).json({
+      await res.status(201).json({
         message: `successfully created account for ${user.username}`,
         user
       })
     } catch (error) {
-      return next(error)
+      next(error)
     }
   }
 
@@ -42,15 +38,15 @@ module.exports = class AuthController {
       res.set('x-auth-token', token)
       res.set('x-refresh-token', refreshToken)
 
-      return await res.status(200).json({ user })
+      await res.status(200).json({ user })
     } catch (error) {
-      return next(error)
+      next(error)
     }
   }
 
   logoutUser = async (req, res, next) => {
-    await this.service.destroyRefreshTokenOnLogout(req, res)
-    return await res.json({
+    await this.service.destroyUserSessionOnLogout(req, res)
+    await res.json({
       message: 'user successfully logged out!',
       user: null
     })
@@ -60,9 +56,9 @@ module.exports = class AuthController {
     try {
       const { user, err } = await this.service.getUserById(req.params.id)
       if (err) throw err
-      return await res.status(200).json({ user })
+      await res.status(200).json({ user })
     } catch (error) {
-      return next(error)
+      next(error)
     }
   }
 
@@ -70,9 +66,9 @@ module.exports = class AuthController {
     try {
       const { users, err } = await this.service.getAllUsers()
       if (err) throw err
-      return await res.status(200).json({ users })
+      await res.status(200).json({ users })
     } catch (error) {
-      return next(error)
+      next(error)
     }
   }
 
@@ -80,7 +76,7 @@ module.exports = class AuthController {
     try {
       const { user, err } = await this.service.findAndRemoveUser(req.user, req.params.id)
       if (err) throw err
-      return await res.status(200).json({
+      await res.status(200).json({
         message: `successfully removed user: ${user.username}`,
         user
       })
@@ -94,9 +90,11 @@ module.exports = class AuthController {
       const { token, refreshToken, user, err } = await this.service.refreshUserTokens(req, res)
 
       if (err) throw err
+
       res.set('x-auth-token', token)
       res.set('x-refresh-token', refreshToken)
-      return await res.status(200).json({
+
+      await res.status(200).json({
         token,
         refreshToken,
         user

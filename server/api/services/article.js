@@ -105,8 +105,6 @@ module.exports = class ArticleDatabaseService {
       return this.articleError('error retrieving user')
     }
 
-    console.log({ profile })
-
     const sorting = {
       query: { author: profile._id },
       options: {

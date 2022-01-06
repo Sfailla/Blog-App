@@ -55,7 +55,7 @@ class UserDatabaseService {
     return { token, refreshToken, user }
   }
 
-  destroyRefreshTokenOnLogout = (req, res) => {
+  destroyUserSessionOnLogout = (req, res) => {
     res.clearCookie('refresh-token')
     res.set('x-auth-token', null)
     res.set('x-refresh-token', null)
