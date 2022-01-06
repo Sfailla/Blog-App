@@ -6,7 +6,7 @@ const { randomBytes } = require('crypto')
  * ===============================
  */
 
-const makeArticleObj = async (article, profile) => {
+const makeArticleObj = async (article, profile = null) => {
   return {
     id: article._id,
     author: article.author,
