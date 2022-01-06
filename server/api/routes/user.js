@@ -8,16 +8,8 @@ const ProfileModel = require('../models/profile')
 const authService = new UserDatabaseService(UserModel, ProfileModel)
 const authController = new AuthController(authService)
 
-const {
-  loginUser,
-  logoutUser,
-  registerUser,
-  getAllUsers,
-  getUserById,
-  deleteUser,
-  refreshTokens,
-  getSessionUser
-} = authController
+const { loginUser, logoutUser, registerUser, getAllUsers, getUserById, deleteUser, refreshTokens } =
+  authController
 
 const router = Router()
 
@@ -38,9 +30,6 @@ router.get('/logout', logoutUser)
 
 // refresh token
 router.get('/refresh-tokens', refreshTokens)
-
-// get session user
-router.get('/session', auth.required, getSessionUser)
 
 /**
  * =======================

@@ -13,6 +13,7 @@ const {
   favoriteArticle,
   getUserArticle,
   getArticles,
+  getArticle,
   getComments,
   createArticle,
   getUserArticles,
@@ -27,11 +28,13 @@ const router = Router()
 
 router.get('/', getArticles)
 
-router.get('/user/articles/:article', auth.required, getUserArticle)
+router.get('/article/:article', getArticle)
 
-router.get('/user/articles', auth.required, getUserArticles)
+router.get('/user-article/:article', auth.required, getUserArticle)
 
-router.get('/:article/comment', getComments)
+router.get('/user-articles', auth.required, getUserArticles)
+
+router.get('/:article/comments', getComments)
 
 router.post('/', auth.required, createArticle)
 
