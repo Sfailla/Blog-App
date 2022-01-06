@@ -116,8 +116,8 @@ class UserDatabaseService {
       return { err }
     }
 
-    const copiedUsers = users.map(user => makeAuthUser(user))
-    return { users: copiedUsers }
+    const allUsers = users.map(user => makeAuthUser(user))
+    return { users: allUsers }
   }
 
   findAndRemoveUser = async (authUser, userId) => {
@@ -133,26 +133,6 @@ class UserDatabaseService {
     } else {
       return { err: new ValidationError(401, 'unauthorized request') }
     }
-  }
-
-  getSessionUser = async req => {
-    console.log({ user: req.user })
-
-    if (!req.user) {
-      const message = 'no authenticated user'
-      return { user: null, message }
-    }
-
-    let user = await this.userModel.findOne({ _id: req.user.id })
-
-    if (!user) {
-      const errMsg = 'user does not match our records'
-      const err = new ValidationError(400, errMsg)
-      return { err }
-    }
-
-    const message = 'user is authenticated'
-    return { user: makeAuthUser(user), message }
   }
 }
 

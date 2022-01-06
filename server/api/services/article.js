@@ -97,12 +97,15 @@ module.exports = class ArticleDatabaseService {
   }
 
   // get all articles by logged in user
-  getArticlesByUser = async (authUser, filters) => {
+  getUserArticles = async (authUser, filters) => {
+    console.log({ authUser })
     const profile = await this.profile.findOne({ user: authUser.id })
 
     if (!profile) {
       return this.articleError('error retrieving user')
     }
+
+    console.log({ profile })
 
     const sorting = {
       query: { author: profile._id },
@@ -135,21 +138,41 @@ module.exports = class ArticleDatabaseService {
     }
   }
 
-  // get articles by slug
-  getArticleBySlug = async (user, slug) => {
+  // get article by slug
+  getArticleBySlug = async slug => {
     const article = await this.article.findOne({ slug }).populate({
       path: 'author',
-      model: 'User',
+      model: 'Profile',
       select: ['username', 'name', 'bio', 'image']
     })
     if (!article) {
       return this.articleError('error fetching article slug')
     }
 
-    const userProfile = user ? await this.profile.findOne({ username: user.username }) : null
-
-    return { article: await makeArticleObj(article, userProfile) }
+    return { article: await makeArticleObj(article) }
   }
+
+  // get user article by slug
+  getUserArticleBySlug = async (user, slug) => {
+    const article = await this.article.findOne({ slug }).populate({
+      path: 'author',
+      model: 'Profile',
+      select: ['username', 'name', 'bio', 'image']
+    })
+
+    if (!article) {
+      return this.articleError('error fetching article slug')
+    }
+
+    const profile = await this.profile.findOne({ username: user.username })
+
+    if (!profile) {
+      return this.articleError('error fetching user profile')
+    }
+
+    return { article: await makeArticleObj(article, profile) }
+  }
+
   // set favorite articles
   setFavoriteArticle = async (authUser, slug) => {
     const articleSchema = await this.article.findOne({ slug })
