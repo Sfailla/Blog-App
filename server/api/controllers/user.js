@@ -23,10 +23,8 @@ module.exports = class AuthController {
       signAndSetCookie(res, refreshToken)
 
       return await res.status(201).json({
-        message: `successfully created user: ${user.username}`,
-        user,
-        token,
-        refreshToken
+        message: `successfully created account for ${user.username}`,
+        user
       })
     } catch (error) {
       return next(error)
@@ -44,7 +42,7 @@ module.exports = class AuthController {
       res.set('x-auth-token', token)
       res.set('x-refresh-token', refreshToken)
 
-      return await res.status(200).json({ user, token, refreshToken })
+      return await res.status(200).json({ user })
     } catch (error) {
       return next(error)
     }
@@ -53,7 +51,8 @@ module.exports = class AuthController {
   logoutUser = async (req, res, next) => {
     await this.service.destroyRefreshTokenOnLogout(req, res)
     return await res.json({
-      message: 'user successfully logged out!'
+      message: 'user successfully logged out!',
+      user: null
     })
   }
 
@@ -105,12 +104,5 @@ module.exports = class AuthController {
     } catch (error) {
       next(error)
     }
-  }
-
-  getSessionUser = async (req, res, next) => {
-    const { user, message, err } = await this.service.getSessionUser(req)
-    console.log({ err })
-    if (err) throw err
-    return await res.status(200).json({ user, message })
   }
 }
