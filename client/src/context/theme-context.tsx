@@ -1,7 +1,7 @@
 import React, { ReactElement, ReactNode, useContext, createContext, useMemo, useState } from 'react'
 import { ThemeProvider as StyledThemeProvider } from 'styled-components'
 import { theme, ThemeType } from '../styles/theme'
-import { Mode } from '../../types/shared'
+import { Mode } from '../types/shared'
 
 interface Context {
   mode: Mode

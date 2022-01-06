@@ -1,11 +1,13 @@
 import { ReactElement } from 'react'
 import { LayoutWrapper } from '../../styles/shared'
 import { RegisterButton } from '../../components/buttons'
+import { ToastNotification } from '../../components'
 import { useFormValidation } from '../../hooks'
 import {
   Container,
   ButtonContainer,
   ContentWrapper,
+  ErrorContainer,
   Title,
   FormContainer,
   FormGroup,
@@ -24,15 +26,13 @@ const initialValues = {
 export default function SignIn(): ReactElement {
   const { values, handleChange, handleSubmit } = useFormValidation(
     initialValues,
-    // validateSignup,
     () => ({}),
     submit
   )
 
-  const { login } = useAuthContext()
+  const { login, error: authError } = useAuthContext()
 
   function submit(): void {
-    console.log('form submitted', { values })
     login(values)
   }
 
@@ -66,6 +66,9 @@ export default function SignIn(): ReactElement {
               <RegisterButton type="submit">Sign In</RegisterButton>
             </ButtonContainer>
           </FormContainer>
+          <ErrorContainer>
+            {authError && <ToastNotification variant="error" message={authError} />}
+          </ErrorContainer>
         </ContentWrapper>
       </LayoutWrapper>
     </Container>

@@ -1,4 +1,4 @@
-import { OptionalFieldValues, ValidationErrors } from '../../../types/forms'
+import { OptionalFieldValues, ValidationErrors } from '../../types/forms'
 
 export function validateSignup(values: OptionalFieldValues): ValidationErrors {
   const errors: ValidationErrors = {}

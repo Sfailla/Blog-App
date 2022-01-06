@@ -46,6 +46,12 @@ export const DesignSystem = {
       // red: '#e92c2c'
       red: '#da3633',
       purple: '#8860d2'
+    },
+    notifications: {
+      success: '#47d764',
+      error: '#dc3545',
+      info: '#2f86eb',
+      warning: '#ffc021'
     }
   },
   shadow: {

@@ -27,6 +27,6 @@ axiosInstance.interceptors.response.use(
       error.config.headers['x-auth-token'] = token
       return axiosInstance(error.config)
     }
-    return Promise.reject(error)
+    return error.response
   }
 )

@@ -1,4 +1,4 @@
-import { FieldValues } from '../../types/forms'
+import { FieldValues } from '../types/forms'
 
 export interface TargetFields {
   name: string

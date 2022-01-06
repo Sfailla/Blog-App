@@ -1,7 +1,7 @@
 import { ReactElement } from 'react'
 import { Container } from './style'
 import { ArticleCard } from '../../components'
-import { Article } from '../../../types/shared'
+import { Article } from '../../types/shared'
 
 interface Props {
   articles: Article[] | undefined

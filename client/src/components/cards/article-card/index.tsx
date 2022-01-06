@@ -1,4 +1,4 @@
-import { Article } from '../../../../types/shared'
+import { Article } from '../../../types/shared'
 import {
   Container,
   Wrapper,

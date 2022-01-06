@@ -1,7 +1,7 @@
 import { eventFn, buildRegisterForm, TargetFields } from '../../test/helpers'
 import { renderHook, act } from '@testing-library/react-hooks'
 import useFormValidation from '.'
-import { ValidationErrors, FieldValues } from '../../../types/forms'
+import { ValidationErrors, FieldValues } from '../../types/forms'
 
 function testValidation(values: FieldValues): ValidationErrors {
   let error: ValidationErrors = {}

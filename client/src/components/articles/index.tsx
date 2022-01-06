@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { Article, Tag } from '../../../types/shared'
+import { Article, Tag } from '../../types/shared'
 import { TabbedArticleFeed, ArticleList } from '../../components'
 import {
   Container,

@@ -7,5 +7,6 @@ export { default as ArticleFeed } from './articles'
 export { default as ArticleCard } from './cards/article-card'
 export { default as TabbedArticleFeed } from './tabbed-article-feed'
 export { default as ArticleList } from './article-list'
+export { default as ToastNotification } from './toast'
 
 export { FullPageSpinner } from './loaders'

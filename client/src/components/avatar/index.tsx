@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { UserFields } from '../../../types/shared'
+import { UserFields } from '../../types/shared'
 import { Container, AvatarLogo, AvatarName } from './style'
 
 interface Props {

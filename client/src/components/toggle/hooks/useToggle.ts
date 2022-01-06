@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { Mode } from '../../../../types/shared'
+import { Mode } from '../../../types/shared'
 import { useThemeContext } from '../../../context/theme-context'
 
 interface UseToggle {
