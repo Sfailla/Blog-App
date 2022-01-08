@@ -26,6 +26,7 @@ export const GridContainer = styled.div`
   ${media.md`
     grid-template-columns: 1fr;
     grid-template-rows: min-content 1fr;
+    row-gap: 2rem;
   `}
 `
 
@@ -87,4 +88,12 @@ export const TagLink = styled.li`
   &:not(:last-child) {
     margin-right: 0.5rem;
   }
+`
+
+export const ButtonText = styled.span`
+  height: 100%;
+  font-size: 1.2rem;
+  white-space: nowrap;
+  color: white;
+  ${flex('center')};
 `

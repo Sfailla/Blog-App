@@ -30,6 +30,7 @@ export const Wrapper = styled.div`
   &:last-child {
     ${media.lg`
       ${flex('flex-start', 'center', 'column-reverse')};
+      row-gap: 1rem;
     `};
   }
 `
@@ -70,6 +71,7 @@ export const ArticleBody = styled.div`
   margin: 2rem 0;
   ${media.lg`
     text-align: center;
+    padding: 1rem 0;
   `};
 `
 

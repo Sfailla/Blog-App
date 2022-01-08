@@ -3,7 +3,7 @@ import { flex } from '../../styles/mixins'
 import { DesignSystem } from '../../styles/shared'
 
 const { color } = DesignSystem
-const tabWidth = 13
+const tabWidth: number = 13
 
 export const Container = styled.div`
   width: 100%;
@@ -12,7 +12,7 @@ export const Container = styled.div`
 
 export const AnimatedTabSlider = styled.div`
   width: ${tabWidth}rem;
-  height: 2px;
+  height: 3px;
   background-color: ${({ theme }) => theme.text.secondary};
   position: absolute;
   bottom: 0;
@@ -39,7 +39,6 @@ export const TabContainer = styled.ul`
   width: 100%;
   height: 4.2rem;
   ${flex('flex-start')};
-  border-bottom: 2px solid #9daec2;
   position: relative;
 `
 
@@ -57,3 +56,18 @@ export const ActiveTab = styled(Tab)`
 export const ContentContainer = styled.div``
 
 export const Content = styled.ul``
+
+export const Header = styled.div`
+  width: 100%;
+  height: 4.2rem;
+  ${flex('space-between')};
+  border-bottom: 1px solid #9daec2;
+`
+
+export const Actions = styled.div`
+  height: 100%;
+  ${flex('center', 'flex-end')};
+  padding-bottom: 5px;
+`
+
+export const EmptyStateMessage = styled.div``

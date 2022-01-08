@@ -1,1 +1,1 @@
-export { RegisterButton, LogoutButton } from './style'
+export { SubmitButton, LogoutButton, CreateArticleButton } from './style'

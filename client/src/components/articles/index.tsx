@@ -1,6 +1,8 @@
 import { ReactElement } from 'react'
 import { Article, Tag } from '../../types/shared'
 import { TabbedArticleFeed, ArticleList } from '../../components'
+import { CreateArticleButton } from '../buttons'
+import { PlusIcon } from '../../assets/svg'
 import {
   Container,
   GridContainer,
@@ -8,7 +10,8 @@ import {
   TagContainer,
   TagLink,
   Title,
-  TagSection
+  TagSection,
+  ButtonText
 } from './style'
 
 import { useAuthContext } from '../../context/auth-context'
@@ -33,7 +36,12 @@ export default function ArticleFeed({ articles, userArticles, tags }: Props): Re
                 <ArticleList articles={articles} />,
                 <ArticleList articles={userArticles} />
               ]}
-            />
+            >
+              <CreateArticleButton to="/create-article">
+                <ButtonText>Create</ButtonText>
+                <PlusIcon width={18} height={18} fill="#FFF" />
+              </CreateArticleButton>
+            </TabbedArticleFeed>
           ) : (
             <TabbedArticleFeed
               titleList={['All Articles']}
