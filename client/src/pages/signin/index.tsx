@@ -1,6 +1,6 @@
 import { ReactElement } from 'react'
-import { LayoutWrapper } from '../../styles/shared'
-import { RegisterButton } from '../../components/buttons'
+import { LayoutWrapper, FormGroup, Label, Input } from '../../styles/shared'
+import { SubmitButton } from '../../components/buttons'
 import { ToastNotification } from '../../components'
 import { useFormValidation } from '../../hooks'
 import {
@@ -9,14 +9,9 @@ import {
   ContentWrapper,
   ErrorContainer,
   Title,
-  FormContainer,
-  FormGroup,
-  Label,
-  Input
+  FormContainer
 } from './style'
 import { useAuthContext } from '../../context/auth-context'
-
-// interface Props {}
 
 const initialValues = {
   email: '',
@@ -63,7 +58,7 @@ export default function SignIn(): ReactElement {
               />
             </FormGroup>
             <ButtonContainer>
-              <RegisterButton type="submit">Sign In</RegisterButton>
+              <SubmitButton type="submit">Sign In</SubmitButton>
             </ButtonContainer>
           </FormContainer>
           <ErrorContainer>

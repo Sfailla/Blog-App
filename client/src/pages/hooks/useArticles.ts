@@ -55,6 +55,7 @@ export default function useArticles(): {
     }
     const response: AxiosResponse<{ articles: Article[] }> = await axiosInstance(request)
     setUserArticles(response.data.articles)
+    console.log({ response })
     setLoading(false)
   }, [])
 

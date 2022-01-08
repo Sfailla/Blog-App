@@ -6,6 +6,57 @@ export const LayoutWrapper = styled.div`
   margin: 0 auto;
 `
 
+export const AppTitle = styled.h1`
+  font-size: 4rem;
+  padding: 10rem 0 5rem 0;
+  color: ${({ theme }) => theme.text.secondary};
+`
+
+export const FormGroup = styled.div`
+  width: 100%;
+  height: 100%;
+  &:not(:last-child) {
+    margin-bottom: 2rem;
+  }
+`
+
+export const Label = styled.label`
+  display: block;
+  margin-bottom: 1rem;
+  color: #6e8098;
+  font-family: 'Roboto', sans-serif;
+  text-transform: uppercase;
+  font-weight: 400;
+  letter-spacing: 1px;
+`
+
+export const Input = styled.input`
+  width: 100%;
+  height: 5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 1.4rem;
+  border: 1px solid #6e8098;
+  background-color: transparent;
+  color: ${({ theme }) => theme.text.primary};
+  &::placeholder {
+  }
+`
+
+export const TextArea = styled.textarea`
+  width: 100%;
+  height: 100%;
+  min-height: 10rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 1.4rem;
+  border: 1px solid #6e8098;
+  background-color: transparent;
+  color: ${({ theme }) => theme.text.primary};
+  &::placeholder {
+  }
+`
+
 export const headerHeight = '5.6rem'
 
 // Design System for Project
