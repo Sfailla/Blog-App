@@ -1,6 +1,6 @@
 import { ReactElement } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import { ArticlesPage } from '../../pages'
+import { ArticlesPage, CreateArticlePage } from '../../pages'
 import { Container } from '../style'
 
 // interface Props {}
@@ -17,6 +17,7 @@ function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<ArticlesPage />} />
+      <Route path="/create-article" element={<CreateArticlePage />} />
     </Routes>
   )
 }
