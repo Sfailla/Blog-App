@@ -68,6 +68,7 @@ export function useAuth(): UseAuth {
     setUser(null)
     localStorage.removeItem('auth-flag')
     setLoading(false)
+    window.location.reload()
   }
 
   useEffect(() => {
