@@ -1,11 +1,11 @@
 import React, { FormEvent, ChangeEvent, useEffect } from 'react'
-import { FieldValues, Validate, ValidationErrors } from '../../types/forms'
+import { FieldValues, Validate, ValidationErrors, InputOrTextarea } from '../../types/forms'
 
 interface UseFormValidation {
   values: FieldValues
   errors: ValidationErrors
   isSubmitting: boolean
-  handleChange: (event: ChangeEvent<HTMLInputElement>) => void
+  handleChange: (event: ChangeEvent<InputOrTextarea>) => void
   handleSubmit: (event: FormEvent<HTMLFormElement>) => void
 }
 
@@ -28,7 +28,7 @@ export default function useFormValidation(
     }
   }, [values, errors, isSubmitting, authenticate])
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
+  function handleChange(event: ChangeEvent<InputOrTextarea>): void {
     event.persist()
     setValues(prevState => ({
       ...prevState,
@@ -36,7 +36,7 @@ export default function useFormValidation(
     }))
   }
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
+  function handleSubmit(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault()
     const errors: ValidationErrors = validate(values)
     setErrors(errors)
