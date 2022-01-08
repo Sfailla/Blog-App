@@ -7,3 +7,5 @@ export type ValidationErrors = OptionalFieldValues & {
 }
 
 export type Validate = (values: FieldValues) => ValidationErrors
+
+export type InputOrTextarea = HTMLInputElement | HTMLTextAreaElement
