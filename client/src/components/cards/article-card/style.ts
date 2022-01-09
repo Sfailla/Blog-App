@@ -92,7 +92,7 @@ export const ArticleLink = styled(Link)`
   &:hover {
     color: ${({ theme }) => theme.link.hover};
   }
-` as typeof Link
+`
 
 export const TagsContainer = styled.div`
   display: flex;
