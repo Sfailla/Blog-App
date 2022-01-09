@@ -8,7 +8,7 @@ export const LayoutWrapper = styled.div`
 
 export const AppTitle = styled.h1`
   font-size: 4rem;
-  padding: 10rem 0 5rem 0;
+  padding: 8rem 0 5rem 0;
   color: ${({ theme }) => theme.text.secondary};
 `
 
@@ -35,6 +35,7 @@ export const Input = styled.input`
   height: 5rem;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
+  font-family: monospace;
   font-size: 1.4rem;
   border: 1px solid #6e8098;
   background-color: transparent;
