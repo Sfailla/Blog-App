@@ -43,3 +43,20 @@ export const CreateArticleButton = styled(Link)`
     margin-left: 3px;
   }
 `
+
+export const AddTagButton = styled(Button)`
+  height: 5rem;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+`
+
+export const DeleteTagButton = styled.button`
+  width: auto;
+  height: 3rem;
+  outline: none;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  ${flex()};
+  color: ${({ theme }) => theme.tag.small};
+`
