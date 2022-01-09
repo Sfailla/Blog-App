@@ -1,8 +1,6 @@
 export type FieldValues = Record<string, string>
 
-export type OptionalFieldValues = Partial<Record<string, keyof FieldValues>>
-
-export type ValidationErrors = OptionalFieldValues & {
+export type ValidationErrors = FieldValues & {
   error?: string
 }
 
