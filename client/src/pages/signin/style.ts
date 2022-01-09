@@ -12,12 +12,6 @@ export const ContentWrapper = styled.div`
   padding: 0 2rem;
 `
 
-export const Title = styled.h1`
-  font-size: 4rem;
-  padding: 10rem 0 5rem 0;
-  color: ${({ theme }) => theme.text.secondary};
-`
-
 export const FormContainer = styled.form`
   width: 100%;
   border-radius: 1rem;

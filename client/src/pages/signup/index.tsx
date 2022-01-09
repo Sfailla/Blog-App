@@ -1,10 +1,10 @@
 import { ReactElement } from 'react'
-import { LayoutWrapper, FormGroup, Label, Input } from '../../styles/shared'
+import { LayoutWrapper, FormGroup, Label, Input, AppTitle } from '../../styles/shared'
 import { useAuth } from '../../context/useAuth'
 import { useFormValidation } from '../../hooks'
 import { validateSignup } from './validation'
 import { SubmitButton } from '../../components/buttons'
-import { Container, ButtonContainer, ContentWrapper, Title, FormContainer } from './style'
+import { Container, ButtonContainer, ContentWrapper, FormContainer } from './style'
 
 const initialValues = {
   username: '',
@@ -30,7 +30,7 @@ export default function Signup(): ReactElement {
     <Container>
       <LayoutWrapper>
         <ContentWrapper>
-          <Title>Sign Up</Title>
+          <AppTitle>Sign Up</AppTitle>
           <FormContainer onSubmit={handleSubmit}>
             <FormGroup>
               <Label>Username</Label>

@@ -1,11 +1,7 @@
 import { FieldValues, ValidationErrors } from '../../types/forms'
 
-export function validateSignup(values: FieldValues): ValidationErrors {
+export function validateSignin(values: FieldValues): ValidationErrors {
   const errors: ValidationErrors = {}
-
-  if (!values.username) {
-    errors.username = 'username is required'
-  }
 
   if (!values.email) {
     errors.email = 'email is Required'
