@@ -3,6 +3,7 @@ import { SubmitButton, AddTagButton, DeleteTagButton } from '../../components/bu
 import { useFormValidation } from '../../hooks'
 import { validateArticle } from './validation'
 import { CloseIcon } from '../../assets/svg'
+import { useTags, useArticles } from '../hooks'
 import { LayoutWrapper, AppTitle, FormGroup, Label, Input, TextArea } from '../../styles/shared'
 import {
   Container,
@@ -10,29 +11,37 @@ import {
   Form,
   Wrapper,
   TagInput,
-  TagList,
+  TagListItems,
   NoTagMessage,
   Tag,
   ButtonContainer
 } from './style'
-import { useTags } from '../hooks/useTags'
+import { CreateArticleFields } from '../../types/forms'
 
 const initialValues = {
   title: '',
   description: '',
-  body: '',
-  tag: ''
+  body: ''
 }
 
 export default function CreateArticlePage(): ReactElement {
   const { values, handleChange, handleSubmit } = useFormValidation(
     initialValues,
     validateArticle,
-    () => {}
+    submitForm
   )
 
-  const { tagList, addTag, removeTag } = useTags()
-  console.log({ tagList })
+  const { tagList, tagName, handleTagChange, addTag, removeTag } = useTags()
+  const { createArticle } = useArticles()
+
+  function submitForm(): void {
+    const articleFields: CreateArticleFields = {
+      ...values,
+      tags: tagList
+    }
+    console.log({ articleFields })
+    createArticle(articleFields)
+  }
 
   return (
     <Container>
@@ -41,7 +50,7 @@ export default function CreateArticlePage(): ReactElement {
           <AppTitle>Create an Article</AppTitle>
           <Form onSubmit={handleSubmit} role="form" aria-label="create-article-form">
             <FormGroup>
-              <Label htmlFor="title">Title</Label>
+              <Label htmlFor="title">Article Title</Label>
               <Input
                 id="title"
                 name="title"
@@ -52,7 +61,7 @@ export default function CreateArticlePage(): ReactElement {
               />
             </FormGroup>
             <FormGroup>
-              <Label htmlFor="description">Description</Label>
+              <Label htmlFor="description">Article Description</Label>
               <Input
                 id="description"
                 name="description"
@@ -63,7 +72,7 @@ export default function CreateArticlePage(): ReactElement {
               />
             </FormGroup>
             <FormGroup>
-              <Label htmlFor="body">Description</Label>
+              <Label htmlFor="body">Article Body</Label>
               <TextArea
                 id="body"
                 name="body"
@@ -74,18 +83,18 @@ export default function CreateArticlePage(): ReactElement {
               />
             </FormGroup>
             <FormGroup>
-              <Label htmlFor="tag">Tags</Label>
+              <Label htmlFor="tag">Article Tags</Label>
               <Wrapper>
                 <TagInput
                   id="tag"
-                  name="tag"
                   autoComplete="off"
-                  onChange={handleChange}
+                  value={tagName}
+                  onChange={handleTagChange}
                   placeholder="Add tag for article"
                 />
-                <AddTagButton onClick={() => addTag(values.tag)}>Add</AddTagButton>
+                <AddTagButton onClick={() => addTag(tagName)}>Add</AddTagButton>
               </Wrapper>
-              <TagList>
+              <TagListItems>
                 {tagList.length > 0 ? (
                   tagList.map((tag, index) => (
                     <Tag key={index}>
@@ -98,7 +107,7 @@ export default function CreateArticlePage(): ReactElement {
                 ) : (
                   <NoTagMessage>No tags added</NoTagMessage>
                 )}
-              </TagList>
+              </TagListItems>
             </FormGroup>
             <ButtonContainer>
               <SubmitButton aria-label="submit-button" type="button">

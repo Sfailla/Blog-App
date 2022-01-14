@@ -46,7 +46,7 @@ export const TagInput = styled.input`
   }
 `
 
-export const TagList = styled.div`
+export const TagListItems = styled.div`
   display: flex;
   margin: 2rem 0 1rem 0;
 `
