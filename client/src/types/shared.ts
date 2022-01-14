@@ -8,6 +8,11 @@ export interface Author {
   id: string
 }
 
+export interface TagList {
+  id: string
+  name: string
+}
+
 export interface Article {
   id: string
   author: Author
@@ -16,15 +21,11 @@ export interface Article {
   description: string
   body: string
   image: string
-  tags: string[]
+  tags?: TagList[]
   createdAt: string
   updatedAt: string
   isFavorite?: boolean
   favoritedCount?: number
-}
-
-export interface Tag {
-  tags: string[]
 }
 
 export type User = UserFields | null
