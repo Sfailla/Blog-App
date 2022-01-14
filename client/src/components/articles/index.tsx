@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { Article, Tag } from '../../types/shared'
+import { Article, TagList } from '../../types/shared'
 import { TabbedArticleFeed, ArticleList } from '../../components'
 import { CreateArticleButton } from '../buttons'
 import { PlusIcon } from '../../assets/svg'
@@ -19,7 +19,7 @@ import { useAuthContext } from '../../context/auth-context'
 interface Props {
   articles: Article[]
   userArticles: Article[]
-  tags: Tag[]
+  tags: TagList[]
 }
 
 export default function ArticleFeed({ articles, userArticles, tags }: Props): ReactElement {
