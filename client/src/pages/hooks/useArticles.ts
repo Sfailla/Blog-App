@@ -1,21 +1,20 @@
 import { useEffect, useCallback, useState } from 'react'
 import { AxiosRequestConfig, AxiosResponse } from 'axios'
-import { Article, Tag } from '../../types/shared'
+import { Article } from '../../types/shared'
 import { axiosInstance } from '../../axios'
 import { endpoints } from '../../axios/constants'
 import { useAuthContext } from '../../context/auth-context'
+import { CreateArticleFields } from '../../types/forms'
 
 export default function useArticles(): {
+  loading: boolean
   articles: Article[]
   userArticles: Article[]
-  tags: Tag[]
-  loading: boolean
+  createArticle: (articleFields: CreateArticleFields) => void
 } {
   const [articles, setArticles] = useState<Article[]>([])
   const [userArticles, setUserArticles] = useState<Article[]>([])
-  const [tags, setTags] = useState<Tag[]>([])
   const [loading, setLoading] = useState<boolean>(false)
-
   const { user } = useAuthContext()
 
   const fetchArticles: () => void = useCallback(async () => {
@@ -36,17 +35,6 @@ export default function useArticles(): {
     }
   }, [])
 
-  const fetchTags: () => void = useCallback(async () => {
-    setLoading(true)
-    const request: AxiosRequestConfig = {
-      url: `${endpoints.tags}`,
-      method: 'GET'
-    }
-    const response: AxiosResponse<{ tags: Tag[] }> = await axiosInstance(request)
-    setTags(response.data.tags)
-    setLoading(false)
-  }, [])
-
   const fetchUserArticles: () => void = useCallback(async () => {
     setLoading(true)
     const request: AxiosRequestConfig = {
@@ -59,6 +47,23 @@ export default function useArticles(): {
     setLoading(false)
   }, [])
 
+  const createArticle: (articleFields: CreateArticleFields) => void = useCallback(
+    async (articleFields: CreateArticleFields) => {
+      // setLoading(true)
+      const request: AxiosRequestConfig = {
+        url: `${endpoints.articles}`,
+        method: 'POST',
+        data: articleFields
+      }
+      const response: AxiosResponse<{ article: Article }> = await axiosInstance(request)
+      console.log({ response })
+
+      // setArticles(prevState => [response.data.article, ...prevState])
+      // setLoading(false)
+    },
+    []
+  )
+
   useEffect(() => {
     if (user) {
       fetchUserArticles()
@@ -69,20 +74,18 @@ export default function useArticles(): {
     let active = true
 
     if (active) {
-      fetchTags()
       fetchArticles()
     }
     return () => {
       active = false
       setArticles([])
-      setTags([])
     }
-  }, [fetchTags, fetchArticles])
+  }, [fetchArticles])
 
   return {
+    loading,
     articles,
     userArticles,
-    tags,
-    loading
+    createArticle
   }
 }
