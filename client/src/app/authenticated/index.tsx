@@ -3,8 +3,6 @@ import { Routes, Route } from 'react-router-dom'
 import { ArticlesPage, CreateArticlePage } from '../../pages'
 import { Container } from '../style'
 
-// interface Props {}
-
 export default function AuthenticatedApp(): ReactElement {
   return (
     <Container>
