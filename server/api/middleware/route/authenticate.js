@@ -25,32 +25,4 @@ const required = async (req, res, next) => {
   }
 }
 
-const optional = async (req, res, next) => {
-  const token = req.header('x-auth-token')
-  if (token && token !== 'null') {
-    try {
-      const verifiedUser = await verifyToken(token, process.env.ACCESS_TOKEN_SECRET)
-
-      if (!verifiedUser) {
-        const errMsg = 'error verifying user token in optional validation middleware'
-        throw new ValidationError(400, errMsg)
-      }
-
-      const user = await UserModel.findById(verifiedUser.userId)
-      req.user = makeAuthUser(user)
-    } catch (error) {
-      if (error.name === 'TokenExpiredError' || error.name === 'JsonWebTokenError') {
-        error.status = 403
-        await next(error)
-      }
-      await next(error)
-    }
-  }
-
-  await next()
-}
-
-module.exports = {
-  required,
-  optional
-}
+module.exports = { required }

@@ -58,7 +58,6 @@ module.exports = class ArticleController {
   }
 
   getUserArticle = async (req, res, next) => {
-    console.log({ user: req.user })
     try {
       const { article, err } = await this.service.getUserArticleBySlug(req.user, req.params.article)
       if (err) throw err
