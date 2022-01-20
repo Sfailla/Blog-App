@@ -5,23 +5,18 @@ import { TagList } from '../../types/shared'
 import { axiosInstance } from '../../axios'
 import { endpoints } from '../../axios/constants'
 
-// interface Tag {
-//   id: string
-//   name: string
-// }
-
 interface UseTags {
-  tagList: TagList[]
+  tagList: string[]
   tagName: string
   tags: TagList[]
   loading: boolean
-  addTag: (name: string) => void
-  removeTag: (id: string) => void
+  addTag: (tagName: string) => void
+  removeTag: (index: number) => void
   handleTagChange: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 export default function useTags(): UseTags {
-  const [tagList, setTagList] = useState<TagList[]>([])
+  const [tagList, setTagList] = useState<string[]>([])
   const [tagName, setTagName] = useState<string>('')
   const [tags, setTags] = useState<TagList[]>([])
   const [loading, setLoading] = useState<boolean>(false)
@@ -41,14 +36,13 @@ export default function useTags(): UseTags {
     setLoading(false)
   }, [])
 
-  const addTag = (name: string): void => {
-    const tag = { id: uuidv4(), name }
-    setTagList(prevState => [...prevState, tag])
+  const addTag = (tagName: string): void => {
+    setTagList(prevState => [...prevState, tagName])
     setTagName('')
   }
 
-  const removeTag = (id: string): void =>
-    setTagList(prevState => prevState.filter(tag => id !== tag.id))
+  const removeTag = (index: number): void =>
+    setTagList(prevState => prevState.filter((_, tagIndex) => index !== tagIndex))
 
   useEffect(() => fetchTags(), [fetchTags])
 

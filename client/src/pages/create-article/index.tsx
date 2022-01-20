@@ -92,14 +92,16 @@ export default function CreateArticlePage(): ReactElement {
                   onChange={handleTagChange}
                   placeholder="Add tag for article"
                 />
-                <AddTagButton onClick={() => addTag(tagName)}>Add</AddTagButton>
+                <AddTagButton type="button" onClick={() => addTag(tagName)}>
+                  Add
+                </AddTagButton>
               </Wrapper>
               <TagListItems>
                 {tagList.length > 0 ? (
                   tagList.map((tag, index) => (
                     <Tag key={index}>
-                      {tag.name}
-                      <DeleteTagButton onClick={() => removeTag(tag.id)}>
+                      {tag}
+                      <DeleteTagButton onClick={() => removeTag(index)}>
                         <CloseIcon width={20} height={20} />
                       </DeleteTagButton>
                     </Tag>
@@ -109,12 +111,11 @@ export default function CreateArticlePage(): ReactElement {
                 )}
               </TagListItems>
             </FormGroup>
-            <ButtonContainer>
-              <SubmitButton aria-label="submit-button" type="button">
-                Submit
-              </SubmitButton>
-            </ButtonContainer>
+            <ButtonContainer></ButtonContainer>
           </Form>
+          <SubmitButton aria-label="submit-button" type="submit">
+            Submit
+          </SubmitButton>
         </MainContent>
       </LayoutWrapper>
     </Container>
