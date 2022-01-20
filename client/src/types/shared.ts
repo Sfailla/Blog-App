@@ -9,7 +9,6 @@ export interface Author {
 }
 
 export interface TagList {
-  id: string
   name: string
 }
 
@@ -21,7 +20,7 @@ export interface Article {
   description: string
   body: string
   image: string
-  tags?: TagList[]
+  tags: TagList[]
   createdAt: string
   updatedAt: string
   isFavorite?: boolean

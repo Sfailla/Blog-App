@@ -6,7 +6,7 @@ export type ValidationErrors = FieldValues & {
   error?: string
 }
 export interface CreateArticleFields extends FieldValues {
-  tags: TagList[]
+  tags: string[]
 }
 
 export type Validate = (values: FieldValues) => ValidationErrors
