@@ -2,7 +2,7 @@ import { ReactElement } from 'react'
 import { NavContainer, NavList, NavLink } from './style'
 import { LogoutButton } from '../buttons'
 import { Avatar } from '../'
-import { useAuthContext } from '../../context/auth-context'
+import { useAuthContext } from '../../context/authContext'
 
 export default function Navigation(): ReactElement {
   const { user, logout } = useAuthContext()

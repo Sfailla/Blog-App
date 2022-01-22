@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { Article, TagList } from '../../types/shared'
+import { Article, ArticleOrUndefined, TagList } from '../../types/shared'
 import { TabbedArticleFeed, ArticleList } from '../../components'
 import { CreateArticleButton } from '../buttons'
 import { PlusIcon } from '../../assets/svg'
@@ -14,11 +14,11 @@ import {
   ButtonText
 } from './style'
 
-import { useAuthContext } from '../../context/auth-context'
+import { useAuthContext } from '../../context/authContext'
 
 interface Props {
   articles: Article[]
-  userArticles: Article[]
+  userArticles: ArticleOrUndefined
   tags: TagList[]
 }
 

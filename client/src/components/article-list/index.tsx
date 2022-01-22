@@ -1,10 +1,10 @@
 import { ReactElement } from 'react'
 import { Container } from './style'
 import { ArticleCard } from '../../components'
-import { Article } from '../../types/shared'
+import { ArticleOrUndefined } from '../../types/shared'
 
 interface Props {
-  articles: Article[] | undefined
+  articles: ArticleOrUndefined
 }
 
 export default function ArticleList({ articles }: Props): ReactElement {
