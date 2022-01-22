@@ -17,6 +17,7 @@ import {
   ButtonContainer
 } from './style'
 import { CreateArticleFields } from '../../types/forms'
+import { useDataContext } from '../../context/dataContext'
 
 const initialValues = {
   title: '',
@@ -31,8 +32,7 @@ export default function CreateArticlePage(): ReactElement {
     submitForm
   )
 
-  const { tagList, tagName, handleTagChange, addTag, removeTag } = useTags()
-  const { createArticle } = useArticles()
+  const { tagList, tagName, handleTagChange, addTag, removeTag, createArticle } = useDataContext()
 
   function submitForm(): void {
     const articleFields: CreateArticleFields = {

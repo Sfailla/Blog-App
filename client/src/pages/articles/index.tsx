@@ -2,12 +2,15 @@ import { ReactElement } from 'react'
 import { Container } from './style'
 
 import { Banner, ArticleFeed } from '../../components'
-import { useTags, useArticles } from '../hooks'
+import { Article, ArticleOrUndefined, TagList } from '../../types/shared'
 
-export default function ArticlesPage(): ReactElement {
-  const { articles, userArticles } = useArticles()
-  const { tags } = useTags()
+interface Props {
+  articles: Article[]
+  userArticles?: ArticleOrUndefined
+  tags: TagList[]
+}
 
+function ArticlesPage({ articles, userArticles, tags }: Props): ReactElement {
   return (
     <Container>
       <Banner />
@@ -15,3 +18,5 @@ export default function ArticlesPage(): ReactElement {
     </Container>
   )
 }
+
+export default ArticlesPage

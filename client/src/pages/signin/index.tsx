@@ -3,7 +3,7 @@ import { LayoutWrapper, FormGroup, Label, Input, AppTitle } from '../../styles/s
 import { SubmitButton } from '../../components/buttons'
 import { ToastNotification } from '../../components'
 import { useFormValidation } from '../../hooks'
-import { useAuthContext } from '../../context/auth-context'
+import { useAuthContext } from '../../context/authContext'
 import { validateSignin } from './validation'
 import { Container, ButtonContainer, ContentWrapper, ErrorContainer, FormContainer } from './style'
 

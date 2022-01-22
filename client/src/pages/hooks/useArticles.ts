@@ -3,7 +3,7 @@ import { AxiosRequestConfig, AxiosResponse } from 'axios'
 import { Article } from '../../types/shared'
 import { axiosInstance } from '../../axios'
 import { endpoints } from '../../axios/constants'
-import { useAuthContext } from '../../context/auth-context'
+import { useAuthContext } from '../../context/authContext'
 import { CreateArticleFields } from '../../types/forms'
 
 export default function useArticles(): {
@@ -80,7 +80,7 @@ export default function useArticles(): {
       active = false
       setArticles([])
     }
-  }, [fetchArticles])
+  }, [fetchArticles, fetchUserArticles, user])
 
   return {
     loading,
