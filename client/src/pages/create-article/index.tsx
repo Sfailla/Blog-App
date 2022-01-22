@@ -1,9 +1,9 @@
 import { ReactElement } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { SubmitButton, AddTagButton, DeleteTagButton } from '../../components/buttons'
 import { useFormValidation } from '../../hooks'
 import { validateArticle } from './validation'
 import { CloseIcon } from '../../assets/svg'
-import { useTags, useArticles } from '../hooks'
 import { LayoutWrapper, AppTitle, FormGroup, Label, Input, TextArea } from '../../styles/shared'
 import {
   Container,
@@ -19,13 +19,8 @@ import {
 import { CreateArticleFields } from '../../types/forms'
 import { useDataContext } from '../../context/dataContext'
 
-const initialValues = {
-  title: '',
-  description: '',
-  body: ''
-}
-
 export default function CreateArticlePage(): ReactElement {
+  const initialValues = { title: '', description: '', body: '' }
   const { values, handleChange, handleSubmit } = useFormValidation(
     initialValues,
     validateArticle,
@@ -33,14 +28,15 @@ export default function CreateArticlePage(): ReactElement {
   )
 
   const { tagList, tagName, handleTagChange, addTag, removeTag, createArticle } = useDataContext()
+  const navigate = useNavigate()
 
   function submitForm(): void {
     const articleFields: CreateArticleFields = {
       ...values,
       tags: tagList
     }
-    console.log({ articleFields })
     createArticle(articleFields)
+    navigate('/')
   }
 
   return (
@@ -83,7 +79,7 @@ export default function CreateArticlePage(): ReactElement {
               />
             </FormGroup>
             <FormGroup>
-              <Label htmlFor="tag">Article Tags</Label>
+              <Label htmlFor="tag">Add Article Tags</Label>
               <Wrapper>
                 <TagInput
                   id="tag"
@@ -92,14 +88,18 @@ export default function CreateArticlePage(): ReactElement {
                   onChange={handleTagChange}
                   placeholder="Add tag for article"
                 />
-                <AddTagButton type="button" onClick={() => addTag(tagName)}>
+                <AddTagButton
+                  aria-label="add-tag-button"
+                  type="button"
+                  onClick={() => addTag(tagName)}
+                >
                   Add
                 </AddTagButton>
               </Wrapper>
-              <TagListItems>
+              <TagListItems role="list">
                 {tagList.length > 0 ? (
                   tagList.map((tag, index) => (
-                    <Tag key={index}>
+                    <Tag role="listitem" key={index}>
                       {tag}
                       <DeleteTagButton onClick={() => removeTag(index)}>
                         <CloseIcon width={20} height={20} />
@@ -111,11 +111,12 @@ export default function CreateArticlePage(): ReactElement {
                 )}
               </TagListItems>
             </FormGroup>
-            <ButtonContainer></ButtonContainer>
+            <ButtonContainer>
+              <SubmitButton aria-label="submit-button" type="submit">
+                Submit
+              </SubmitButton>
+            </ButtonContainer>
           </Form>
-          <SubmitButton aria-label="submit-button" type="submit">
-            Submit
-          </SubmitButton>
         </MainContent>
       </LayoutWrapper>
     </Container>

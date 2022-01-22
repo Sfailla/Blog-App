@@ -43,25 +43,33 @@ export default function useArticles(): {
     }
     const response: AxiosResponse<{ articles: Article[] }> = await axiosInstance(request)
     setUserArticles(response.data.articles)
-    console.log({ response })
     setLoading(false)
   }, [])
 
   const createArticle: (articleFields: CreateArticleFields) => void = useCallback(
     async (articleFields: CreateArticleFields) => {
-      // setLoading(true)
-      const request: AxiosRequestConfig = {
-        url: `${endpoints.articles}`,
-        method: 'POST',
-        data: articleFields
-      }
-      const response: AxiosResponse<{ article: Article }> = await axiosInstance(request)
-      console.log({ response })
+      try {
+        setLoading(true)
+        const request: AxiosRequestConfig = {
+          url: `${endpoints.articles}`,
+          method: 'POST',
+          data: articleFields
+        }
+        const response: AxiosResponse<{ article: Article }> = await axiosInstance(request)
+        console.log({ response })
 
-      // setArticles(prevState => [response.data.article, ...prevState])
-      // setLoading(false)
+        if (response.status === 200) {
+          setArticles([response.data.article, ...articles])
+          setUserArticles([response.data.article, ...userArticles])
+        }
+      } catch (error) {
+        console.error(error)
+        throw new Error('error creating article')
+      } finally {
+        setLoading(false)
+      }
     },
-    []
+    [articles, userArticles]
   )
 
   useEffect(() => {
