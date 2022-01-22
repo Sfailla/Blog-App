@@ -8,9 +8,7 @@ export interface Author {
   id: string
 }
 
-export interface TagList {
-  name: string
-}
+export type Tag = string
 
 export interface Article {
   id: string
@@ -20,7 +18,7 @@ export interface Article {
   description: string
   body: string
   image: string
-  tags: TagList[]
+  tags: Tag[]
   createdAt: string
   updatedAt: string
   isFavorite?: boolean

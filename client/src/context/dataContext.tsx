@@ -1,7 +1,7 @@
 import { ReactElement, ReactNode, ChangeEvent, createContext, useContext, useMemo } from 'react'
 import { useArticles, useTags } from '../pages/hooks'
 import { CreateArticleFields } from '../types/forms'
-import { Article, ArticleOrUndefined, TagList } from '../types/shared'
+import { Article, ArticleOrUndefined, Tag } from '../types/shared'
 
 interface Props {
   children: ReactNode
@@ -12,12 +12,12 @@ interface DataContextValues {
   articles: Article[]
   userArticles: ArticleOrUndefined
   createArticle: (articleFields: CreateArticleFields) => void
-  tags: TagList[]
-  tagList: string[]
-  tagName: string
+  tags: Tag[]
+  tagList: Tag[]
+  tagName: Tag
   handleTagChange: (event: ChangeEvent<HTMLInputElement>) => void
-  addTag: (tag: string) => void
-  removeTag: (tag: number) => void
+  addTag: (tag: Tag) => void
+  removeTag: (index: number) => void
   loading: boolean
 }
 

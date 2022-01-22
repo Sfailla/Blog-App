@@ -2,12 +2,12 @@ import { ReactElement } from 'react'
 import { Container } from './style'
 
 import { Banner, ArticleFeed } from '../../components'
-import { Article, ArticleOrUndefined, TagList } from '../../types/shared'
+import { Article, Tag } from '../../types/shared'
 
 interface Props {
   articles: Article[]
-  userArticles?: ArticleOrUndefined
-  tags: TagList[]
+  userArticles?: Article[] | undefined
+  tags: Tag[]
 }
 
 function ArticlesPage({ articles, userArticles, tags }: Props): ReactElement {

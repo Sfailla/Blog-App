@@ -1,14 +1,13 @@
 import { ChangeEvent, useState, useCallback, useEffect } from 'react'
-import { v4 as uuidv4 } from 'uuid'
 import { AxiosRequestConfig, AxiosResponse } from 'axios'
-import { TagList } from '../../types/shared'
+import { Tag } from '../../types/shared'
 import { axiosInstance } from '../../axios'
 import { endpoints } from '../../axios/constants'
 
 interface UseTags {
   tagList: string[]
   tagName: string
-  tags: TagList[]
+  tags: Tag[]
   loading: boolean
   addTag: (tagName: string) => void
   removeTag: (index: number) => void
@@ -16,9 +15,9 @@ interface UseTags {
 }
 
 export default function useTags(): UseTags {
-  const [tagList, setTagList] = useState<string[]>([])
-  const [tagName, setTagName] = useState<string>('')
-  const [tags, setTags] = useState<TagList[]>([])
+  const [tagList, setTagList] = useState<Tag[]>([])
+  const [tagName, setTagName] = useState<Tag>('')
+  const [tags, setTags] = useState<Tag[]>([])
   const [loading, setLoading] = useState<boolean>(false)
 
   const handleTagChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -31,7 +30,7 @@ export default function useTags(): UseTags {
       url: `${endpoints.tags}`,
       method: 'GET'
     }
-    const response: AxiosResponse<{ tags: TagList[] }> = await axiosInstance(request)
+    const response: AxiosResponse<{ tags: Tag[] }> = await axiosInstance(request)
     setTags(response.data.tags)
     setLoading(false)
   }, [])

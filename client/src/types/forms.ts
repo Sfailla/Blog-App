@@ -1,4 +1,4 @@
-import { TagList } from './shared'
+import { Tag } from './shared'
 
 export type FieldValues = Record<string, any>
 
@@ -6,7 +6,7 @@ export type ValidationErrors = FieldValues & {
   error?: string
 }
 export interface CreateArticleFields extends FieldValues {
-  tags: string[]
+  tags: Tag[]
 }
 
 export type Validate = (values: FieldValues) => ValidationErrors
