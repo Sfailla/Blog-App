@@ -27,6 +27,8 @@ export interface Article {
   favoritedCount?: number
 }
 
+export type ArticleOrUndefined = Article[] | undefined
+
 export type User = UserFields | null
 
 export interface UserFields {
