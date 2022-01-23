@@ -8,5 +8,6 @@ export { default as ArticleCard } from './cards/article-card'
 export { default as TabbedArticleFeed } from './tabbed-article-feed'
 export { default as ArticleList } from './article-list'
 export { default as ToastNotification } from './toast'
+export { default as InputFieldError } from './input-error'
 
 export { FullPageSpinner } from './loaders'

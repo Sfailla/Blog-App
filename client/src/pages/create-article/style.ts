@@ -42,7 +42,9 @@ export const TagInput = styled.input`
   border: 1px solid #6e8098;
   background-color: transparent;
   color: ${({ theme }) => theme.text.primary};
-  &::placeholder {
+  &:focus-visible {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
   }
 `
 

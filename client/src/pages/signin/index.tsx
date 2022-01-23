@@ -1,7 +1,7 @@
 import { ReactElement } from 'react'
 import { LayoutWrapper, FormGroup, Label, Input, AppTitle } from '../../styles/shared'
 import { SubmitButton } from '../../components/buttons'
-import { ToastNotification } from '../../components'
+import { ToastNotification, InputFieldError } from '../../components'
 import { useFormValidation } from '../../hooks'
 import { useAuthContext } from '../../context/authContext'
 import { validateSignin } from './validation'
@@ -13,7 +13,7 @@ const initialValues = {
 }
 
 export default function SignIn(): ReactElement {
-  const { values, handleChange, handleSubmit } = useFormValidation(
+  const { values, formErrors, handleChange, handleSubmit } = useFormValidation(
     initialValues,
     validateSignin,
     submit
@@ -40,6 +40,7 @@ export default function SignIn(): ReactElement {
                 onChange={handleChange}
                 placeholder="enter email..."
               />
+              {formErrors.email && <InputFieldError errorMessage={formErrors.email} />}
             </FormGroup>
             <FormGroup>
               <Label>Password</Label>
@@ -50,6 +51,7 @@ export default function SignIn(): ReactElement {
                 onChange={handleChange}
                 placeholder="enter password..."
               />
+              {formErrors.password && <InputFieldError errorMessage={formErrors.password} />}
             </FormGroup>
             <ButtonContainer>
               <SubmitButton type="submit">Sign In</SubmitButton>
