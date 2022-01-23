@@ -3,7 +3,7 @@ import { FieldValues, Validate, ValidationErrors, InputOrTextarea } from '../../
 
 interface UseFormValidation {
   values: FieldValues
-  errors: ValidationErrors
+  formErrors: ValidationErrors
   isSubmitting: boolean
   handleChange: (event: ChangeEvent<InputOrTextarea>) => void
   handleSubmit: (event: FormEvent<HTMLFormElement>) => void
@@ -45,7 +45,7 @@ export default function useFormValidation(
 
   return {
     values,
-    errors,
+    formErrors: errors,
     isSubmitting,
     handleChange,
     handleSubmit
