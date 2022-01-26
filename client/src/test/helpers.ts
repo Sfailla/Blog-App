@@ -1,19 +1,18 @@
 import { FieldValues } from '../types/forms'
+import { FormEvent, ChangeEvent } from 'react'
 
-export interface TargetFields {
+export interface CustomEventFields {
   name: string
   value: string
 }
 
-export interface TargetForm {
-  preventDefault: () => void
-  persist: () => void
-  target: Partial<TargetFields>
+export type CustomFields = CustomEventFields
+
+export interface CustomEvent {
+  preventDefault?: (event: FormEvent<HTMLFormElement>) => void
+  persist?: (event: ChangeEvent<HTMLInputElement>) => void
+  target?: CustomEventFields
 }
-
-export type TargetFieldsOrObject = TargetFields | {}
-
-export type CustomEvent = Partial<TargetForm>
 
 /**
  * Testing utility function to simulate a change event
@@ -22,11 +21,11 @@ export type CustomEvent = Partial<TargetForm>
  * @returns a custom event object that can be used to simulate an input event
  */
 
-export function eventFn(fields: TargetFieldsOrObject = {}): CustomEvent {
+export function eventFn({ name, value }: CustomEventFields): CustomEvent {
   return {
     preventDefault: jest.fn(),
     persist: jest.fn(),
-    target: { ...fields }
+    target: { name, value }
   }
 }
 

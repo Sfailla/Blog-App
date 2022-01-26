@@ -7,18 +7,10 @@ import { SubmitButton } from '../../components/buttons'
 import { InputFieldError } from '../../components'
 import { Container, ButtonContainer, ContentWrapper, FormContainer } from './style'
 
-const initialValues = {
-  username: '',
-  email: '',
-  password: ''
-}
-
 export default function Signup(): ReactElement {
-  const { values, formErrors, handleChange, handleSubmit } = useFormValidation(
-    initialValues,
-    validateSignup,
-    submit
-  )
+  const initialValues = { username: '', email: '', password: '' }
+  const { values, formErrors, handleResetFormErrors, handleChange, handleSubmit } =
+    useFormValidation(initialValues, validateSignup, submit)
 
   const { register } = useAuth()
 
@@ -38,6 +30,7 @@ export default function Signup(): ReactElement {
                 type="text"
                 name="username"
                 onChange={handleChange}
+                onKeyDown={handleResetFormErrors}
                 value={values.username}
                 placeholder="enter username..."
               />
@@ -49,6 +42,7 @@ export default function Signup(): ReactElement {
                 type="email"
                 name="email"
                 onChange={handleChange}
+                onKeyDown={handleResetFormErrors}
                 value={values.email}
                 placeholder="enter email..."
               />
@@ -60,6 +54,7 @@ export default function Signup(): ReactElement {
                 type="password"
                 name="password"
                 onChange={handleChange}
+                onKeyDown={handleResetFormErrors}
                 value={values.password}
                 placeholder="enter password..."
               />

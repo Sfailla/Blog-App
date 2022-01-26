@@ -1,4 +1,4 @@
-import React, { FormEvent, ChangeEvent, useEffect } from 'react'
+import { FormEvent, ChangeEvent, KeyboardEvent, useState, useEffect } from 'react'
 import { FieldValues, Validate, ValidationErrors, InputOrTextarea } from '../../types/forms'
 
 interface UseFormValidation {
@@ -6,7 +6,10 @@ interface UseFormValidation {
   formErrors: ValidationErrors
   isSubmitting: boolean
   handleChange: (event: ChangeEvent<InputOrTextarea>) => void
-  handleSubmit: (event: FormEvent<HTMLFormElement>) => void
+  handleSubmit: (event: FormEvent<HTMLFormElement> & ChangeEvent<HTMLInputElement>) => void
+  handleResetFormErrors: (
+    event: KeyboardEvent<HTMLInputElement> & ChangeEvent<HTMLInputElement>
+  ) => void
 }
 
 export default function useFormValidation(
@@ -14,9 +17,9 @@ export default function useFormValidation(
   validate: Validate,
   authenticate: () => void
 ): UseFormValidation {
-  const [values, setValues] = React.useState<FieldValues>(initialValues)
-  const [errors, setErrors] = React.useState<ValidationErrors>({})
-  const [isSubmitting, setIsSubmitting] = React.useState<boolean>(false)
+  const [values, setValues] = useState<FieldValues>(initialValues)
+  const [errors, setErrors] = useState<ValidationErrors>({})
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
 
   useEffect(() => {
     if (isSubmitting) {
@@ -43,11 +46,25 @@ export default function useFormValidation(
     setIsSubmitting(true)
   }
 
+  function handleResetFormErrors(
+    event: KeyboardEvent<HTMLInputElement> & ChangeEvent<HTMLInputElement>
+  ): void {
+    setErrors(
+      Object.keys(errors).reduce((acc, key) => {
+        if (key !== event.target.name) {
+          acc[key] = errors[key]
+        }
+        return acc
+      }, {} as ValidationErrors)
+    )
+  }
+
   return {
     values,
     formErrors: errors,
     isSubmitting,
     handleChange,
-    handleSubmit
+    handleSubmit,
+    handleResetFormErrors
   }
 }
