@@ -6,12 +6,8 @@ export interface CustomEventFields {
   value: string
 }
 
-export type CustomFields = CustomEventFields
-
 export interface CustomEvent {
-  preventDefault?: (event: FormEvent<HTMLFormElement>) => void
-  persist?: (event: ChangeEvent<HTMLInputElement>) => void
-  target?: CustomEventFields
+  target: CustomEventFields
 }
 
 /**
@@ -21,10 +17,8 @@ export interface CustomEvent {
  * @returns a custom event object that can be used to simulate an input event
  */
 
-export function eventFn({ name, value }: CustomEventFields): CustomEvent {
+export function changeEvent({ name, value }: CustomEventFields): CustomEvent {
   return {
-    preventDefault: jest.fn(),
-    persist: jest.fn(),
     target: { name, value }
   }
 }
