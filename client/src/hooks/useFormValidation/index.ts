@@ -2,15 +2,6 @@ import { FormEvent, ChangeEvent, KeyboardEvent, useState, useEffect } from 'reac
 // import { CustomEventFields } from '../../test/helpers'
 import { FieldValues, Validate, ValidationErrors, InputOrTextarea } from '../../types/forms'
 
-declare global {
-  interface FormEvent {
-    target: {
-      name: string
-      value: string
-    }
-  }
-}
-
 interface UseFormValidation {
   values: FieldValues
   formErrors: ValidationErrors

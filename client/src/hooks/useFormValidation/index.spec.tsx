@@ -1,8 +1,10 @@
-import { FormEvent, ChangeEvent } from 'react'
+import { FormEvent, ChangeEvent, KeyboardEvent } from 'react'
+import { ValidationErrors, FieldValues, InputOrTextarea } from '../../types/forms'
 import { changeEvent, buildRegisterForm, CustomEventFields } from '../../test/helpers'
 import { renderHook, act } from '@testing-library/react-hooks'
 import useFormValidation from '.'
-import { ValidationErrors, FieldValues, InputOrTextarea } from '../../types/forms'
+
+type KeyboardAndChangeEvent = KeyboardEvent<HTMLInputElement> & ChangeEvent<HTMLInputElement>
 
 function testValidation(values: FieldValues): ValidationErrors {
   let error: ValidationErrors = {}
@@ -80,16 +82,46 @@ describe('useFormValidation tests', () => {
     waitFor(() => expect(result.current.isSubmitting).toBeTruthy())
   })
 
-  test('handleResetFormErrors should work correctly', () => {
-    const { result } = renderHook(() =>
+  test('handleResetFormErrors should correctly reset formError object', () => {
+    const { result, waitFor } = renderHook(() =>
       useFormValidation({ email: '', password: '' }, testValidation, submitFn)
     )
 
     act(() => result.current.handleSubmit(submitFn as unknown as FormEvent<HTMLFormElement>))
 
+    expect(submitFn).not.toHaveBeenCalled()
     expect(result.current.formErrors).toEqual({
       email: 'email field required',
       password: 'password field required'
     })
+
+    act(() =>
+      result.current.handleResetFormErrors(
+        changeEvent({
+          name: 'email',
+          value: 'test@test.com'
+        }) as unknown as KeyboardAndChangeEvent
+      )
+    )
+
+    expect(result.current.formErrors).toEqual({
+      password: 'password field required'
+    })
+
+    act(() =>
+      result.current.handleResetFormErrors(
+        changeEvent({
+          name: 'password',
+          value: '1234'
+        }) as unknown as KeyboardAndChangeEvent
+      )
+    )
+
+    expect(result.current.formErrors).toEqual({})
+
+    act(() => result.current.handleSubmit(submitFn as unknown as FormEvent<HTMLFormElement>))
+
+    waitFor(() => expect(result.current.isSubmitting).toBeTruthy())
+    waitFor(() => expect(submitFn).toHaveBeenCalledTimes(1))
   })
 })
