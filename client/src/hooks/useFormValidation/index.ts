@@ -1,12 +1,22 @@
 import { FormEvent, ChangeEvent, KeyboardEvent, useState, useEffect } from 'react'
+// import { CustomEventFields } from '../../test/helpers'
 import { FieldValues, Validate, ValidationErrors, InputOrTextarea } from '../../types/forms'
+
+declare global {
+  interface FormEvent {
+    target: {
+      name: string
+      value: string
+    }
+  }
+}
 
 interface UseFormValidation {
   values: FieldValues
   formErrors: ValidationErrors
   isSubmitting: boolean
   handleChange: (event: ChangeEvent<InputOrTextarea>) => void
-  handleSubmit: (event: FormEvent<HTMLFormElement> & ChangeEvent<HTMLInputElement>) => void
+  handleSubmit: (event: FormEvent<HTMLFormElement>) => void
   handleResetFormErrors: (
     event: KeyboardEvent<HTMLInputElement> & ChangeEvent<HTMLInputElement>
   ) => void
@@ -32,7 +42,6 @@ export default function useFormValidation(
   }, [values, errors, isSubmitting, authenticate])
 
   function handleChange(event: ChangeEvent<InputOrTextarea>): void {
-    event.persist()
     setValues(prevState => ({
       ...prevState,
       [event.target.name]: event.target.value
