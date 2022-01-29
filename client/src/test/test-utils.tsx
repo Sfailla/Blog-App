@@ -6,8 +6,8 @@ import { AppProviders } from '../context'
 type CustomRenderOptions = Omit<RenderOptions, 'wrapper'>
 
 function customRender(ui: ReactElement, options: CustomRenderOptions = {}): RenderResult {
-  const Wrapper: FunctionComponent = ({ children }) => <AppProviders>{children}</AppProviders>
-  return render(ui, { wrapper: Wrapper, ...options })
+  const wrapper: FunctionComponent = ({ children }) => <AppProviders>{children}</AppProviders>
+  return render(ui, { wrapper, ...options })
 }
 
 export * from '@testing-library/react'
