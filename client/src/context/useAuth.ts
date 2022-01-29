@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { AxiosRequestConfig, AxiosResponse } from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { axiosInstance } from '../axios'
-import { User } from '../types/shared'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { TryCatchError, User } from '../types/shared'
 import { FieldValues } from '../types/forms'
 import { endpoints } from '../axios/constants'
+import { useLocation } from 'react-router-dom'
 
 export interface UseAuth {
   user: User
@@ -20,72 +22,110 @@ export function useAuth(): UseAuth {
   const [loading, setLoading] = useState<boolean>(false)
   const isAuthenticated = localStorage.getItem('auth-flag')
   const [error, setError] = useState<string>('')
+  const initialRender = useRef<boolean>(true)
 
   const navigate = useNavigate()
+  const location = useLocation()
 
   async function register(fields: FieldValues): Promise<void> {
     setLoading(true)
-    const request: AxiosRequestConfig = {
-      url: `${endpoints.auth}/register`,
-      data: fields,
-      method: 'POST'
-    }
+    try {
+      const request: AxiosRequestConfig = {
+        url: `${endpoints.auth}/register`,
+        data: fields,
+        method: 'POST'
+      }
 
-    const response: AxiosResponse = await axiosInstance(request)
-    setUser(response.data.user)
-    localStorage.setItem('auth-flag', response.data.user.id)
-    navigate('/')
-    setLoading(false)
+      const response: AxiosResponse = await axiosInstance(request)
+      if (response.data?.error) {
+        setError(response.data.error.message)
+      } else {
+        setUser(response.data.user)
+        localStorage.setItem('auth-flag', response.data.user.id)
+        navigate('/')
+      }
+    } catch (error: TryCatchError) {
+      setError(error.response.data.error)
+    } finally {
+      setLoading(false)
+    }
   }
 
   async function login(fields: FieldValues): Promise<void> {
     setLoading(true)
-    const request: AxiosRequestConfig = {
-      url: `${endpoints.auth}/login`,
-      data: fields,
-      method: 'POST'
-    }
-    const response: AxiosResponse = await axiosInstance(request)
-    if (response.data?.error) {
-      setError(response.data.error.message)
-      setLoading(false)
-    } else {
-      setUser(response.data.user)
-      localStorage.setItem('auth-flag', response.data.user.id)
-      navigate('/')
+    try {
+      const request: AxiosRequestConfig = {
+        url: `${endpoints.auth}/login`,
+        data: fields,
+        method: 'POST'
+      }
+      const response: AxiosResponse = await axiosInstance(request)
+      if (response.data.error) {
+        setError(response.data.error.message)
+      } else {
+        setUser(response.data.user)
+        localStorage.setItem('auth-flag', response.data.user.id)
+        navigate('/')
+      }
+    } catch (error: TryCatchError) {
+      setError(error.message)
+    } finally {
       setLoading(false)
     }
   }
 
   async function logout(): Promise<void> {
     setLoading(true)
-    const request: AxiosRequestConfig = {
-      url: `${endpoints.auth}/logout`,
-      method: 'GET'
-    }
+    try {
+      const request: AxiosRequestConfig = {
+        url: `${endpoints.auth}/logout`,
+        method: 'GET'
+      }
 
-    await axiosInstance(request)
-    setUser(null)
-    localStorage.removeItem('auth-flag')
-    setLoading(false)
-    window.location.reload()
+      const response: AxiosResponse = await axiosInstance(request)
+      if (response.data?.error) {
+        setError(response.data.error.message)
+      } else {
+        setUser(null)
+        localStorage.removeItem('auth-flag')
+        setLoading(false)
+      }
+    } catch (error: TryCatchError) {
+      setError(error.message)
+    } finally {
+      setLoading(false)
+    }
   }
 
   useEffect(() => {
     async function checkUserSession() {
       setLoading(true)
-      const request: AxiosRequestConfig = {
-        url: `${endpoints.auth}/refresh-tokens`,
-        method: 'GET'
+      try {
+        const request: AxiosRequestConfig = {
+          url: `${endpoints.auth}/refresh-tokens`,
+          method: 'GET'
+        }
+        const response: AxiosResponse = await axiosInstance(request)
+        setUser(response.data.user)
+        setLoading(false)
+      } catch (error: TryCatchError) {
+        setError(error.message)
+      } finally {
+        setLoading(false)
       }
-      const response: AxiosResponse = await axiosInstance(request)
-      setUser(response.data.user)
-      setLoading(false)
     }
     if (isAuthenticated) {
       checkUserSession()
     }
   }, [isAuthenticated])
+
+  // useEffect(() => {
+  //   if (initialRender.current) {
+  //     initialRender.current = false
+  //   } else {
+  //     setError('')
+  //   }
+  // }, [location])
 
   return {
     user,

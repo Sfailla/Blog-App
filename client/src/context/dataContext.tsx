@@ -38,6 +38,7 @@ export function DataProvider(props: Props): ReactElement {
   const contextValues: DataContextValues = useMemo(() => {
     return {
       loading,
+
       articles,
       userArticles,
       createArticle,
@@ -50,6 +51,7 @@ export function DataProvider(props: Props): ReactElement {
     }
   }, [
     loading,
+
     articles,
     userArticles,
     createArticle,

@@ -1,20 +1,25 @@
 import { useEffect, useCallback, useState } from 'react'
 import { AxiosRequestConfig, AxiosResponse } from 'axios'
-import { Article } from '../../types/shared'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Article, ArticleError, ArticleOrError, TryCatchError } from '../../types/shared'
 import { axiosInstance } from '../../axios'
 import { endpoints } from '../../axios/constants'
 import { useAuthContext } from '../../context/authContext'
 import { CreateArticleFields } from '../../types/forms'
 
-export default function useArticles(): {
+interface UseArticles {
   loading: boolean
   articles: Article[]
   userArticles: Article[]
   createArticle: (articleFields: CreateArticleFields) => void
-} {
+  error: string
+}
+
+export default function useArticles(): UseArticles {
+  const [loading, setLoading] = useState<boolean>(false)
   const [articles, setArticles] = useState<Article[]>([])
   const [userArticles, setUserArticles] = useState<Article[]>([])
-  const [loading, setLoading] = useState<boolean>(false)
+  const [error, setError] = useState<string>('')
   const { user } = useAuthContext()
 
   const fetchArticles: () => void = useCallback(async () => {
@@ -24,12 +29,14 @@ export default function useArticles(): {
         url: `${endpoints.articles}`,
         method: 'GET'
       }
-      const response: AxiosResponse<{ articles: Article[] }> = await axiosInstance(request)
-      setArticles(response.data.articles)
-      setLoading(false)
-    } catch (error) {
-      console.error(error)
-      throw new Error('error fetching articles')
+      const response: AxiosResponse<ArticleOrError> = await axiosInstance(request)
+      if (response.data?.error) {
+        setError(response.data.error.message)
+      } else {
+        setArticles(response.data.articles)
+      }
+    } catch (error: TryCatchError) {
+      setError(error.message)
     } finally {
       setLoading(false)
     }
@@ -37,16 +44,25 @@ export default function useArticles(): {
 
   const fetchUserArticles: () => void = useCallback(async () => {
     setLoading(true)
-    const request: AxiosRequestConfig = {
-      url: `${endpoints.articles}/user-articles`,
-      method: 'GET'
+    try {
+      const request: AxiosRequestConfig = {
+        url: `${endpoints.articles}/user-articles`,
+        method: 'GET'
+      }
+      const response: AxiosResponse<ArticleOrError> = await axiosInstance(request)
+      if (response.data?.error) {
+        setError(response.data.error.message)
+      } else {
+        setUserArticles(response.data.articles)
+      }
+    } catch (error: TryCatchError) {
+      setError(error.message)
+    } finally {
+      setLoading(false)
     }
-    const response: AxiosResponse<{ articles: Article[] }> = await axiosInstance(request)
-    setUserArticles(response.data.articles)
-    setLoading(false)
   }, [])
 
-  const createArticle: (articleFields: CreateArticleFields) => void = useCallback(
+  const createArticle: (articleFields: CreateArticleFields) => Promise<void> = useCallback(
     async (articleFields: CreateArticleFields) => {
       try {
         setLoading(true)
@@ -55,16 +71,14 @@ export default function useArticles(): {
           method: 'POST',
           data: articleFields
         }
-        const response: AxiosResponse<{ article: Article }> = await axiosInstance(request)
-        console.log({ response })
+        const response: AxiosResponse<ArticleOrError> = await axiosInstance(request)
 
         if (response.status === 200) {
           setArticles([response.data.article, ...articles])
           setUserArticles([response.data.article, ...userArticles])
         }
-      } catch (error) {
-        console.error(error)
-        throw new Error('error creating article')
+      } catch (error: TryCatchError) {
+        setError(error.message)
       } finally {
         setLoading(false)
       }
@@ -73,25 +87,20 @@ export default function useArticles(): {
   )
 
   useEffect(() => {
-    if (user) {
-      fetchUserArticles()
-    }
+    if (user) fetchUserArticles()
   }, [fetchUserArticles, user])
 
   useEffect(() => {
     let active = true
-
-    if (active) {
-      fetchArticles()
-    }
+    if (active) fetchArticles()
     return () => {
       active = false
-      setArticles([])
     }
-  }, [fetchArticles, fetchUserArticles, user])
+  }, [fetchArticles])
 
   return {
     loading,
+    error,
     articles,
     userArticles,
     createArticle

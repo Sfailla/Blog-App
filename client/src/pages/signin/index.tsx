@@ -13,11 +13,8 @@ const initialValues = {
 }
 
 export default function SignIn(): ReactElement {
-  const { values, formErrors, handleChange, handleSubmit } = useFormValidation(
-    initialValues,
-    validateSignin,
-    submit
-  )
+  const { values, formErrors, handleChange, handleSubmit, handleResetFormErrors } =
+    useFormValidation(initialValues, validateSignin, submit)
 
   const { login, error: authError } = useAuthContext()
 
@@ -38,6 +35,7 @@ export default function SignIn(): ReactElement {
                 name="email"
                 value={values.email}
                 onChange={handleChange}
+                onKeyDown={handleResetFormErrors}
                 placeholder="enter email..."
               />
               {formErrors.email && <InputFieldError errorMessage={formErrors.email} />}
@@ -49,6 +47,7 @@ export default function SignIn(): ReactElement {
                 name="password"
                 value={values.password}
                 onChange={handleChange}
+                onKeyDown={handleResetFormErrors}
                 placeholder="enter password..."
               />
               {formErrors.password && <InputFieldError errorMessage={formErrors.password} />}

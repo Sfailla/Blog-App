@@ -22,3 +22,9 @@ export const ButtonContainer = styled.div`
   height: auto;
   margin-top: 3rem;
 `
+
+export const ErrorContainer = styled.div`
+  width: 100%;
+  height: auto;
+  margin-top: 2rem;
+`

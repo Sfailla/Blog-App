@@ -25,7 +25,27 @@ export interface Article {
   favoritedCount?: number
 }
 
+export interface ServerError {
+  status: number
+  name: string
+  message: string
+  stack: string
+}
+
+export type ResponseError = Pick<ServerError, 'message'>
+
+export type ArticleError = string
+
 export type ArticleOrUndefined = Article[] | undefined
+export interface ArticleOrError {
+  article: Article
+  articles: Article[]
+  error: ResponseError
+}
+
+export type TagsOrError = { tags: Tag[] } | { error: ResponseError }
+
+export type TryCatchError = any & Error
 
 export type User = UserFields | null
 

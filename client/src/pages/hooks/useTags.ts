@@ -1,6 +1,7 @@
 import { ChangeEvent, useState, useCallback, useEffect } from 'react'
-import { AxiosRequestConfig, AxiosResponse } from 'axios'
-import { Tag } from '../../types/shared'
+import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { TagsOrError, Tag, TryCatchError, ResponseError } from '../../types/shared'
 import { axiosInstance } from '../../axios'
 import { endpoints } from '../../axios/constants'
 
@@ -8,6 +9,7 @@ interface UseTags {
   tagList: string[]
   tagName: string
   tags: Tag[]
+  error: string
   loading: boolean
   addTag: (tagName: string) => void
   removeTag: (index: number) => void
@@ -19,6 +21,7 @@ export default function useTags(): UseTags {
   const [tagName, setTagName] = useState<Tag>('')
   const [tags, setTags] = useState<Tag[]>([])
   const [loading, setLoading] = useState<boolean>(false)
+  const [error, setError] = useState<string>('')
 
   const handleTagChange = (event: ChangeEvent<HTMLInputElement>) => {
     setTagName(event.target.value)
@@ -26,13 +29,24 @@ export default function useTags(): UseTags {
 
   const fetchTags: () => void = useCallback(async () => {
     setLoading(true)
-    const request: AxiosRequestConfig = {
-      url: `${endpoints.tags}`,
-      method: 'GET'
+    try {
+      const request: AxiosRequestConfig = {
+        url: `${endpoints.tags}`,
+        method: 'GET'
+      }
+      const response: AxiosResponse<{ tags: Tag[] }> = await axiosInstance(request)
+      console.log({ response })
+      // if (response.data?.error) {
+      //   setError(response.data.error.message)
+      // } else {
+      setTags(response.data.tags)
+      // }
+    } catch (error: TryCatchError) {
+      console.log(error)
+      setError(error.message)
+    } finally {
+      setLoading(false)
     }
-    const response: AxiosResponse<{ tags: Tag[] }> = await axiosInstance(request)
-    setTags(response.data.tags)
-    setLoading(false)
   }, [])
 
   const addTag = (tagName: string): void => {
@@ -50,6 +64,7 @@ export default function useTags(): UseTags {
     tagName,
     tags,
     loading,
+    error,
     addTag,
     removeTag,
     handleTagChange

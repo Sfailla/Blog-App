@@ -1,18 +1,18 @@
 import { ReactElement } from 'react'
 import { LayoutWrapper, FormGroup, Label, Input, AppTitle } from '../../styles/shared'
-import { useAuth } from '../../context/useAuth'
 import { useFormValidation } from '../../hooks'
 import { validateSignup } from './validation'
 import { SubmitButton } from '../../components/buttons'
-import { InputFieldError } from '../../components'
-import { Container, ButtonContainer, ContentWrapper, FormContainer } from './style'
+import { ToastNotification, InputFieldError } from '../../components'
+import { Container, ButtonContainer, ErrorContainer, ContentWrapper, FormContainer } from './style'
+import { useAuthContext } from '../../context/authContext'
 
 export default function Signup(): ReactElement {
   const initialValues = { username: '', email: '', password: '' }
-  const { values, formErrors, handleResetFormErrors, handleChange, handleSubmit } =
+  const { values, formErrors, handleChange, handleSubmit, handleResetFormErrors } =
     useFormValidation(initialValues, validateSignup, submit)
 
-  const { register } = useAuth()
+  const { register, error } = useAuthContext()
 
   function submit(): void {
     register(values)
@@ -64,6 +64,9 @@ export default function Signup(): ReactElement {
               <SubmitButton type="submit">Sign Up</SubmitButton>
             </ButtonContainer>
           </FormContainer>
+          <ErrorContainer>
+            {error && <ToastNotification variant="error" message={error} />}
+          </ErrorContainer>
         </ContentWrapper>
       </LayoutWrapper>
     </Container>
