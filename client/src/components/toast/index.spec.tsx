@@ -18,13 +18,10 @@ describe('toast notification unit tests', () => {
       <ToastNotification variant="success" message={message} />
     )
     expect(container.firstChild).toHaveStyle('border-color: #47d764')
-
     rerender(<ToastNotification variant="error" message={message} />)
     expect(container.firstChild).toHaveStyle('border-color: #dc3545')
-
     rerender(<ToastNotification variant="info" message={message} />)
     expect(container.firstChild).toHaveStyle('border-color: #2f86eb')
-
     rerender(<ToastNotification variant="warning" message={message} />)
     expect(container.firstChild).toHaveStyle('border-color: #ffc021')
   })

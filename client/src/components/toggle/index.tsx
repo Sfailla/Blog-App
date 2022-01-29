@@ -1,15 +1,21 @@
-import { ReactElement } from 'react'
+import { ReactElement, useCallback } from 'react'
 import { Container, Switch, Slider, Label } from './style'
 import { SunIcon, MoonIcon } from '../../assets/svg'
-import { useToggle } from './hooks/useToggle'
 import { RestProps } from '../../types/shared'
+import { useThemeContext } from '../../context/themeContext'
+
 interface ToggleProps {
   on: boolean
   toggle: () => void
 }
 
 export default function Toggle(): ReactElement {
-  const { mode, toggle } = useToggle()
+  const { mode, setMode } = useThemeContext()
+
+  const toggle: () => void = useCallback(() => {
+    setMode(mode === 'light' ? 'dark' : 'light')
+  }, [mode, setMode])
+
   const on: boolean = mode === 'dark'
 
   return (
