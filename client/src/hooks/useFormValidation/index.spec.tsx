@@ -83,7 +83,7 @@ describe('useFormValidation tests', () => {
   })
 
   test('handleResetFormErrors should correctly reset formError object', () => {
-    const { result, waitFor } = renderHook(() =>
+    const { result } = renderHook(() =>
       useFormValidation({ email: '', password: '' }, testValidation, submitFn)
     )
 
@@ -118,10 +118,5 @@ describe('useFormValidation tests', () => {
     )
 
     expect(result.current.formErrors).toEqual({})
-
-    act(() => result.current.handleSubmit(submitFn as unknown as FormEvent<HTMLFormElement>))
-
-    waitFor(() => expect(result.current.isSubmitting).toBeTruthy())
-    waitFor(() => expect(submitFn).toHaveBeenCalledTimes(1))
   })
 })

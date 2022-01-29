@@ -1,5 +1,4 @@
 import { FormEvent, ChangeEvent, KeyboardEvent, useState, useEffect } from 'react'
-// import { CustomEventFields } from '../../test/helpers'
 import { FieldValues, Validate, ValidationErrors, InputOrTextarea } from '../../types/forms'
 
 interface UseFormValidation {
