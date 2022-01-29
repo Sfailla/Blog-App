@@ -18,9 +18,11 @@ const config: AxiosRequestConfig = {
 export const axiosInstance = axios.create(config)
 
 axiosInstance.interceptors.response.use(
-  (response: AxiosResponse<any>) => response,
+  (response: AxiosResponse<unknown, any>) => {
+    return response
+  },
   async error => {
-    if (error.response.status === 403) {
+    if (error.response?.status === 403) {
       const errorResponse = await axiosInstance.get(`${endpoints.auth}/refresh-tokens`)
       const token: string = errorResponse.data.token
       axiosInstance.defaults.headers.common['x-auth-token'] = token
