@@ -43,7 +43,10 @@ export interface ArticleOrError {
   error: ResponseError
 }
 
-export type TagsOrError = { tags: Tag[] } | { error: ResponseError }
+export interface TagsOrError {
+  tags: Tag[]
+  error: ResponseError
+}
 
 export type TryCatchError = any & Error
 
