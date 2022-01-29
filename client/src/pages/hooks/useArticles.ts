@@ -1,7 +1,7 @@
 import { useEffect, useCallback, useState } from 'react'
 import { AxiosRequestConfig, AxiosResponse } from 'axios'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Article, ArticleError, ArticleOrError, TryCatchError } from '../../types/shared'
+import { Tag, Article, TryCatchError, Await } from '../../types/shared'
 import { axiosInstance } from '../../axios'
 import { endpoints } from '../../axios/constants'
 import { useAuthContext } from '../../context/authContext'
@@ -9,6 +9,7 @@ import { CreateArticleFields } from '../../types/forms'
 
 interface UseArticles {
   loading: boolean
+  tags: Tag[]
   articles: Article[]
   userArticles: Article[]
   createArticle: (articleFields: CreateArticleFields) => void
@@ -17,19 +18,41 @@ interface UseArticles {
 
 export default function useArticles(): UseArticles {
   const [loading, setLoading] = useState<boolean>(false)
+  const [tags, setTags] = useState<Tag[]>([])
   const [articles, setArticles] = useState<Article[]>([])
   const [userArticles, setUserArticles] = useState<Article[]>([])
   const [error, setError] = useState<string>('')
   const { user } = useAuthContext()
 
-  const fetchArticles: () => void = useCallback(async () => {
+  const fetchTags: () => Await<void> = useCallback(async () => {
+    setLoading(true)
+    try {
+      const request: AxiosRequestConfig = {
+        url: `${endpoints.tags}`,
+        method: 'GET'
+      }
+      const response: AxiosResponse = await axiosInstance(request)
+      if (response.data?.error) {
+        setError(response.data.error.message)
+      } else {
+        setTags(response.data.tags)
+      }
+    } catch (error: TryCatchError) {
+      console.log(error)
+      setError(error.message)
+    } finally {
+      setLoading(false)
+    }
+  }, [])
+
+  const fetchArticles: () => Await<void> = useCallback(async () => {
     setLoading(true)
     try {
       const request: AxiosRequestConfig = {
         url: `${endpoints.articles}`,
         method: 'GET'
       }
-      const response: AxiosResponse<ArticleOrError> = await axiosInstance(request)
+      const response: AxiosResponse = await axiosInstance(request)
       if (response.data?.error) {
         setError(response.data.error.message)
       } else {
@@ -42,14 +65,14 @@ export default function useArticles(): UseArticles {
     }
   }, [])
 
-  const fetchUserArticles: () => void = useCallback(async () => {
+  const fetchUserArticles: () => Await<void> = useCallback(async () => {
     setLoading(true)
     try {
       const request: AxiosRequestConfig = {
         url: `${endpoints.articles}/user-articles`,
         method: 'GET'
       }
-      const response: AxiosResponse<ArticleOrError> = await axiosInstance(request)
+      const response: AxiosResponse = await axiosInstance(request)
       if (response.data?.error) {
         setError(response.data.error.message)
       } else {
@@ -62,7 +85,7 @@ export default function useArticles(): UseArticles {
     }
   }, [])
 
-  const createArticle: (articleFields: CreateArticleFields) => Promise<void> = useCallback(
+  const createArticle: (articleFields: CreateArticleFields) => Await<void> = useCallback(
     async (articleFields: CreateArticleFields) => {
       try {
         setLoading(true)
@@ -71,7 +94,7 @@ export default function useArticles(): UseArticles {
           method: 'POST',
           data: articleFields
         }
-        const response: AxiosResponse<ArticleOrError> = await axiosInstance(request)
+        const response: AxiosResponse = await axiosInstance(request)
 
         if (response.status === 200) {
           setArticles([response.data.article, ...articles])
@@ -85,6 +108,8 @@ export default function useArticles(): UseArticles {
     },
     [articles, userArticles]
   )
+
+  useEffect(() => fetchTags(), [fetchTags])
 
   useEffect(() => {
     if (user) fetchUserArticles()
@@ -101,6 +126,7 @@ export default function useArticles(): UseArticles {
   return {
     loading,
     error,
+    tags,
     articles,
     userArticles,
     createArticle

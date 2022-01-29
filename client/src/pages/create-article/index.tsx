@@ -17,9 +17,13 @@ import {
   ButtonContainer
 } from './style'
 import { CreateArticleFields } from '../../types/forms'
-import { useDataContext } from '../../context/dataContext'
+import { useTags } from '../hooks'
 
-export default function CreateArticlePage(): ReactElement {
+interface Props {
+  createArticle: (articleFields: CreateArticleFields) => void
+}
+
+export default function CreateArticlePage({ createArticle }: Props): ReactElement {
   const initialValues = { title: '', description: '', body: '' }
   const { values, handleChange, handleSubmit } = useFormValidation(
     initialValues,
@@ -27,7 +31,7 @@ export default function CreateArticlePage(): ReactElement {
     submitForm
   )
 
-  const { tagList, tagName, handleTagChange, addTag, removeTag, createArticle } = useDataContext()
+  const { tagList, tagName, handleTagChange, addTag, removeTag } = useTags()
   const navigate = useNavigate()
 
   function submitForm(): void {

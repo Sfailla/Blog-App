@@ -2,26 +2,42 @@ import { ReactElement } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { ArticlesPage, CreateArticlePage } from '../../pages'
 import { Container } from '../style'
-import { useDataContext } from '../../context/dataContext'
+import { Article, Tag } from '../../types/shared'
+import { CreateArticleFields } from '../../types/forms'
 
-export default function AuthenticatedApp(): ReactElement {
+interface Props {
+  articles: Article[]
+  userArticles: Article[]
+  createArticle: (articleFields: CreateArticleFields) => void
+  tags: Tag[]
+}
+
+export default function AuthenticatedApp({
+  articles,
+  userArticles,
+  createArticle,
+  tags
+}: Props): ReactElement {
   return (
     <Container>
-      <AppRoutes />
+      <AppRoutes
+        articles={articles}
+        userArticles={userArticles}
+        createArticle={createArticle}
+        tags={tags}
+      />
     </Container>
   )
 }
 
-function AppRoutes() {
-  const { articles, userArticles, tags } = useDataContext()
-
+function AppRoutes({ articles, userArticles, createArticle, tags }: Props): ReactElement {
   return (
     <Routes>
       <Route
         path="/"
         element={<ArticlesPage articles={articles} userArticles={userArticles} tags={tags} />}
       />
-      <Route path="/create-article" element={<CreateArticlePage />} />
+      <Route path="/create-article" element={<CreateArticlePage createArticle={createArticle} />} />
     </Routes>
   )
 }

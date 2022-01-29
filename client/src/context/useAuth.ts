@@ -98,7 +98,7 @@ export function useAuth(): UseAuth {
   }
 
   useEffect(() => {
-    async function checkUserSession() {
+    async function checkUserSession(): Promise<void> {
       setLoading(true)
       try {
         const request: AxiosRequestConfig = {
@@ -119,13 +119,13 @@ export function useAuth(): UseAuth {
     }
   }, [isAuthenticated])
 
-  // useEffect(() => {
-  //   if (initialRender.current) {
-  //     initialRender.current = false
-  //   } else {
-  //     setError('')
-  //   }
-  // }, [location])
+  useEffect(() => {
+    if (initialRender.current) {
+      initialRender.current = false
+    } else {
+      setError('')
+    }
+  }, [location])
 
   return {
     user,
