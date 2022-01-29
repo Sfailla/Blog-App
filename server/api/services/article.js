@@ -6,7 +6,6 @@ const {
   makeArticleObj,
   formatTags,
   formatFavorites,
-  formatSlug,
   makeCommentObj
 } = require('../helpers/article')
 
@@ -19,9 +18,7 @@ module.exports = class ArticleDatabaseService {
   }
 
   // article error method to keep class DRY
-  articleError = errMsg => {
-    return { err: new ValidationError(400, errMsg) }
-  }
+  articleError = errMsg => ({ err: new ValidationError(400, errMsg) })
 
   // create article
   createArticle = async (userId, articleFields) => {
@@ -36,11 +33,17 @@ module.exports = class ArticleDatabaseService {
       ...trimRequest(articleFields)
     })
 
+    const updatedArticle = await this.article.findOne(article._id).populate({
+      path: 'author',
+      model: 'Profile',
+      select: ['username', 'name', 'bio', 'image']
+    })
+
     if (!article) {
       return this.articleError('error creating article')
     }
     return {
-      article: await makeArticleObj(article),
+      article: await makeArticleObj(updatedArticle),
       message: 'successfully created article'
     }
   }
