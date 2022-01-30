@@ -1,0 +1,97 @@
+[
+  {
+    "id": "5f774c904107ca3658595af4",
+    "author": {
+      "id": "5f773f6aae743038043c55b0",
+      "name": null,
+      "bio": null,
+      "image": null,
+      "username": "steve"
+    },
+    "image": null,
+    "tags": ["ski", "learning", "fun"],
+    "favoriteCount": 1,
+    "title": "Learn to ski",
+    "description": "this is an article on learning to ski",
+    "body": "learning to ski can be difficult.  However, if you are passionate you can easily put in all the required work to get there.  It can be an incredibly rewarding truckeer as well, due to the high paying salaries of developers",
+    "createdAt": "1601653904125",
+    "updatedAt": "1601653904125",
+    "slug": "learn-to-ski-d6fb5250"
+  },
+  {
+    "id": "5f774cbf4107ca3658595af8",
+    "image": null,
+    "tags": ["surf", "learning"],
+    "favoriteCount": "0",
+    "author": {
+      "id": "5f773f6aae743038043c55b0",
+      "name": null,
+      "bio": null,
+      "image": null,
+      "username": "steve"
+    },
+    "title": "Learn to surf",
+    "description": "this is an article on learning to surf",
+    "body": "learning to surf can be difficult.  However, if you are passionate you can easily put in all the required work to get there.  It can be an incredibly rewarding truckeer as well, due to the high paying salaries of developers",
+    "createdAt": "1601653951860",
+    "updatedAt": "1601653951860",
+    "slug": "learn-to-surf-c13757d8"
+  },
+  {
+    "id": "61f571d607181c48887ea963",
+    "image": null,
+    "tags": ["react", "development"],
+    "favoriteCount": 0,
+    "author": {
+      "id": "61101fc59d600f304cf3808e",
+      "name": null,
+      "bio": null,
+      "image": null,
+      "username": "sfailla1983"
+    },
+    "title": "Build App With React and Typescript part 2",
+    "description": "this is an article on building an app using react and typescript",
+    "body": "learning to build apps with react and typescript can be difficult.  However, if you are passionate you can easily put in all the required work to get there.",
+    "createdAt": "1643475414576",
+    "updatedAt": "1643475414577",
+    "slug": "build-app-with-react-and-typescript-part-2-867931a2"
+  },
+  {
+    "id": "61f5865facaa9811603cf03c",
+    "image": null,
+    "tags": ["e sports", "ps4", "apex legends"],
+    "favoriteCount": 0,
+    "author": {
+      "id": "5f773f6aae743038043c55b0",
+      "name": null,
+      "bio": null,
+      "image": null,
+      "username": "steve"
+    },
+    "title": "Mastering Apex Legends",
+    "description": "This is an article about Learning how to play Apex Legends",
+    "body": "Apex Legends is a very difficult battle royal where the average player is very experienced and difficult to beat.  The only way you stand a chance in this game is to put in the time to gain experience enough to compete.",
+    "createdAt": "1643480671137",
+    "updatedAt": "1643480671137",
+    "slug": "mastering-apex-legends-70e6b1b6"
+  },
+  {
+    "id": "61103cfcebeeed1c4c8ff434",
+    "image": null,
+    "tags": ["refresh-tokens", "jwt", "security", "node-security"],
+    "favoriteCount": 1,
+    "author": {
+      "id": "5f773f6aae743038043c55b0",
+      "name": null,
+      "bio": null,
+      "image": null,
+      "username": "steve"
+    },
+    "title": "How to refresh token in nodeJS pt2",
+    "description": "this is an article on refreshing token in nodeJS",
+    "body": "learning to refresh token in nodeJS can be difficult.  However, if you are passionate you can easily put in all the required work to get there.",
+    "createdAt": "1628454140216",
+    "updatedAt": "1629556848872",
+    "slug": "how-to-refresh-token-in-nodejs-pt2-76ab7f6b"
+  }
+]
