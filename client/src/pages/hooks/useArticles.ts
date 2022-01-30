@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useState } from 'react'
+import { useEffect, useCallback, useState, useRef } from 'react'
 import { AxiosRequestConfig, AxiosResponse } from 'axios'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Tag, Article, TryCatchError, Await } from '../../types/shared'
@@ -12,7 +12,7 @@ interface UseArticles {
   tags: Tag[]
   articles: Article[]
   userArticles: Article[]
-  createArticle: (articleFields: CreateArticleFields) => void
+  createArticle: (articleFields: CreateArticleFields) => Await<void>
   error: string
 }
 
@@ -23,6 +23,7 @@ export default function useArticles(): UseArticles {
   const [userArticles, setUserArticles] = useState<Article[]>([])
   const [error, setError] = useState<string>('')
   const { user } = useAuthContext()
+  const mounted = useRef(true)
 
   const fetchTags: () => Await<void> = useCallback(async () => {
     setLoading(true)
@@ -97,8 +98,11 @@ export default function useArticles(): UseArticles {
         const response: AxiosResponse = await axiosInstance(request)
 
         if (response.status === 200) {
-          setArticles([response.data.article, ...articles])
-          setUserArticles([response.data.article, ...userArticles])
+          setArticles(prevState => [response.data.article, ...prevState])
+          setUserArticles(prevState => [response.data.article, ...prevState])
+          setTags(prevState =>
+            [...response.data.article.tags, ...prevState].sort((a, b) => a.localeCompare(b))
+          )
         }
       } catch (error: TryCatchError) {
         setError(error.message)
@@ -106,22 +110,16 @@ export default function useArticles(): UseArticles {
         setLoading(false)
       }
     },
-    [articles, userArticles]
+    []
   )
 
   useEffect(() => fetchTags(), [fetchTags])
+  useEffect(() => fetchArticles(), [fetchArticles])
 
   useEffect(() => {
-    if (user) fetchUserArticles()
+    if (!user) return
+    fetchUserArticles()
   }, [fetchUserArticles, user])
-
-  useEffect(() => {
-    let active = true
-    if (active) fetchArticles()
-    return () => {
-      active = false
-    }
-  }, [fetchArticles])
 
   return {
     loading,

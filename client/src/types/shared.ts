@@ -1,9 +1,9 @@
 ///// SHARED INTERFACES & TYPES /////
 
 export interface Author {
-  name?: null
-  bio?: null
-  image?: null
+  name: null
+  bio: null
+  image: null
   username: string
   id: string
 }
@@ -12,7 +12,7 @@ export type Tag = string
 
 export interface Article {
   id: string
-  author: Author
+  author: Partial<Author>
   slug: string
   title: string
   description: string
