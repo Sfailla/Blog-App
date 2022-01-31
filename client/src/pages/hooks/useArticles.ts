@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useState, useRef } from 'react'
+import { useEffect, useCallback, useState } from 'react'
 import { AxiosRequestConfig, AxiosResponse } from 'axios'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Tag, Article, TryCatchError, Await } from '../../types/shared'
@@ -23,7 +23,6 @@ export default function useArticles(): UseArticles {
   const [userArticles, setUserArticles] = useState<Article[]>([])
   const [error, setError] = useState<string>('')
   const { user } = useAuthContext()
-  const mounted = useRef(true)
 
   const fetchTags: () => Await<void> = useCallback(async () => {
     setLoading(true)
@@ -115,7 +114,6 @@ export default function useArticles(): UseArticles {
 
   useEffect(() => fetchTags(), [fetchTags])
   useEffect(() => fetchArticles(), [fetchArticles])
-
   useEffect(() => {
     if (!user) return
     fetchUserArticles()
