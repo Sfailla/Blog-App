@@ -55,7 +55,7 @@ export const ActiveTab = styled(Tab)`
 
 export const ContentContainer = styled.div``
 
-export const Content = styled.ul``
+export const Content = styled.div``
 
 export const Header = styled.div`
   width: 100%;
@@ -70,4 +70,6 @@ export const Actions = styled.div`
   padding-bottom: 5px;
 `
 
-export const EmptyStateMessage = styled.div``
+export const EmptyStateMessage = styled.div`
+  color: ${color.notifications.error};
+`

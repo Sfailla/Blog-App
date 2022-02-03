@@ -31,15 +31,37 @@ export default function TabbedArticleFeed({
     [activeKey]
   )
 
+  if (!titleList.length && !componentList.length) {
+    return (
+      <EmptyStateMessage>
+        Please provide a tab to render and a component to render
+      </EmptyStateMessage>
+    )
+  }
+
+  if (!titleList.length) {
+    return <EmptyStateMessage>Please provide a tab to render</EmptyStateMessage>
+  }
+
+  if (!componentList.length) {
+    return <EmptyStateMessage>Please provide a component to render</EmptyStateMessage>
+  }
+
+  if (titleList.length !== componentList.length) {
+    return <EmptyStateMessage>Please provide equal number of tabs and components</EmptyStateMessage>
+  }
+
   return (
     <Container>
       <Header>
         <TabContainer>
           {titleList.map((title, index) =>
             activeKey === index ? (
-              <ActiveTab key={index}>{title}</ActiveTab>
+              <ActiveTab aria-label="active-tab" key={index}>
+                {title}
+              </ActiveTab>
             ) : (
-              <Tab onClick={() => toggle(index)} key={index}>
+              <Tab aria-label="tab" onClick={() => toggle(index)} key={index}>
                 {title}
               </Tab>
             )
@@ -49,13 +71,9 @@ export default function TabbedArticleFeed({
         <Actions>{children}</Actions>
       </Header>
       <ContentContainer>
-        {componentList !== null ? (
-          componentList.map((component, index) => {
-            return activeKey === index ? <Content key={index}>{component}</Content> : null
-          })
-        ) : (
-          <EmptyStateMessage>Please provide a component to render</EmptyStateMessage>
-        )}
+        {componentList.map((component, index) => {
+          return activeKey === index ? <Content key={index}>{component}</Content> : null
+        })}
       </ContentContainer>
     </Container>
   )
