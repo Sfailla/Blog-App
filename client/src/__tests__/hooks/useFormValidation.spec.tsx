@@ -2,7 +2,7 @@ import { FormEvent, ChangeEvent, KeyboardEvent } from 'react'
 import { ValidationErrors, FieldValues, InputOrTextarea } from '../../types/forms'
 import { changeEvent, buildRegisterForm, CustomEventFields } from '../../test/helpers'
 import { renderHook, act } from '@testing-library/react-hooks'
-import useFormValidation from '.'
+import useFormValidation from '../../hooks/useFormValidation'
 
 type KeyboardAndChangeEvent = KeyboardEvent<HTMLInputElement> & ChangeEvent<HTMLInputElement>
 
