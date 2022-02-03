@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
 import { baseUrl, endpoints } from './constants'
 
 interface JwtHeader {
@@ -15,20 +15,22 @@ const config: AxiosRequestConfig = {
   headers: { 'Content-Type': 'application/json' }
 }
 
-export const axiosInstance = axios.create(config)
+export const axiosInstance: AxiosInstance = axios.create(config)
 
-axiosInstance.interceptors.response.use(
-  (response: AxiosResponse<unknown, any>) => {
-    return response
-  },
-  async error => {
-    if (error.response?.status === 403) {
-      const errorResponse = await axiosInstance.get(`${endpoints.auth}/refresh-tokens`)
-      const token: string = errorResponse.data.token
-      axiosInstance.defaults.headers.common['x-auth-token'] = token
-      error.config.headers['x-auth-token'] = token
-      return axiosInstance(error.config)
-    }
-    return error.response
-  }
-)
+export { endpoints }
+
+// axiosInstance.interceptors.response.use(
+//   (response: AxiosResponse) => {
+//     return response
+//   },
+//   async error => {
+//     if (error.response?.status === 403) {
+//       const errorResponse = await axiosInstance.get(`${endpoints.auth}/refresh-tokens`)
+//       const token: string = errorResponse.data.token
+//       axiosInstance.defaults.headers.common['x-auth-token'] = token
+//       error.config.headers['x-auth-token'] = token
+//       return axiosInstance(error.config)
+//     }
+//     return error.response
+//   }
+// )

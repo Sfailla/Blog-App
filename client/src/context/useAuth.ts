@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { AxiosRequestConfig, AxiosResponse } from 'axios'
 import { useNavigate } from 'react-router-dom'
-import { axiosInstance } from '../axios'
+import { useAxiosInstance } from '../hooks'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { TryCatchError, User } from '../types/shared'
 import { FieldValues } from '../types/forms'
@@ -23,6 +23,7 @@ export function useAuth(): UseAuth {
   const isAuthenticated = localStorage.getItem('auth-flag')
   const [error, setError] = useState<string>('')
   const initialRender = useRef<boolean>(true)
+  const axiosInstance = useAxiosInstance()
 
   const navigate = useNavigate()
   const location = useLocation()
@@ -117,7 +118,7 @@ export function useAuth(): UseAuth {
     if (isAuthenticated) {
       checkUserSession()
     }
-  }, [isAuthenticated])
+  }, [isAuthenticated, axiosInstance])
 
   useEffect(() => {
     if (initialRender.current) {
