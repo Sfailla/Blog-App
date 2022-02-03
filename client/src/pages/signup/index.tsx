@@ -25,8 +25,9 @@ export default function Signup(): ReactElement {
           <AppTitle>Sign Up</AppTitle>
           <FormContainer onSubmit={handleSubmit}>
             <FormGroup>
-              <Label>Username</Label>
+              <Label htmlFor="username">Username</Label>
               <Input
+                id="username"
                 type="text"
                 name="username"
                 onChange={handleChange}
@@ -37,8 +38,9 @@ export default function Signup(): ReactElement {
               {formErrors.username && <InputFieldError errorMessage={formErrors.username} />}
             </FormGroup>
             <FormGroup>
-              <Label>Email</Label>
+              <Label htmlFor="email">Email</Label>
               <Input
+                id="email"
                 type="email"
                 name="email"
                 onChange={handleChange}
@@ -49,10 +51,12 @@ export default function Signup(): ReactElement {
               {formErrors.email && <InputFieldError errorMessage={formErrors.email} />}
             </FormGroup>
             <FormGroup>
-              <Label>Password</Label>
+              <Label htmlFor="password">Password</Label>
               <Input
+                id="password"
                 type="password"
                 name="password"
+                role="textbox"
                 onChange={handleChange}
                 onKeyDown={handleResetFormErrors}
                 value={values.password}
