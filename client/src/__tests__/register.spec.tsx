@@ -2,7 +2,14 @@ import { render, userEvent, waitFor, waitForElementToBeRemoved } from '../test/t
 import * as UsersDB from '../test/data/users'
 import Signup from '../pages/signup'
 
-afterEach(async () => await UsersDB.resetDatabase())
+// afterEach(async () => await UsersDB.resetDatabase())
+
+jest.mock('../pages/hooks/useArticles', () => ({
+  useArticles: () => ({
+    getUserArticles: jest.fn(),
+    articles: ['article1', 'article2']
+  })
+}))
 
 describe('Signup component tests', () => {
   test('register form displays error message if fields are empty', () => {
@@ -31,18 +38,18 @@ describe('Signup component tests', () => {
 
     userEvent.click(submitButton)
 
-    await waitFor(() => {
-      expect(queryByRole('status')).toBeInTheDocument()
-      debug()
-    })
+    console.log(window.location.pathname)
 
-    debug()
+    await waitFor(() => expect(queryByRole('status')).toBeInTheDocument())
+
+    console.log(window.location.pathname)
     await waitForElementToBeRemoved(() => queryByRole('status'))
+    debug()
 
     // await waitFor(() => {
     //   expect(queryByRole('alert')).toBeInTheDocument()
     // })
 
-    debug()
+    // debug()
   })
 })

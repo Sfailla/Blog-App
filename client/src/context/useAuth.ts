@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { AxiosRequestConfig, AxiosResponse } from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { useAxiosInstance } from '../hooks'
@@ -98,27 +98,34 @@ export function useAuth(): UseAuth {
     }
   }
 
-  useEffect(() => {
-    async function checkUserSession(): Promise<void> {
-      setLoading(true)
-      try {
-        const request: AxiosRequestConfig = {
-          url: `${endpoints.auth}/refresh-tokens`,
-          method: 'GET'
-        }
-        const response: AxiosResponse = await axiosInstance(request)
-        setUser(response.data.user)
-        setLoading(false)
-      } catch (error: TryCatchError) {
-        setError(error.message)
-      } finally {
-        setLoading(false)
+  const checkUserSession: () => Promise<void> = useCallback(async () => {
+    setLoading(true)
+    try {
+      const request: AxiosRequestConfig = {
+        url: `${endpoints.auth}/refresh-tokens`,
+        method: 'GET'
       }
+      const response: AxiosResponse = await axiosInstance(request)
+      setUser(response.data.user)
+      setLoading(false)
+    } catch (error: TryCatchError) {
+      setError(error.message)
+    } finally {
+      setLoading(false)
     }
+  }, [axiosInstance])
+
+  useEffect(() => {
+    let isMounted = true
+
     if (isAuthenticated) {
-      checkUserSession()
+      isMounted && checkUserSession()
     }
-  }, [isAuthenticated, axiosInstance])
+
+    return () => {
+      isMounted = false
+    }
+  }, [isAuthenticated, checkUserSession])
 
   useEffect(() => {
     if (initialRender.current) {

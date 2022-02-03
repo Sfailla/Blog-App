@@ -5,7 +5,6 @@ import {
   TestUser,
   ResponseError
 } from '../../types/tests'
-// import { randomBytes, pbkdf2Sync } from 'crypto'
 
 const usersKey: string = 'test_users'
 
@@ -28,11 +27,11 @@ async function authenticate({
   email,
   password
 }: AuthFields): Promise<{ user: TestUser; token: string }> {
-  const id: string = hash(email)
+  const id: string = await hash(email)
   const user: StoredTestUser = users[id] || {}
-  const hashedPassword = hash(password)
+  const hashedPassword = await hash(password)
   if (user.hashedPassword === hashedPassword) {
-    return { user: sanitizeUser(user), token: id }
+    return { user: await sanitizeUser(user), token: id }
   }
 
   const error: ResponseError = new Error('Invalid username or password')
@@ -41,14 +40,14 @@ async function authenticate({
 }
 
 async function createUser({ username, email, password }: AuthFields): Promise<TestUser> {
-  const id: string = hash(email)
+  const id: string = await hash(email)
   if (users[id]) {
     const error: ResponseError = new Error(`username ${username} already exists`)
     error.status = 400
     throw error
   }
 
-  const hashedPassword = hash(password)
+  const hashedPassword = await hash(password)
   const user: StoredTestUser = {
     id,
     username,
@@ -78,7 +77,7 @@ async function retrieveUser(userId: string): Promise<TestUser> {
   return sanitizeUser(users[userId])
 }
 
-function validateUser(userId: string): void {
+async function validateUser(userId: string): Promise<void> {
   if (!users[userId]) {
     const error: ResponseError = new Error(`user with id of: ${userId} does not exist`)
     error.status = 400
@@ -87,13 +86,7 @@ function validateUser(userId: string): void {
   load()
 }
 
-// function hash(password: string): string {
-//   const salt = randomBytes(16).toString('hex')
-//   const hash = pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex')
-//   return `${salt}$${hash}`
-// }
-
-function hash(str: string): string {
+async function hash(str: string): Promise<string> {
   let hash: number = 5381
   let i: number = str.length
 
@@ -103,14 +96,14 @@ function hash(str: string): string {
   return String(hash >>> 0)
 }
 
-function sanitizeUser(user: StoredTestUser): TestUser {
+async function sanitizeUser(user: StoredTestUser): Promise<TestUser> {
   const { hashedPassword, ...rest } = user
   return rest
 }
 
 async function resetDatabase(): Promise<void> {
   users = {}
-  await persist()
+  persist()
 }
 
 export { authenticate, createUser, updateUser, removeUser, retrieveUser, resetDatabase }

@@ -2,7 +2,6 @@ import { useEffect, useCallback, useState } from 'react'
 import { AxiosRequestConfig, AxiosResponse } from 'axios'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Tag, Article, TryCatchError, Await } from '../../types/shared'
-// import { axiosInstance } from '../../axios'
 import { useAxiosInstance } from '../../hooks/'
 import { endpoints } from '../../axios/constants'
 import { useAuthContext } from '../../context/authContext'
@@ -114,8 +113,21 @@ export default function useArticles(): UseArticles {
     [axiosInstance]
   )
 
-  useEffect(() => fetchTags(), [fetchTags])
+  useEffect(() => {
+    let isMounted = true
+
+    if (isMounted) {
+      fetchTags()
+    }
+
+    return () => {
+      isMounted = false
+      setTags([])
+    }
+  }, [fetchTags])
+
   useEffect(() => fetchArticles(), [fetchArticles])
+
   useEffect(() => {
     if (!user) return
     fetchUserArticles()

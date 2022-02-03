@@ -51,7 +51,6 @@ export const handlers = [
 ]
 
 const getToken = (req: any) => req.cookies['x-auth-token']
-// const getRefreshToken = (req: any) => req.headers.get('x-refresh-token')
 
 const getUser = async (req: any) => {
   const userId = await getToken(req)
