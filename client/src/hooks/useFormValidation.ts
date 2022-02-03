@@ -1,5 +1,5 @@
 import { FormEvent, ChangeEvent, KeyboardEvent, useState, useEffect } from 'react'
-import { FieldValues, Validate, ValidationErrors, InputOrTextarea } from '../../types/forms'
+import { FieldValues, Validate, ValidationErrors, InputOrTextarea } from '../types/forms'
 
 interface UseFormValidation {
   values: FieldValues
