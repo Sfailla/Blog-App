@@ -32,7 +32,7 @@ export interface ServerError {
   stack: string
 }
 
-export type ResponseError = Pick<ServerError, 'message'>
+export type ResponseError = Pick<ServerError, 'message' | 'status'>
 
 export type ArticleError = string
 
