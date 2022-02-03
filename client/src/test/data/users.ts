@@ -26,12 +26,12 @@ try {
 async function authenticate({
   email,
   password
-}: AuthFields): Promise<{ user: TestUser; token: string }> {
+}: AuthFields): Promise<TestUser & { token: string }> {
   const id: string = await hash(email)
   const user: StoredTestUser = users[id] || {}
   const hashedPassword = await hash(password)
   if (user.hashedPassword === hashedPassword) {
-    return { user: await sanitizeUser(user), token: id }
+    return { ...(await sanitizeUser(user)), token: id }
   }
 
   const error: ResponseError = new Error('Invalid username or password')
@@ -56,25 +56,25 @@ async function createUser({ username, email, password }: AuthFields): Promise<Te
   }
   users[id] = user
   persist()
-  return retrieveUser(id)
+  return await retrieveUser(id)
 }
 
 async function updateUser(userId: string, updates: Partial<StoredTestUser>): Promise<TestUser> {
-  validateUser(userId)
+  await validateUser(userId)
   Object.assign(users[userId], updates)
   persist()
-  return retrieveUser(userId)
+  return await retrieveUser(userId)
 }
 
 async function removeUser(userId: string): Promise<void> {
-  validateUser(userId)
+  await validateUser(userId)
   delete users[userId]
   persist()
 }
 
 async function retrieveUser(userId: string): Promise<TestUser> {
-  validateUser(userId)
-  return sanitizeUser(users[userId])
+  await validateUser(userId)
+  return await sanitizeUser(users[userId])
 }
 
 async function validateUser(userId: string): Promise<void> {

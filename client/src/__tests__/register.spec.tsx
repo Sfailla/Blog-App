@@ -1,5 +1,5 @@
 import { render, userEvent, waitFor, waitForElementToBeRemoved } from '../test/test-utils'
-import * as UsersDB from '../test/data/users'
+// import * as UsersDB from '../test/data/users'
 import Signup from '../pages/signup'
 
 // afterEach(async () => await UsersDB.resetDatabase())
@@ -38,12 +38,11 @@ describe('Signup component tests', () => {
 
     userEvent.click(submitButton)
 
-    console.log(window.location.pathname)
+    // console.log(window.location.pathname)
 
-    await waitFor(() => expect(queryByRole('status')).toBeInTheDocument())
+    // await waitFor(() => expect(queryByRole('status')).toBeInTheDocument())
 
-    console.log(window.location.pathname)
-    await waitForElementToBeRemoved(() => queryByRole('status'))
+    // await waitForElementToBeRemoved(() => queryByRole('status'))
     debug()
 
     // await waitFor(() => {

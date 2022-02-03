@@ -10,7 +10,8 @@ import {
   LoginBody,
   LoginResponse,
   Article,
-  AuthCredentials
+  AuthCredentials,
+  TestUser
 } from '../types/tests'
 
 export const handlers = [
@@ -24,7 +25,14 @@ export const handlers = [
     `${baseUrl}${endpoints.auth}/register`,
     async (req, res, ctx) => {
       const { username, email, password } = req.body
-      const user = await UsersDB.createUser({ username, email, password })
+      await UsersDB.createUser({ username, email, password })
+      let user: TestUser
+      try {
+        user = await UsersDB.authenticate({ email, password })
+      } catch (error: Error | any) {
+        return res(ctx.status(400), ctx.json({ error: error.message }))
+      }
+
       return res(
         ctx.cookie('x-auth-token', user.id),
         ctx.status(200),
@@ -44,8 +52,6 @@ export const handlers = [
   rest.get<AuthCredentials>(`${baseUrl}${endpoints.auth}/refresh-tokens`, async (req, res, ctx) => {
     const token = await getToken(req)
     const user = await getUser(req)
-
-    console.log({ token, user })
     return res(ctx.status(200), ctx.delay(500), ctx.json({ token, user }))
   })
 ]
