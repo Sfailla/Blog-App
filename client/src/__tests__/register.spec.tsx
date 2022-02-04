@@ -2,14 +2,17 @@ import { render, userEvent, waitFor, waitForElementToBeRemoved } from '../test/t
 import * as UsersDB from '../test/data/users'
 import Signup from '../pages/signup'
 
-// afterEach(async () => await UsersDB.resetDatabase())
+// mocking localstorage to
+jest.spyOn(window.localStorage.__proto__, 'setItem')
+jest.spyOn(window.localStorage.__proto__, 'getItem')
 
-jest.mock('../pages/hooks/useArticles', () => ({
-  useArticles: () => ({
-    getUserArticles: jest.fn(),
-    articles: ['article1', 'article2']
-  })
-}))
+afterAll(() => {
+  UsersDB.resetDatabase()
+})
+
+afterAll(() => {
+  jest.resetAllMocks()
+})
 
 describe('Signup component tests', () => {
   test('register form displays error message if fields are empty', () => {
@@ -23,11 +26,10 @@ describe('Signup component tests', () => {
     expect(getByText(/username is required/i)).toBeInTheDocument()
   })
 
-  test('register component should create and return an authenticated user', async () => {
-    const { getByRole, queryByRole, getByText, debug } = render(<Signup />)
+  test('register component should create user and return to previous ui state', async () => {
+    const { getByRole, queryByRole } = render(<Signup />)
 
     const submitButton = getByRole('button', { name: /sign up/i })
-
     const usernameInput = getByRole('textbox', { name: /username/i })
     const emailInput = getByRole('textbox', { name: /email/i })
     const passwordInput = getByRole('textbox', { name: /password/i })
@@ -38,18 +40,34 @@ describe('Signup component tests', () => {
 
     userEvent.click(submitButton)
 
-    console.log(window.location.pathname)
+    await waitFor(() => expect(getByRole('status')).toBeInTheDocument())
+    await waitFor(() => expect(getByRole('heading', { name: /sign up/i })).toBeInTheDocument())
 
-    await waitFor(() => expect(queryByRole('status')).toBeInTheDocument())
+    expect(usernameInput.textContent).toBe('')
+    expect(emailInput.textContent).toBe('')
+    expect(passwordInput.textContent).toBe('')
 
-    console.log(window.location.pathname)
-    await waitForElementToBeRemoved(() => queryByRole('status'))
-    debug()
+    expect(queryByRole('alert')).not.toBeInTheDocument()
+  })
 
-    // await waitFor(() => {
-    //   expect(queryByRole('alert')).toBeInTheDocument()
-    // })
+  test('registration with already registered user should render error message', async () => {
+    const { getByRole, getByText } = render(<Signup />)
 
-    // debug()
+    const submitButton = getByRole('button', { name: /sign up/i })
+    const usernameInput = getByRole('textbox', { name: /username/i })
+    const emailInput = getByRole('textbox', { name: /email/i })
+    const passwordInput = getByRole('textbox', { name: /password/i })
+
+    userEvent.type(usernameInput, 'testUser')
+    userEvent.type(emailInput, 'testUser@gmail.com')
+    userEvent.type(passwordInput, '1234')
+
+    userEvent.click(submitButton)
+
+    await waitFor(() => expect(getByRole('status')).toBeInTheDocument())
+    await waitForElementToBeRemoved(() => getByRole('status'))
+    await waitFor(() => expect(getByRole('alert')).toBeInTheDocument())
+
+    expect(getByText(/user already exists/i)).toBeInTheDocument()
   })
 })

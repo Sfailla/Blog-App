@@ -22,7 +22,9 @@ export default function Signup(): ReactElement {
     <Container>
       <LayoutWrapper>
         <ContentWrapper>
-          <AppTitle>Sign Up</AppTitle>
+          <AppTitle role="heading" aria-level={1}>
+            Sign Up
+          </AppTitle>
           <FormContainer onSubmit={handleSubmit}>
             <FormGroup>
               <Label htmlFor="username">Username</Label>

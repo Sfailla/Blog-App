@@ -12,7 +12,7 @@ let users = {} as UserDatabase
 
 const persist = (): void => window.localStorage.setItem(usersKey, JSON.stringify(users))
 const load = () => {
-  const data = window.localStorage.getItem(usersKey) as string
+  const data = window.localStorage.getItem(usersKey) || '{}'
   Object.assign(users, JSON.parse(data))
 }
 
@@ -42,7 +42,7 @@ async function authenticate({
 async function createUser({ username, email, password }: AuthFields): Promise<TestUser> {
   const id: string = await hash(email)
   if (users[id]) {
-    const error: ResponseError = new Error(`username ${username} already exists`)
+    const error: ResponseError = new Error(`user ${username} already exists`)
     error.status = 400
     throw error
   }
@@ -52,7 +52,8 @@ async function createUser({ username, email, password }: AuthFields): Promise<Te
     id,
     username,
     hashedPassword,
-    email
+    email,
+    role: 'user'
   }
   users[id] = user
   persist()

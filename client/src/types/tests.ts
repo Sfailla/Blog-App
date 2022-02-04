@@ -3,6 +3,7 @@ export interface StoredTestUser {
   username?: string
   hashedPassword: string
   email: string
+  role: string
 }
 
 export type TestUser = Omit<StoredTestUser, 'hashedPassword'>

@@ -4,6 +4,7 @@ import { GlobalStyles } from './styles/global'
 import App from './app'
 import reportWebVitals from './reportWebVitals'
 import { AppProviders } from './context'
+import './test'
 
 ReactDOM.render(
   <React.StrictMode>

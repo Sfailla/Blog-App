@@ -116,14 +116,15 @@ export function useAuth(): UseAuth {
   }, [axiosInstance])
 
   useEffect(() => {
-    let isMounted = true
+    // let isMounted = true
 
     if (isAuthenticated) {
-      isMounted && checkUserSession()
+      checkUserSession()
     }
 
     return () => {
-      isMounted = false
+      // isMounted = false
+      setUser(null)
     }
   }, [isAuthenticated, checkUserSession])
 
