@@ -4,7 +4,7 @@ import ToastNotification from '../components/toast'
 describe('toast notification unit tests', () => {
   const message: string = 'test message'
 
-  test('Toast should display correctly', () => {
+  test('Toast should display and close correctly', () => {
     const { getByText, getByRole, queryByText } = render(
       <ToastNotification variant="success" message={message} />
     )
