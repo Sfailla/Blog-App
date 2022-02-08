@@ -10,8 +10,7 @@ import {
   LoginBody,
   LoginResponse,
   Article,
-  AuthCredentials,
-  TestUser
+  AuthCredentials
 } from '../types/tests'
 
 export const handlers = [

@@ -28,7 +28,7 @@ export default function useAxiosInstance() {
           prevRequest.headers['x-auth-token'] = token
           return axiosInstance(prevRequest)
         }
-        return Promise.reject(error)
+        return error.response
       }
     )
 

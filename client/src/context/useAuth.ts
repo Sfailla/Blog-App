@@ -38,7 +38,8 @@ export function useAuth(): UseAuth {
       }
 
       const response: AxiosResponse = await axiosInstance(request)
-      if (response.data?.error) {
+      console.log({ response })
+      if (response.data.error) {
         setError(response.data.error.message)
       } else {
         setUser(response.data.user)
