@@ -12,7 +12,7 @@ export default function Signup(): ReactElement {
   const { values, formErrors, handleChange, handleSubmit, handleResetFormErrors } =
     useFormValidation(initialValues, validateSignup, submit)
 
-  const { register, error } = useAuthContext()
+  const { register, error: authError } = useAuthContext()
 
   function submit(): void {
     register(values)
@@ -71,7 +71,7 @@ export default function Signup(): ReactElement {
             </ButtonContainer>
           </FormContainer>
           <ErrorContainer>
-            {error && <ToastNotification variant="error" message={error} />}
+            {authError && <ToastNotification variant="error" message={authError} />}
           </ErrorContainer>
         </ContentWrapper>
       </LayoutWrapper>

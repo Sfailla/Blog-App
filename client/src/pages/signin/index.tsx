@@ -26,11 +26,14 @@ export default function SignIn(): ReactElement {
     <Container>
       <LayoutWrapper>
         <ContentWrapper>
-          <AppTitle>Sign In</AppTitle>
+          <AppTitle role="heading" aria-level={1}>
+            Sign In
+          </AppTitle>
           <FormContainer onSubmit={handleSubmit}>
             <FormGroup>
-              <Label>Email</Label>
+              <Label htmlFor="email">Email</Label>
               <Input
+                id="email"
                 type="email"
                 name="email"
                 value={values.email}
@@ -41,10 +44,12 @@ export default function SignIn(): ReactElement {
               {formErrors.email && <InputFieldError errorMessage={formErrors.email} />}
             </FormGroup>
             <FormGroup>
-              <Label>Password</Label>
+              <Label htmlFor="password">Password</Label>
               <Input
+                id="password"
                 type="password"
                 name="password"
+                role="textbox"
                 value={values.password}
                 onChange={handleChange}
                 onKeyDown={handleResetFormErrors}

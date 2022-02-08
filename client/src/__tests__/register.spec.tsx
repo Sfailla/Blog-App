@@ -6,8 +6,8 @@ import Signup from '../pages/signup'
 jest.spyOn(window.localStorage.__proto__, 'setItem')
 jest.spyOn(window.localStorage.__proto__, 'getItem')
 
-afterAll(() => {
-  UsersDB.resetDatabase()
+afterEach(async () => {
+  await UsersDB.resetDatabase()
 })
 
 afterAll(() => {
@@ -58,8 +58,14 @@ describe('Signup component tests', () => {
     const emailInput = getByRole('textbox', { name: /email/i })
     const passwordInput = getByRole('textbox', { name: /password/i })
 
+    await UsersDB.createUser({
+      username: 'testUser',
+      email: 'TestUser@gmail.com',
+      password: '1234'
+    })
+
     userEvent.type(usernameInput, 'testUser')
-    userEvent.type(emailInput, 'testUser@gmail.com')
+    userEvent.type(emailInput, 'TestUser@gmail.com')
     userEvent.type(passwordInput, '1234')
 
     userEvent.click(submitButton)

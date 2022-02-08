@@ -10,16 +10,19 @@ import {
   LoginBody,
   LoginResponse,
   Article,
-  AuthCredentials
+  AuthCredentials,
+  TestUser
 } from '../types/tests'
 
 export const handlers = [
   rest.get<Article[]>(`${baseUrl}${endpoints.articles}`, (req, res, ctx) => {
     return res(ctx.status(200), ctx.delay(500), ctx.json({ articles }))
   }),
+
   rest.get<Tag[]>(`${baseUrl}${endpoints.tags}`, (req, res, ctx) => {
     return res(ctx.status(200), ctx.delay(500), ctx.json(tags))
   }),
+
   rest.get<Article[]>(`${baseUrl}${endpoints.articles}/user-articles`, (req, res, ctx) => {
     return res(ctx.status(200), ctx.delay(500), ctx.json({ articles }))
   }),
@@ -37,6 +40,7 @@ export const handlers = [
       return res(ctx.status(200), ctx.json({ user }))
     }
   ),
+
   rest.post<LoginBody, LoginResponse>(
     `${baseUrl}${endpoints.auth}/login`,
     async (req, res, ctx) => {
@@ -47,13 +51,13 @@ export const handlers = [
       } catch (error: Error | any) {
         return res(ctx.status(400), ctx.json({ error: error.message }))
       }
-      console.log('login user', { user })
-      return res(ctx.status(200), ctx.delay(500), ctx.json({ user }))
+      return res(ctx.status(200), ctx.delay(500), ctx.json(user))
     }
   ),
+
   rest.get<AuthCredentials>(`${baseUrl}${endpoints.auth}/refresh-tokens`, async (req, res, ctx) => {
-    const token = 'test-access-token'
-    const refreshToken = 'test-refresh-token'
+    const token: string = 'test-access-token'
+    const refreshToken: string = 'test-refresh-token'
     const user = { id: 'test-id', username: 'testUser', email: 'testUser@gmail.com', role: 'user' }
     return res(ctx.status(200), ctx.json({ token, refreshToken, user }))
   })

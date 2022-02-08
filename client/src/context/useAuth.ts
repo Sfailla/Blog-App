@@ -69,7 +69,7 @@ export function useAuth(): UseAuth {
         navigate('/')
       }
     } catch (error: TryCatchError) {
-      setError(error.message)
+      setError(error.response.data.error)
     } finally {
       setLoading(false)
     }
