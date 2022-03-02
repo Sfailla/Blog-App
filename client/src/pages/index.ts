@@ -1,4 +1,5 @@
 export { default as SignUpPage } from './signup'
 export { default as SignInPage } from './signin'
-export { default as ArticlesPage } from './articles'
+export { default as ArticlesPage } from './articles-page'
+export { default as ArticleDetails } from './view-article'
 export { default as CreateArticlePage } from './create-article'

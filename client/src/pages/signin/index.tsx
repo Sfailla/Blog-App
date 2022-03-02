@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { LayoutWrapper, FormGroup, Label, Input, AppTitle } from '../../styles/shared'
+import { LayoutWrapper, FormGroup, Label, Input, PageTitle } from '../../styles/shared'
 import { SubmitButton } from '../../components/buttons'
 import { ToastNotification, InputFieldError } from '../../components'
 import { useFormValidation } from '../../hooks'
@@ -26,9 +26,9 @@ export default function SignIn(): ReactElement {
     <Container>
       <LayoutWrapper>
         <ContentWrapper>
-          <AppTitle role="heading" aria-level={1}>
+          <PageTitle role="heading" aria-level={1}>
             Sign In
-          </AppTitle>
+          </PageTitle>
           <FormContainer onSubmit={handleSubmit}>
             <FormGroup>
               <Label htmlFor="email">Email</Label>

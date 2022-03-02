@@ -4,7 +4,7 @@ import { SubmitButton, AddTagButton, DeleteTagButton } from '../../components/bu
 import { useFormValidation } from '../../hooks'
 import { validateArticle } from './validation'
 import { CloseIcon } from '../../assets/svg'
-import { LayoutWrapper, AppTitle, FormGroup, Label, Input, TextArea } from '../../styles/shared'
+import { LayoutWrapper, PageTitle, FormGroup, Label, Input, TextArea } from '../../styles/shared'
 import {
   Container,
   MainContent,
@@ -24,15 +24,13 @@ interface Props {
 }
 
 export default function CreateArticlePage({ createArticle }: Props): ReactElement {
-  const initialValues = { title: '', description: '', body: '' }
+  const { tagList, tagName, handleTagChange, addTag, removeTag } = useTags()
+  const navigate = useNavigate()
   const { values, handleChange, handleSubmit } = useFormValidation(
-    initialValues,
+    { title: '', description: '', body: '' },
     validateArticle,
     submitForm
   )
-
-  const { tagList, tagName, handleTagChange, addTag, removeTag } = useTags()
-  const navigate = useNavigate()
 
   function submitForm(): void {
     const articleFields: CreateArticleFields = {
@@ -47,7 +45,9 @@ export default function CreateArticlePage({ createArticle }: Props): ReactElemen
     <Container>
       <LayoutWrapper>
         <MainContent>
-          <AppTitle>Create an Article</AppTitle>
+          <PageTitle role="heading" aria-level={1}>
+            Create an Article
+          </PageTitle>
           <Form onSubmit={handleSubmit} role="form" aria-label="create-article-form">
             <FormGroup>
               <Label htmlFor="title">Article Title</Label>

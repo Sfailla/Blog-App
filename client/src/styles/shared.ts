@@ -1,12 +1,23 @@
 import styled, { css } from 'styled-components'
 
+export const headerHeight = '5.6rem'
+export const layoutWidth = '114rem'
+
+export const PageContainer = styled.div`
+  width: 100%;
+  height: auto;
+  min-height: 100vh;
+  padding: 2rem;
+  background-color: ${({ theme }) => theme.background.primary};
+`
+
 export const LayoutWrapper = styled.div`
   width: 100%;
-  max-width: 114rem;
+  max-width: ${layoutWidth};
   margin: 0 auto;
 `
 
-export const AppTitle = styled.h1`
+export const PageTitle = styled.h1`
   font-size: 4rem;
   padding: 8rem 0 5rem 0;
   color: ${({ theme }) => theme.text.secondary};
@@ -57,8 +68,6 @@ export const TextArea = styled.textarea`
   &::placeholder {
   }
 `
-
-export const headerHeight = '5.6rem'
 
 // Design System for Project
 export const DesignSystem = {

@@ -1,6 +1,6 @@
 import { ReactElement } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import { ArticlesPage, SignUpPage, SignInPage } from '../../pages'
+import { ArticlesPage, ArticleDetails, SignUpPage, SignInPage } from '../../pages'
 import { Container } from './style'
 import { Article, Tag } from '../../types/shared'
 
@@ -21,6 +21,7 @@ function AppRoutes({ articles, tags }: Props) {
   return (
     <Routes>
       <Route path="/" element={<ArticlesPage articles={articles} tags={tags} />} />
+      <Route path="/article/:slug" element={<ArticleDetails />} />
       <Route path="/signup" element={<SignUpPage />} />
       <Route path="/signin" element={<SignInPage />} />
     </Routes>

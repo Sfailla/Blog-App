@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { LayoutWrapper, FormGroup, Label, Input, AppTitle } from '../../styles/shared'
+import { LayoutWrapper, FormGroup, Label, Input, PageTitle } from '../../styles/shared'
 import { useFormValidation } from '../../hooks'
 import { validateSignup } from './validation'
 import { SubmitButton } from '../../components/buttons'
@@ -22,9 +22,9 @@ export default function Signup(): ReactElement {
     <Container>
       <LayoutWrapper>
         <ContentWrapper>
-          <AppTitle role="heading" aria-level={1}>
+          <PageTitle role="heading" aria-level={1}>
             Sign Up
-          </AppTitle>
+          </PageTitle>
           <FormContainer onSubmit={handleSubmit}>
             <FormGroup>
               <Label htmlFor="username">Username</Label>

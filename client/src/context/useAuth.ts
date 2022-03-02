@@ -38,7 +38,6 @@ export function useAuth(): UseAuth {
       }
 
       const response: AxiosResponse = await axiosInstance(request)
-      console.log({ response })
       if (response.data.error) {
         setError(response.data.error.message)
       } else {
@@ -85,7 +84,7 @@ export function useAuth(): UseAuth {
       }
 
       const response: AxiosResponse = await axiosInstance(request)
-      if (response.data?.error) {
+      if (response.data.error) {
         setError(response.data.error.message)
       } else {
         setUser(null)
@@ -117,14 +116,11 @@ export function useAuth(): UseAuth {
   }, [axiosInstance])
 
   useEffect(() => {
-    // let isMounted = true
-
     if (isAuthenticated) {
       checkUserSession()
     }
 
     return () => {
-      // isMounted = false
       setUser(null)
     }
   }, [isAuthenticated, checkUserSession])

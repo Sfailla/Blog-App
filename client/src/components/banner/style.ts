@@ -20,6 +20,7 @@ export const TextWrapper = styled.div`
 
 export const Title = styled.h1`
   font-size: 3.5rem;
+  font-family: monospace;
   ${heading_lg()};
   ${gradientText()};
 `

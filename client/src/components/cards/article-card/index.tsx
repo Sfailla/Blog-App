@@ -43,7 +43,9 @@ export default function ArticleCard({ article }: Props) {
           <ArticleDescription>{article.description}</ArticleDescription>
         </ArticleBody>
         <Wrapper>
-          <ArticleLink to="#">read more...</ArticleLink>
+          <ArticleLink to={`/article/${article.slug}`} state={{ article }}>
+            read more...
+          </ArticleLink>
           <TagsContainer>
             {article.tags !== undefined &&
               article.tags.map((tag, index) => <SmallTag key={index}>{tag}</SmallTag>)}
