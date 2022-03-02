@@ -34,16 +34,18 @@ async function authenticate({
     return { user: await sanitizeUser(user), token: id }
   }
 
-  const error: ResponseError = new Error('Invalid username or password')
+  const error: ResponseError = new Error()
   error.status = 400
+  error.message = 'Invalid username or password'
   throw error
 }
 
 async function createUser({ username, email, password }: AuthFields): Promise<TestUser> {
   const id: string = await hash(email)
   if (users[id]) {
-    const error: ResponseError = new Error(`user ${username} already exists`)
+    const error: ResponseError = new Error()
     error.status = 400
+    error.message = `user ${username} already exists`
     throw error
   }
 
@@ -80,8 +82,9 @@ async function retrieveUser(userId: string): Promise<TestUser> {
 
 async function validateUser(userId: string): Promise<void> {
   if (!users[userId]) {
-    const error: ResponseError = new Error(`user with id of: ${userId} does not exist`)
+    const error: ResponseError = new Error()
     error.status = 400
+    error.message = `user with id of: ${userId} does not exist`
     throw error
   }
   load()

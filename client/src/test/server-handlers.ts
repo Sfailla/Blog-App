@@ -34,7 +34,7 @@ export const handlers = [
       try {
         user = await UsersDB.createUser({ username, email, password })
       } catch (error: Error | any) {
-        return res(ctx.status(400), ctx.json({ error: error.message }))
+        return res(ctx.status(400), ctx.json({ error }))
       }
       return res(ctx.status(200), ctx.json({ user }))
     }
@@ -48,7 +48,7 @@ export const handlers = [
       try {
         user = await UsersDB.authenticate({ email, password })
       } catch (error: Error | any) {
-        return res(ctx.status(400), ctx.json({ error: error.message }))
+        return res(ctx.status(400), ctx.json({ error }))
       }
       return res(ctx.status(200), ctx.delay(500), ctx.json(user))
     }

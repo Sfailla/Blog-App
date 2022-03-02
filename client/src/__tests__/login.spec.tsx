@@ -6,7 +6,7 @@ import SignIn from '../pages/signin'
 jest.spyOn(window.localStorage.__proto__, 'setItem')
 jest.spyOn(window.localStorage.__proto__, 'getItem')
 
-afterEach(async () => {
+beforeEach(async () => {
   await UsersDB.resetDatabase()
 })
 
@@ -56,7 +56,7 @@ describe('Login component tests', () => {
   })
 
   test('login with invalid credentials should render error message', async () => {
-    const { getByRole, getByText } = render(<SignIn />)
+    const { getByRole, getByText, debug } = render(<SignIn />)
 
     const submitButton = getByRole('button', { name: /sign in/i })
 

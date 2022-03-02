@@ -14,6 +14,7 @@ export interface UserDatabase {
 
 export interface ResponseError extends Error {
   status?: number
+  message: string
 }
 
 export interface LoginBody {
