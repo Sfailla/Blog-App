@@ -1,8 +1,9 @@
 import styled, { css } from 'styled-components'
 
-export const headerHeight = '5.6rem'
-export const layoutWidth = '114rem'
+export const headerHeight = 5.6
+export const layoutWidth = 114
 
+// PAGE AND LAYOUT
 export const PageContainer = styled.div`
   width: 100%;
   height: auto;
@@ -13,16 +14,22 @@ export const PageContainer = styled.div`
 
 export const LayoutWrapper = styled.div`
   width: 100%;
-  max-width: ${layoutWidth};
+  max-width: ${layoutWidth}rem;
   margin: 0 auto;
 `
 
 export const PageTitle = styled.h1`
   font-size: 4rem;
   padding: 8rem 0 5rem 0;
+  font-family: MD Primer Bold, Rubik, Lato, Lucida Grande, Lucida Sans Unicode, Tahoma, Sans-Serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: clamp(4rem, 1rem + 3.5vw, 4rem);
+  text-shadow: 0 2px 2px rgb(0 0 0 / 50%);
   color: ${({ theme }) => theme.text.secondary};
 `
 
+// FORMS AND INPUTS
 export const FormGroup = styled.div`
   width: 100%;
   height: 100%;
@@ -72,7 +79,7 @@ export const TextArea = styled.textarea`
 // Design System for Project
 export const DesignSystem = {
   layout: {
-    mainWrapper() {
+    layoutWrapper() {
       return css`
         width: 100%;
         max-width: 114rem;
@@ -85,7 +92,7 @@ export const DesignSystem = {
       violet: '#9E7F66',
       lightviolet: '#939Bf4',
       darkblue: '#19202D',
-      deepblue: '#5964E0',
+      deepblue: '#1f3b6f',
       midnight: '#121721',
       teal: '#00B0B9'
     },
@@ -94,6 +101,7 @@ export const DesignSystem = {
       lightgrey: '#F4F6F8',
       grey: '#9DAEC2',
       darkgrey: '#6E8098',
+      darkgray: 'darkgray',
       aqua: '#64ffda',
       magenta: '#ff0097'
     },
@@ -113,6 +121,9 @@ export const DesignSystem = {
       error: '#dc3545',
       info: '#2f86eb',
       warning: '#ffc021'
+    },
+    background: {
+      banner: '#012057'
     }
   },
   shadow: {
@@ -153,11 +164,25 @@ export const DesignSystem = {
     gradientText() {
       return css`
         display: inline-block;
-        background: linear-gradient(to right, #7f7fd5, #86a8e7, #91eae4);
-        /* background: linear-gradient(to right, #10b981, #3b82f6, #8b5cf6); */
+        /* fallback for old browsers */
+        background: #2980b9;
+        /* Chrome 10-25, Safari 5.1-6 */
+        background: -webkit-linear-gradient(to right, #ffffff, #6dd5fa, #2980b9);
+        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        background: linear-gradient(to right, #ffffff, #6dd5fa, #2980b9);
         color: transparent;
         background-clip: text;
         -webkit-background-clip: text;
+      `
+    },
+    articleTitle() {
+      return css`
+        font-family: MD Primer Bold, Rubik, Lato, Lucida Grande, Lucida Sans Unicode, Tahoma,
+          Sans-Serif;
+        font-weight: 700;
+        font-style: normal;
+        font-size: clamp(1.2rem, 1rem + 3.5vw, 5rem);
+        text-shadow: 0 2px 2px rgb(0 0 0 / 50%);
       `
     }
   }

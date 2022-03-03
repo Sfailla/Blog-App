@@ -3,5 +3,5 @@ import { headerHeight } from '../../styles/shared'
 
 export const Container = styled.div`
   width: 100%;
-  height: calc(100% - ${headerHeight});
+  height: calc(100% - ${headerHeight}rem);
 `

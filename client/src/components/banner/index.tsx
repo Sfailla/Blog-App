@@ -6,9 +6,9 @@ export default function Banner(): ReactElement {
     <Container>
       <TextWrapper>
         <Title role="heading" aria-level={1}>
-          The Record
+          Off The Record
         </Title>
-        <Subtitle>A collection of thoughts and information</Subtitle>
+        <Subtitle>A collection of thoughts and ideas</Subtitle>
       </TextWrapper>
     </Container>
   )

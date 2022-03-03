@@ -3,7 +3,7 @@ import { DesignSystem } from '../../styles/shared'
 import { flex, media } from '../../styles/mixins'
 
 const {
-  layout: { mainWrapper },
+  layout: { layoutWrapper },
   typography: { subheading },
   color
 } = DesignSystem
@@ -11,6 +11,7 @@ const {
 export const Container = styled.div`
   width: 100%;
   height: 100%;
+  padding: 0 2rem;
   background-color: ${({ theme }) => theme.background.primary};
   flex: 1;
 `
@@ -18,11 +19,12 @@ export const Container = styled.div`
 export const GridContainer = styled.div`
   width: 100%;
   height: calc(100% - 2rem);
-  ${mainWrapper()};
+  ${layoutWrapper()};
   margin-top: 2rem;
   display: grid;
   grid-template-columns: 3fr 27.5rem;
   grid-template-rows: 1fr;
+  column-gap: 1rem;
   ${media.md`
     grid-template-columns: 1fr;
     grid-template-rows: min-content 1fr;
@@ -33,12 +35,12 @@ export const GridContainer = styled.div`
 export const ArticlesSection = styled.div`
   width: 100%;
   height: 100%;
-  padding: 0 1.5rem;
+  padding: 0;
   ${media.md`
     grid-row: 2 / 3;
   `};
 `
-export const TagSection = styled.div`
+export const TagSection = styled.aside`
   width: 100%;
   height: 100%;
   ${media.md`

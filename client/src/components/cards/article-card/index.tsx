@@ -1,4 +1,5 @@
 import { Article } from '../../../types/shared'
+import { convertToReadableDate } from '../../../utils/helperFns'
 import {
   Container,
   Wrapper,
@@ -23,6 +24,7 @@ interface Props {
 }
 
 export default function ArticleCard({ article }: Props) {
+  console.log(article)
   return (
     <Container>
       <ArticlePreview>
@@ -31,7 +33,7 @@ export default function ArticleCard({ article }: Props) {
             <Avatar src={article.image} />
             <ContentWrapper>
               <AuthorName>{article.author.username}</AuthorName>
-              <CreatedDate>{article.createdAt}</CreatedDate>
+              <CreatedDate>{convertToReadableDate(article.createdAt)}</CreatedDate>
             </ContentWrapper>
           </ArticleMeta>
           <Favorites>

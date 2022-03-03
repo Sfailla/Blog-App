@@ -3,22 +3,25 @@ export type ThemeType = typeof theme
 export const theme = {
   light: {
     background: {
-      primary: '#FFFFFF', // white
-      secondary: '#105151' // teal
+      primary: '#FFFFFF',
+      secondary: '#105151',
+      tertiary: '#105151',
+      text: '#1f333a'
     },
     text: {
-      primary: '#19202D', // almost black
-      primaryLight: '#19202D', // almost black
-      secondary: '#105151', // teal
+      primary: '#19202D',
+      primaryLight: '#19202D',
+      secondary: '#105151',
       secondaryLight: '#105151',
-      heading: '#FFFFFF' // white
+      heading: '#1f3b6f',
+      gray: 'darkgray'
     },
     tag: {
-      small: '#0085FF' // neon blue
+      small: '#0085FF'
     },
     link: {
       main: '#0000EE',
-      hover: '#8957e5' // blue
+      hover: '#8957e5'
     },
     button: {
       normal: '#105151'
@@ -26,22 +29,25 @@ export const theme = {
   },
   dark: {
     background: {
-      primary: '#060C20', // dark blue
-      secondary: '#112240'
+      primary: '#060C20',
+      secondary: '#112240',
+      tertiary: '#122d5e',
+      text: '#FFFFFF'
     },
     text: {
       primary: '#FFFFFF',
       primaryLight: '#d8d7d7',
       secondary: '#61B3FB',
       secondaryLight: '#64ffda',
-      heading: '#61B3FB'
+      heading: '#FFFFFF',
+      gray: '#6E8098'
     },
     tag: {
-      small: '#0085FF' // neon blue
+      small: '#0085FF'
     },
     link: {
-      main: '#8957e5', // neon purple
-      hover: '#0000EE' // blue
+      main: '#8957e5',
+      hover: '#0000EE'
     },
     button: {
       normal: '#0f8fff'

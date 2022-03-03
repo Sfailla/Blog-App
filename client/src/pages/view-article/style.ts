@@ -1,8 +1,61 @@
 import styled from 'styled-components/macro'
+import { DesignSystem, headerHeight } from '../../styles/shared'
 
-export const Container = styled.div``
+const { typography, color } = DesignSystem
+const { articleTitle, heading_sm } = typography
+
+export const Container = styled.div`
+  width: 100%;
+  height: calc(100% - ${headerHeight}rem);
+`
 
 export const ArticleTitle = styled.h2`
-  font-size: 3rem;
+  ${articleTitle()};
+  line-height: 1.4;
+  padding: 2rem 0;
   color: ${({ theme }) => theme.text.secondary};
+`
+
+export const ArticleMeta = styled.div`
+  padding: 4rem 0 2rem 0;
+  display: flex;
+`
+
+export const ContentWrapper = styled.div``
+
+export const AuthorName = styled.h4`
+  font-size: 1.4rem;
+  ${heading_sm()}
+  cursor: pointer;
+  color: ${color.neon.blue};
+  &:hover {
+    color: ${({ theme }) => theme.link.hover};
+  }
+`
+
+export const Avatar = styled.img`
+  width: 35px;
+  height: 35px;
+  margin-right: 1rem;
+  border-radius: 50%;
+  background-color: lightblue;
+`
+
+export const CreatedDate = styled.span`
+  font-size: 1.2rem;
+  color: ${color.secondary.darkgrey};
+`
+
+export const ArticleBody = styled.div`
+  margin-top: 4rem;
+  font-size: 1.8rem;
+  line-height: 1.5;
+  background: ${({ theme }) => theme.background.text};
+  color: ${({ theme }) => theme.text.gray};
+  overflow-wrap: break-word;
+  border-radius: 8px;
+  padding: 4rem;
+  text-align: justify;
+  position: relative;
+  text-indent: 2rem;
 `

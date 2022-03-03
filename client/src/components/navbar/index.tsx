@@ -6,7 +6,7 @@ export default function Navbar(): ReactElement {
   return (
     <Container>
       <Wrapper>
-        <Title>Blog</Title>
+        <Title>OTR</Title>
         <ContentWrapper>
           <Toggle />
           <VerticalDivider />
