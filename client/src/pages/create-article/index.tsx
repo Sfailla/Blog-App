@@ -4,9 +4,18 @@ import { SubmitButton, AddTagButton, DeleteTagButton } from '../../components/bu
 import { useFormValidation } from '../../hooks'
 import { validateArticle } from './validation'
 import { CloseIcon } from '../../assets/svg'
-import { LayoutWrapper, PageTitle, FormGroup, Label, Input, TextArea } from '../../styles/shared'
+import { CreateArticleFields } from '../../types/forms'
+import { useTags } from '../hooks'
 import {
-  Container,
+  LayoutWrapper,
+  PageTitle,
+  PageContainer,
+  FormGroup,
+  Label,
+  Input,
+  TextArea
+} from '../../styles/shared'
+import {
   MainContent,
   Form,
   Wrapper,
@@ -16,8 +25,6 @@ import {
   Tag,
   ButtonContainer
 } from './style'
-import { CreateArticleFields } from '../../types/forms'
-import { useTags } from '../hooks'
 
 interface Props {
   createArticle: (articleFields: CreateArticleFields) => void
@@ -42,7 +49,7 @@ export default function CreateArticlePage({ createArticle }: Props): ReactElemen
   }
 
   return (
-    <Container>
+    <PageContainer>
       <LayoutWrapper>
         <MainContent>
           <PageTitle role="heading" aria-level={1}>
@@ -123,6 +130,6 @@ export default function CreateArticlePage({ createArticle }: Props): ReactElemen
           </Form>
         </MainContent>
       </LayoutWrapper>
-    </Container>
+    </PageContainer>
   )
 }

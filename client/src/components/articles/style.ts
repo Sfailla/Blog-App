@@ -11,7 +11,7 @@ const {
 export const Container = styled.div`
   width: 100%;
   height: 100%;
-  padding: 0 2rem;
+  padding: 0 2rem 2rem 2rem;
   background-color: ${({ theme }) => theme.background.primary};
   flex: 1;
 `
@@ -21,6 +21,7 @@ export const GridContainer = styled.div`
   height: calc(100% - 2rem);
   ${layoutWrapper()};
   margin-top: 2rem;
+  margin-bottom: 2rem;
   display: grid;
   grid-template-columns: 3fr 27.5rem;
   grid-template-rows: 1fr;

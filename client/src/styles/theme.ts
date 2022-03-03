@@ -6,7 +6,7 @@ export const theme = {
       primary: '#FFFFFF',
       secondary: '#105151',
       tertiary: '#105151',
-      text: '#1f333a'
+      text: '#072f3a'
     },
     text: {
       primary: '#19202D',
@@ -40,7 +40,7 @@ export const theme = {
       secondary: '#61B3FB',
       secondaryLight: '#64ffda',
       heading: '#FFFFFF',
-      gray: '#6E8098'
+      gray: '#19202D'
     },
     tag: {
       small: '#0085FF'

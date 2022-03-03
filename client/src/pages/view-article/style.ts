@@ -1,5 +1,6 @@
 import styled from 'styled-components/macro'
 import { DesignSystem, headerHeight } from '../../styles/shared'
+import ReactMarkdown from 'react-markdown'
 
 const { typography, color } = DesignSystem
 const { articleTitle, heading_sm } = typography
@@ -55,7 +56,21 @@ export const ArticleBody = styled.div`
   overflow-wrap: break-word;
   border-radius: 8px;
   padding: 4rem;
-  text-align: justify;
   position: relative;
-  text-indent: 2rem;
+`
+
+export const MarkdownContainer = styled(ReactMarkdown)`
+  font-family: 'Lato', 'Roboto', sans-serif;
+  & > *:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+  & > ul {
+    margin-left: 40px;
+    margin-bottom: 1rem;
+  }
+  & a {
+    display: inline-block;
+    text-decoration: none;
+    color: ${({ theme }) => theme.link.hover};
+  }
 `

@@ -24,7 +24,6 @@ interface Props {
 }
 
 export default function ArticleCard({ article }: Props) {
-  console.log(article)
   return (
     <Container>
       <ArticlePreview>
