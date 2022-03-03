@@ -1,6 +1,6 @@
 import { ReactElement } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import { ArticlesPage, CreateArticlePage } from '../../pages'
+import { ArticlesPage, CreateArticlePage, ArticleDetails } from '../../pages'
 import { Container } from '../style'
 import { Article, Tag } from '../../types/shared'
 import { CreateArticleFields } from '../../types/forms'
@@ -38,6 +38,7 @@ function AppRoutes({ articles, userArticles, createArticle, tags }: Props): Reac
         element={<ArticlesPage articles={articles} userArticles={userArticles} tags={tags} />}
       />
       <Route path="/create-article" element={<CreateArticlePage createArticle={createArticle} />} />
+      <Route path="/article/:slug" element={<ArticleDetails />} />
     </Routes>
   )
 }
