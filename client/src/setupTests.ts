@@ -31,15 +31,16 @@ afterEach(() => server.resetHandlers())
 */
 afterAll(() => server.close())
 
-// mock window.matchMedia to prevent error due to not being available in jestDom
 beforeAll(() => {
+  // mock window.matchMedia to prevent error due to not being available in jestDom
   Object.defineProperty(window, 'matchMedia', {
-    value: () => {
-      return {
-        matches: false,
-        addListener: () => {},
-        removeListener: () => {}
-      }
-    }
+    value: () => ({
+      matches: false,
+      addListener: () => {},
+      removeListener: () => {}
+    })
   })
+
+  // mock window.scrollTo to prevent error due to not being available in jestDom
+  Object.defineProperty(window, 'scrollTo', { value: () => {}, writable: true })
 })
