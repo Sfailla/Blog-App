@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import { ArticlesPage, ArticleDetails, SignUpPage, SignInPage } from '../../pages'
 import { Container } from './style'
 import { Article, Tag } from '../../types/shared'
