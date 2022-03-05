@@ -1,11 +1,21 @@
-import styled from 'styled-components/macro'
+import styled, { keyframes, css } from 'styled-components/macro'
 import { flex } from '../../styles/mixins'
 import { DesignSystem } from '../../styles/shared'
+import ReactMarkdown from 'react-markdown'
 
 const {
   color,
-  typography: { subheading }
+  typography: { subheading, heading_sm }
 } = DesignSystem
+
+const fadeIn = keyframes`
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+`
+
+interface StyleProps {
+  isActive: boolean
+}
 
 export const Container = styled.div`
   width: 100%;
@@ -80,6 +90,130 @@ export const Tag = styled.span`
   }
 `
 
-export const NoTagMessage = styled.span``
+export const TextArea = styled.textarea`
+  width: 100%;
+  height: 100%;
+  min-height: 20rem;
+  max-width: 81rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  font-size: 1.4rem;
+  border: 1px solid #6e8098;
+  background-color: transparent;
+  color: ${({ theme }) => theme.text.primary};
+  resize: vertical;
+  visibility: ${(props: StyleProps) => (props.isActive ? 'hidden' : 'visible')};
+`
 
-export const ButtonContainer = styled.div``
+export const MarkdownContainer = styled(ReactMarkdown)`
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  border-radius: 0.5rem;
+  border: 1px solid #6e8098;
+  padding: 1rem;
+  color: ${({ theme }) => theme.text.primary};
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  visibility: ${(props: StyleProps) => (props.isActive ? 'visible' : 'hidden')};
+  & > *:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+  & > ul {
+    margin-left: 2rem;
+  }
+`
+
+export const MarkdownWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  max-width: 81rem;
+  min-height: 20rem;
+  position: relative;
+  ${flex('flex-start', 'flex-start', 'column')};
+  & > svg {
+    position: absolute;
+    top: 1rem;
+    right: 2.1rem;
+  }
+`
+
+export const NoTagMessage = styled.span`
+  font-size: 1.3rem;
+  ${heading_sm()};
+  color: #6e8098;
+`
+
+export const ButtonContainer = styled.div`
+  width: auto;
+  height: auto;
+`
+
+export const MarkdownButtonContainer = styled(ButtonContainer)`
+  ${flex()};
+  position: absolute;
+  top: 1rem;
+  right: 2.1rem;
+  z-index: 5;
+`
+
+export const ButtonWrapper = styled.div`
+  width: 12rem;
+  height: 2rem;
+  background: lightgray;
+  margin-right: 1rem;
+  border-radius: 0.3rem;
+  ${flex()};
+  position: relative;
+`
+
+export const BaseButton = styled.button`
+  width: 100%;
+  height: 2rem;
+  font-size: 9px;
+  ${flex()};
+  ${heading_sm()};
+  background-color: transparent;
+  border: none;
+  outline: none;
+  user-select: none;
+  cursor: pointer;
+`
+
+export const WriteButton = styled(BaseButton)``
+export const PreviewButton = styled(BaseButton)``
+
+export const AnimatedSlider = styled.span`
+  width: 50%;
+  height: 2rem;
+  background-color: ${color.neon.blue};
+  position: absolute;
+  top: 0;
+  left: 0;
+  ${flex()};
+  ${heading_sm()};
+  font-size: 9px;
+  color: ${({ theme }) => theme.text.primary};
+  transform: ${(props: StyleProps) => props.isActive && 'translateX(100%)'};
+  transform: ${(props: StyleProps) => !props.isActive && 'translateX(0%)'};
+  border-top-left-radius: ${(props: StyleProps) => (props.isActive ? '0' : '0.3rem')};
+  border-bottom-left-radius: ${(props: StyleProps) => (props.isActive ? '0' : '0.3rem')};
+  border-top-right-radius: ${(props: StyleProps) => (props.isActive ? '0.3rem' : '0')};
+  border-bottom-right-radius: ${(props: StyleProps) => (props.isActive ? '0.3rem' : '0')};
+  transition: transform 0.2s ease-in-out;
+`
+
+export const ActiveText = styled.span`
+  /* animation: ${(props: StyleProps) =>
+    props.isActive
+      ? css`
+          ${fadeIn} 0.5s ease-in-out backwards 0.3s
+        `
+      : css`
+          ${fadeIn} 0.5s ease-in-out backwards 0.3s
+        `}; */
+  animation: ${fadeIn} 2s ease-in-out forwards;
+`

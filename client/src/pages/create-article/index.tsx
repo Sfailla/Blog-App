@@ -3,27 +3,35 @@ import { useNavigate } from 'react-router-dom'
 import { SubmitButton, AddTagButton, DeleteTagButton } from '../../components/buttons'
 import { useFormValidation } from '../../hooks'
 import { validateArticle } from './validation'
-import { CloseIcon } from '../../assets/svg'
+import { CloseIcon, MarkdownIcon } from '../../assets/svg'
 import { CreateArticleFields } from '../../types/forms'
-import { useTags } from '../hooks'
+import { useTags, useMarkdownPreview } from '../hooks'
 import {
   LayoutWrapper,
   PageTitle,
   PageContainer,
   FormGroup,
   Label,
-  Input,
-  TextArea
+  Input
 } from '../../styles/shared'
 import {
-  MainContent,
+  Tag,
   Form,
+  MainContent,
   Wrapper,
   TagInput,
+  TextArea,
   TagListItems,
   NoTagMessage,
-  Tag,
-  ButtonContainer
+  ButtonContainer,
+  ButtonWrapper,
+  MarkdownButtonContainer,
+  MarkdownContainer,
+  MarkdownWrapper,
+  PreviewButton,
+  WriteButton,
+  AnimatedSlider,
+  ActiveText
 } from './style'
 
 interface Props {
@@ -32,18 +40,18 @@ interface Props {
 
 export default function CreateArticlePage({ createArticle }: Props): ReactElement {
   const { tagList, tagName, handleTagChange, addTag, removeTag } = useTags()
-  const navigate = useNavigate()
   const { values, handleChange, handleSubmit } = useFormValidation(
     { title: '', description: '', body: '' },
     validateArticle,
     submitForm
   )
 
+  const { markdownPreview, toggleMarkdownPreview } = useMarkdownPreview()
+
+  const navigate = useNavigate()
+
   function submitForm(): void {
-    const articleFields: CreateArticleFields = {
-      ...values,
-      tags: tagList
-    }
+    const articleFields: CreateArticleFields = { ...values, tags: tagList }
     createArticle(articleFields)
     navigate('/')
   }
@@ -79,15 +87,26 @@ export default function CreateArticlePage({ createArticle }: Props): ReactElemen
               />
             </FormGroup>
             <FormGroup>
-              <Label htmlFor="body">Article Body</Label>
-              <TextArea
-                id="body"
-                name="body"
-                autoComplete="off"
-                value={values.body}
-                onChange={handleChange}
-                placeholder="Enter article"
-              />
+              <Label htmlFor="body">Article</Label>
+              <MarkdownWrapper>
+                <MarkdownButtonContainer>
+                  <MarkdownToggleButton
+                    isActive={markdownPreview}
+                    toggleMarkdownPreview={toggleMarkdownPreview}
+                  />
+                  <MarkdownIcon width={25} height={22} fill="#ff0097" />
+                </MarkdownButtonContainer>
+                <MarkdownContainer isActive={markdownPreview}>{values.body}</MarkdownContainer>
+                <TextArea
+                  id="body"
+                  name="body"
+                  autoComplete="off"
+                  value={values.body}
+                  onChange={handleChange}
+                  isActive={markdownPreview}
+                  placeholder="compose your article (markdown supported)"
+                />
+              </MarkdownWrapper>
             </FormGroup>
             <FormGroup>
               <Label htmlFor="tag">Add Article Tags</Label>
@@ -131,5 +150,22 @@ export default function CreateArticlePage({ createArticle }: Props): ReactElemen
         </MainContent>
       </LayoutWrapper>
     </PageContainer>
+  )
+}
+
+interface ToggleProps {
+  isActive: boolean
+  toggleMarkdownPreview: () => void
+}
+
+const MarkdownToggleButton = ({ isActive, toggleMarkdownPreview }: ToggleProps): ReactElement => {
+  return (
+    <ButtonWrapper>
+      <WriteButton onClick={toggleMarkdownPreview}>Write</WriteButton>
+      <PreviewButton onClick={toggleMarkdownPreview}>Preview</PreviewButton>
+      <AnimatedSlider isActive={isActive}>
+        <ActiveText isActive={isActive}>{isActive ? 'preview' : 'write'}</ActiveText>
+      </AnimatedSlider>
+    </ButtonWrapper>
   )
 }

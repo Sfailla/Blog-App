@@ -33,6 +33,7 @@ export const PageTitle = styled.h1`
 export const FormGroup = styled.div`
   width: 100%;
   height: 100%;
+  position: relative;
   &:not(:last-child) {
     margin-bottom: 2rem;
   }
@@ -54,21 +55,6 @@ export const Input = styled.input`
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   font-family: monospace;
-  font-size: 1.4rem;
-  border: 1px solid #6e8098;
-  background-color: transparent;
-  color: ${({ theme }) => theme.text.primary};
-  &::placeholder {
-  }
-`
-
-export const TextArea = styled.textarea`
-  width: 100%;
-  height: 100%;
-  min-height: 10rem;
-  max-width: 81rem;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
   font-size: 1.4rem;
   border: 1px solid #6e8098;
   background-color: transparent;
@@ -142,7 +128,7 @@ export const DesignSystem = {
     heading_sm() {
       return css`
         font-family: 'Roboto', sans-serif;
-        font-weight: 500;
+        font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 1px;
       `
