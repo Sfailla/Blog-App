@@ -1,10 +1,11 @@
-import styled, { keyframes, css } from 'styled-components/macro'
+import styled, { keyframes } from 'styled-components/macro'
 import { flex } from '../../styles/mixins'
 import { DesignSystem } from '../../styles/shared'
 import ReactMarkdown from 'react-markdown'
 
 const {
   color,
+  shadow,
   typography: { subheading, heading_sm }
 } = DesignSystem
 
@@ -163,19 +164,22 @@ export const MarkdownButtonContainer = styled(ButtonContainer)`
 export const ButtonWrapper = styled.div`
   width: 12rem;
   height: 2rem;
-  background: lightgray;
+  background: #e9e9e9;
   margin-right: 1rem;
   border-radius: 0.3rem;
   ${flex()};
   position: relative;
+  box-shadow: ${shadow.sm};
 `
 
 export const BaseButton = styled.button`
   width: 100%;
   height: 2rem;
   font-size: 9px;
+  color: #909090;
   ${flex()};
   ${heading_sm()};
+  font-weight: 400;
   background-color: transparent;
   border: none;
   outline: none;
@@ -196,24 +200,16 @@ export const AnimatedSlider = styled.span`
   ${flex()};
   ${heading_sm()};
   font-size: 9px;
-  color: ${({ theme }) => theme.text.primary};
-  transform: ${(props: StyleProps) => props.isActive && 'translateX(100%)'};
-  transform: ${(props: StyleProps) => !props.isActive && 'translateX(0%)'};
+  color: ${color.secondary.white};
+  transform: ${(props: StyleProps) => (props.isActive ? 'translateX(100%)' : 'translateX(0%)')};
   border-top-left-radius: ${(props: StyleProps) => (props.isActive ? '0' : '0.3rem')};
   border-bottom-left-radius: ${(props: StyleProps) => (props.isActive ? '0' : '0.3rem')};
   border-top-right-radius: ${(props: StyleProps) => (props.isActive ? '0.3rem' : '0')};
   border-bottom-right-radius: ${(props: StyleProps) => (props.isActive ? '0.3rem' : '0')};
   transition: transform 0.2s ease-in-out;
+  box-shadow: ${shadow.sm};
 `
 
 export const ActiveText = styled.span`
-  /* animation: ${(props: StyleProps) =>
-    props.isActive
-      ? css`
-          ${fadeIn} 0.5s ease-in-out backwards 0.3s
-        `
-      : css`
-          ${fadeIn} 0.5s ease-in-out backwards 0.3s
-        `}; */
-  animation: ${fadeIn} 2s ease-in-out forwards;
+  animation: ${fadeIn} 0.3s ease-in-out forwards;
 `

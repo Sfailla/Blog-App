@@ -164,7 +164,7 @@ const MarkdownToggleButton = ({ isActive, toggleMarkdownPreview }: ToggleProps):
       <WriteButton onClick={toggleMarkdownPreview}>Write</WriteButton>
       <PreviewButton onClick={toggleMarkdownPreview}>Preview</PreviewButton>
       <AnimatedSlider isActive={isActive}>
-        <ActiveText isActive={isActive}>{isActive ? 'preview' : 'write'}</ActiveText>
+        <ActiveText>{isActive ? 'preview' : 'write'}</ActiveText>
       </AnimatedSlider>
     </ButtonWrapper>
   )

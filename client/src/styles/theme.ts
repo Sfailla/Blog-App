@@ -24,7 +24,8 @@ export const theme = {
       hover: '#8957e5'
     },
     button: {
-      normal: '#105151'
+      normal: '#105151',
+      preview: '#000000'
     }
   },
   dark: {
@@ -50,7 +51,8 @@ export const theme = {
       hover: '#0000EE'
     },
     button: {
-      normal: '#0f8fff'
+      normal: '#0f8fff',
+      preview: '#e9e9e9'
     }
   }
 }

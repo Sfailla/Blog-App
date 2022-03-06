@@ -1,6 +1,9 @@
 import styled from 'styled-components/macro'
 import { Link } from 'react-router-dom'
 import { flex } from '../../styles/mixins'
+import { DesignSystem } from '../../styles/shared'
+
+const { shadow } = DesignSystem
 
 const Button = styled.button`
   width: auto;
@@ -15,11 +18,13 @@ const Button = styled.button`
   letter-spacing: 1px;
   background-color: ${({ theme }) => theme.button.normal};
   cursor: pointer;
+  box-shadow: ${shadow.sm};
 `
 
 export const SubmitButton = styled(Button)`
   width: 100%;
   max-width: 13rem;
+  box-shadow: ${shadow.md};
 `
 
 export const LogoutButton = styled(Button)`
