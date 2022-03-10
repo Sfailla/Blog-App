@@ -10,7 +10,16 @@ import '@testing-library/jest-dom'
 import '@testing-library/user-event'
 
 import { setupServer } from 'msw/node'
+import { ReactNode } from 'react'
 import { handlers } from './test/server-handlers'
+
+// mocking react-markdown package because jest doesn't yet support esm
+jest.mock('react-markdown', () => ({
+  __esModule: true,
+  default: ({ children }: { children: ReactNode }) => {
+    return children
+  }
+}))
 
 const server = setupServer(...handlers)
 /*
