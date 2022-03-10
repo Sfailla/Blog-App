@@ -58,5 +58,14 @@
   "proxy": "http://localhost:3001/api/v1",
   "msw": {
     "workerDirectory": "public"
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "/node_modules/(?!(react-markdown)/)"
+    ],
+    "transform": {
+      "^.+\\.ts?$": "ts-jest",
+      "^.+\\.(js|jsx)$": "babel-jest"
+    }
   }
 }
