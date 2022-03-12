@@ -13,7 +13,7 @@ export default function Navigation(): ReactElement {
         <NavList>
           <NavLink to="/">Home</NavLink>
           <NavLink to="/settings">Settings</NavLink>
-          <Avatar user={user} />
+          <Avatar username={user.username} />
           <LogoutButton onClick={logout}>Sign out</LogoutButton>
         </NavList>
       ) : (

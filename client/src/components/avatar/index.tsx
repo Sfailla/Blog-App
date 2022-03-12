@@ -1,16 +1,15 @@
 import { ReactElement } from 'react'
-import { UserFields } from '../../types/shared'
 import { Container, AvatarLogo, AvatarName } from './style'
 
 interface Props {
-  user: UserFields
+  username: string | undefined
 }
 
-export default function Avatar({ user }: Props): ReactElement {
+export default function Avatar({ username }: Props): ReactElement {
   return (
     <Container>
       <AvatarLogo />
-      <AvatarName>{user.username}</AvatarName>
+      <AvatarName>{username}</AvatarName>
     </Container>
   )
 }

@@ -14,7 +14,7 @@ export default function ArticleDetails(): ReactElement {
     <PageContainer>
       <LayoutWrapper>
         <ArticlePageCard article={article} />
-        <CommentSection />
+        <CommentSection article={article} />
       </LayoutWrapper>
     </PageContainer>
   )
