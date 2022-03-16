@@ -88,6 +88,8 @@ module.exports = class ArticleDatabaseService {
       select: ['username', 'name', 'bio', 'image']
     })
 
+    console.log({ articles })
+
     if (!articles) {
       return this.articleError('error fetching all articles')
     }
@@ -257,6 +259,7 @@ module.exports = class ArticleDatabaseService {
   }
 
   createCommentForArticle = async (authUser, articleSlug, commentFields) => {
+    console.log({ authUser })
     const profile = await this.profile.findOne({ user: authUser.id })
 
     if (!profile) {
@@ -267,7 +270,7 @@ module.exports = class ArticleDatabaseService {
     const createComment = {
       ...commentFields,
       article: article._id,
-      author: profile.user
+      author: authUser.id
     }
 
     if (!article) {
@@ -275,9 +278,14 @@ module.exports = class ArticleDatabaseService {
     }
 
     const comment = await this.comment.create({ ...createComment })
+    // return comment.populate({
+    //   path: 'author',
+    //   model: 'Profile',
+    //   select: ['username', 'name', 'bio', 'image']
+    // })
 
     if (!comment) return this.articleError('error creating comment')
-    await article.addComment(article._id, comment)
+    // await article.addComment(article._id, comment)
 
     return {
       comment: makeCommentObj(comment),
@@ -294,12 +302,24 @@ module.exports = class ArticleDatabaseService {
       )
     }
 
-    const getComments = await this.comment.find({ article: article._id }).populate({
-      path: 'author',
-      model: 'Profile',
-      select: ['username', 'name', 'bio', 'image']
-      // select: ['author', 'title', 'slug', 'tags']
+    const getComments = await this.comment.find({ article: article._id }, null, {
+      sort: { createdAt: -1 },
+      limit: 10,
+      skip: 0
     })
+    // .populate({
+    //   path: 'author',
+    //   model: 'Profile',
+    //   select: ['username', 'name', 'bio', 'image']
+    // })
+
+    // populate getComments author field with Profile model
+
+    // const populateComments = await Promise.all(
+    //   getComments.map(comment => comment.populate({ path: 'author', model: 'Profile' }))
+    // )
+
+    console.log({ getComments })
 
     if (!getComments) {
       return this.articleError(`error fetching comments for ${article.title}`)
