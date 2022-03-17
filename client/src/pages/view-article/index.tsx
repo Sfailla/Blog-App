@@ -10,11 +10,24 @@ export default function ArticleDetails(): ReactElement {
     state: { article }
   } = useLocation()
 
+  const comment = {
+    id: '',
+    author: {
+      username: '',
+      avatar: null,
+      id: ''
+    },
+    comment: '',
+    article: '',
+    createdAt: '',
+    updatedAt: ''
+  }
+
   return (
     <PageContainer>
       <LayoutWrapper>
         <ArticlePageCard article={article} />
-        <CommentSection article={article} />
+        <CommentSection comment={comment} />
       </LayoutWrapper>
     </PageContainer>
   )

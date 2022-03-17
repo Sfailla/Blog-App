@@ -1,7 +1,7 @@
 ///// SHARED INTERFACES & TYPES /////
 
 export interface Author {
-  avatar: null
+  avatar: string | null
   username: string
   id: string
 }
