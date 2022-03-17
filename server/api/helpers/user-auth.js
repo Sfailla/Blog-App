@@ -9,7 +9,7 @@ const crypto = require('crypto')
  */
 
 const makeAuthUser = user => {
-  const { id, username, fullname, email, role } = user
+  const { id, username, email, role } = user
   return { id, username, email, role }
 }
 
