@@ -15,7 +15,6 @@ const ArticleSchema = new Schema(
     description: { ...requiredString, trim: true },
     body: { ...requiredString, trim: true },
     image: { type: String, default: null },
-    comments: [{ type: ObjectId, ref: 'Comment', default: [] }],
     tags: [{ type: String, trim: true, lowercase: true, default: [] }],
     favoriteCount: { type: Number, default: 0 },
     createdAt: { type: Date, default: Date.now },
@@ -45,20 +44,6 @@ ArticleSchema.methods.updateCount = async function () {
   })
   this.favoriteCount = count
   return this.save()
-}
-
-ArticleSchema.methods.addComment = async function (articleId, comment) {
-  if (this._id.toString() === articleId.toString()) {
-    await this.comments.push(comment)
-  }
-  return await this.save()
-}
-
-ArticleSchema.methods.deleteComment = async function (commentId) {
-  if (this.comments.includes(commentId)) {
-    await this.comments.remove(commentId)
-  }
-  return await this.save()
 }
 
 module.exports = model('Article', ArticleSchema)

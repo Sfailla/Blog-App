@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const colorTerminal = require('../../../config/terminalColors')
+const colorTerminal = require('../../../vendor/terminalColors')
 const { ValidationError } = require('../../middleware/utils/errors')
 const { ObjectId } = mongoose.Types
 
@@ -41,8 +41,7 @@ const makeDbConnection = async () => {
   })
 
   try {
-    const connect = await mongoose.connect(url, mongooseOptions)
-    return connect
+    await mongoose.connect(url, mongooseOptions)
   } catch (err) {
     return new ValidationError(500, err.toString())
   }
