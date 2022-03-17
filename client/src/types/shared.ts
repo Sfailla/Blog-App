@@ -1,10 +1,34 @@
 ///// SHARED INTERFACES & TYPES /////
 
+export type UserFields = User | null
+
+export interface User {
+  id: string
+  username: string
+  email: string
+  role: string
+}
+
 export interface Author {
   avatar: string | null
   username: string
   id: string
 }
+
+export interface Profile {
+  id: string
+  username: string
+  fullname: string
+  avatar: string
+  bio: string
+  favorites?: string[]
+  following?: string[]
+  isFollowing: boolean
+  createdAt?: string
+  updatedAt?: string
+}
+
+export type ExtendedUser = User & Pick<Profile, 'avatar' | 'fullname' | 'bio'>
 
 export type Tag = string
 
@@ -56,16 +80,6 @@ export interface TagsOrError {
 }
 
 export type TryCatchError = any & Error
-
-export type User = UserFields | null
-
-export interface UserFields {
-  id: string
-  username: string
-  email: string
-  avatar: string
-  role: string
-}
 
 export type ToastVariant = 'success' | 'error' | 'info' | 'warning'
 export type ToastTheme = 'dark' | 'light'

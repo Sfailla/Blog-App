@@ -3,13 +3,14 @@ import { AxiosRequestConfig, AxiosResponse } from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { useAxiosInstance } from '../hooks'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { TryCatchError, User } from '../types/shared'
+import { TryCatchError, User, Profile } from '../types/shared'
 import { FieldValues } from '../types/forms'
 import { endpoints } from '../axios/constants'
 import { useLocation } from 'react-router-dom'
 
 export interface UseAuth {
-  user: User
+  user: User | null
+  profile: Profile | null
   register: (fields: FieldValues) => void
   login: (fields: FieldValues) => void
   logout: () => void
@@ -18,13 +19,14 @@ export interface UseAuth {
 }
 
 export function useAuth(): UseAuth {
-  const [user, setUser] = useState<User>(null)
+  const [user, setUser] = useState<User | null>(null)
+  const [profile, setProfile] = useState<Profile | null>(null)
   const [loading, setLoading] = useState<boolean>(false)
-  const isAuthenticated = localStorage.getItem('auth-flag')
   const [error, setError] = useState<string>('')
   const initialRender = useRef<boolean>(true)
-  const axiosInstance = useAxiosInstance()
 
+  const isAuthenticated = localStorage.getItem('auth-flag')
+  const axiosInstance = useAxiosInstance()
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -41,7 +43,9 @@ export function useAuth(): UseAuth {
       if (response.data.error) {
         setError(response.data.error.message)
       } else {
-        setUser(response.data.user)
+        const user = response.data.user
+        setUser(user)
+        await getUserProfile(user.username)
         localStorage.setItem('auth-flag', response.data.user.id)
         navigate('/')
       }
@@ -64,7 +68,9 @@ export function useAuth(): UseAuth {
       if (response.data.error) {
         setError(response.data.error.message)
       } else {
-        setUser(response.data.user)
+        const user = response.data.user
+        setUser(user)
+        await getUserProfile(user.username)
         localStorage.setItem('auth-flag', response.data.user.id)
         navigate('/')
       }
@@ -88,6 +94,7 @@ export function useAuth(): UseAuth {
         setError(response.data.error.message)
       } else {
         setUser(null)
+        setProfile(null)
         localStorage.removeItem('auth-flag')
         setLoading(false)
       }
@@ -95,6 +102,23 @@ export function useAuth(): UseAuth {
       setError(error.message)
     } finally {
       setLoading(false)
+    }
+  }
+
+  async function getUserProfile(username: string): Promise<void> {
+    try {
+      const request: AxiosRequestConfig = {
+        url: `${endpoints.profiles}/${username}`,
+        method: 'GET'
+      }
+      const response: AxiosResponse = await axiosInstance(request)
+      if (response.data.error) {
+        setError(response.data.error.message)
+      } else {
+        setProfile(response.data.profile)
+      }
+    } catch (error: TryCatchError) {
+      setError(error.message)
     }
   }
 
@@ -116,25 +140,18 @@ export function useAuth(): UseAuth {
   }, [axiosInstance])
 
   useEffect(() => {
-    if (isAuthenticated) {
-      checkUserSession()
-    }
-
-    return () => {
-      setUser(null)
-    }
+    if (isAuthenticated) checkUserSession()
+    return () => setUser(null)
   }, [isAuthenticated, checkUserSession])
 
   useEffect(() => {
-    if (initialRender.current) {
-      initialRender.current = false
-    } else {
-      setError('')
-    }
+    if (initialRender.current) initialRender.current = false
+    else setError('')
   }, [location])
 
   return {
     user,
+    profile,
     register,
     login,
     logout,
