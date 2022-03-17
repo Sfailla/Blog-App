@@ -25,7 +25,6 @@ const UserSchema = new Schema(
       lowercase: true,
       validate: validateEmail
     },
-    fullname: { type: String, default: null },
     password: { ...requiredString, trim: true },
     role: {
       type: String,

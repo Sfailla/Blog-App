@@ -3,17 +3,20 @@ const { ValidationError } = require('../middleware/utils/errors')
 const { trimRequest } = require('../helpers/validation')
 
 module.exports = class ProfileDatabaseService {
-  constructor(profileModel) {
+  constructor(profileModel, userModel) {
     this.profile = profileModel
+    this.user = userModel
   }
 
   fetchUserProfile = async username => {
     const profile = await this.profile.findOne({ username })
+
     if (!profile) {
       const errMsg = 'error fetching user profile'
       const err = new ValidationError(400, errMsg)
       return { err }
     }
+
     return { profile: await makeUserProfile(profile) }
   }
 

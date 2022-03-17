@@ -10,7 +10,7 @@ const crypto = require('crypto')
 
 const makeAuthUser = user => {
   const { id, username, fullname, email, role } = user
-  return { id, username, fullname, email, role }
+  return { id, username, email, role }
 }
 
 const makeUserProfile = async (profile, user) => {
@@ -18,7 +18,8 @@ const makeUserProfile = async (profile, user) => {
     id: profile._id,
     username: profile.username,
     bio: profile.bio,
-    avatar: profile.image,
+    fullname: profile.fullname,
+    avatar: profile.avatar,
     favorites: profile.favorites,
     following: profile.following,
     isFollowing: user ? await profile.isFollowing(user._id) : false

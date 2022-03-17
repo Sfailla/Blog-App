@@ -13,7 +13,7 @@ const makeDbConnection = async () => {
     promiseLibrary: global.Promise
   }
 
-  const url = process.env.MONGOOSE_TEST_URL
+  const url = process.env.MONGOOSE_URL
 
   console.log(url)
 
