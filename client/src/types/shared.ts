@@ -1,9 +1,7 @@
 ///// SHARED INTERFACES & TYPES /////
 
 export interface Author {
-  name: null
-  bio: null
-  image: null
+  avatar: null
   username: string
   id: string
 }
@@ -12,17 +10,26 @@ export type Tag = string
 
 export interface Article {
   id: string
-  author: Partial<Author>
+  author: Author
   slug: string
   title: string
   description: string
   body: string
-  image: string
+  avatar: string
   tags: Tag[]
-  createdAt: string
-  updatedAt: string
   isFavorite?: boolean
   favoritedCount?: number
+  createdAt: string
+  updatedAt: string
+}
+
+export interface Comment {
+  id: string
+  author: Author
+  comment: string
+  article: string
+  createdAt: string
+  updatedAt: string
 }
 
 export interface ServerError {
@@ -56,6 +63,7 @@ export interface UserFields {
   id: string
   username: string
   email: string
+  avatar: string
   role: string
 }
 

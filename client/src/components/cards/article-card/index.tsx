@@ -29,7 +29,7 @@ export default function ArticleCard({ article }: Props) {
       <ArticlePreview>
         <Wrapper>
           <ArticleMeta>
-            <Avatar src={article.image} />
+            <Avatar src={article.avatar} />
             <ContentWrapper>
               <AuthorName>{article.author.username}</AuthorName>
               <CreatedDate>{convertToReadableDate(article.createdAt)}</CreatedDate>

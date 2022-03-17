@@ -27,7 +27,7 @@ export default function ArticlePageCard({ article }: Props): ReactElement {
       </ArticleTitle>
 
       <ArticleMeta>
-        <Avatar src={article.image} />
+        <Avatar src={article.avatar} />
         <ContentWrapper>
           <AuthorName>{article.author.username}</AuthorName>
           <CreatedDate>{convertToReadableDate(article.createdAt)}</CreatedDate>

@@ -1,6 +1,5 @@
 import { ReactElement } from 'react'
-import { Article } from '../../types/shared'
-import Avatar from '../avatar'
+import { Comment } from '../../types/shared'
 import {
   Container,
   Title,
@@ -9,30 +8,39 @@ import {
   TextArea,
   Divider,
   GridContainer,
-  Wrapper
+  Wrapper,
+  Avatar,
+  Author
 } from './style'
 
 interface Props {
-  article: Article
+  comment: Comment
 }
 
-export default function CommentSection({ article }: Props): ReactElement {
+export default function ArticleComments({ comment }: Props): ReactElement {
   return (
     <Container>
       <Title>Comments section</Title>
       <Divider />
-      <Form>
-        <FormGroup>
-          <GridContainer>
-            <Avatar username={article.author.username} />
-            <Wrapper>
-              <TextArea name="comment" placeholder="Write a comment..." />
-              <button>post</button>
-              {/* <PostCommentButton>Post</PostCommentButton> */}
-            </Wrapper>
-          </GridContainer>
-        </FormGroup>
-      </Form>
+      <CommentPostSection comment={comment} />
     </Container>
+  )
+}
+
+function CommentPostSection({ comment }: Props): ReactElement {
+  return (
+    <Form>
+      <FormGroup>
+        <GridContainer>
+          <Avatar />
+          <Wrapper>
+            <Author>{comment.author.username}</Author>
+            <TextArea name="comment" placeholder="Write a comment..." />
+            <button>post</button>
+            {/* <PostCommentButton>Post</PostCommentButton> */}
+          </Wrapper>
+        </GridContainer>
+      </FormGroup>
+    </Form>
   )
 }

@@ -44,3 +44,12 @@ export const Divider = styled.hr``
 
 export const GridContainer = styled.div``
 export const Wrapper = styled.div``
+
+export const Avatar = styled.img`
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background-color: lightblue;
+`
+
+export const Author = styled.h4``
