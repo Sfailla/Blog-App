@@ -21,13 +21,6 @@ const CommentSchema = new Schema(
   }
 )
 
-const autoPopulateAuthor = function (next) {
-  this.populate('author')
-  next()
-}
-
-CommentSchema.pre('find', autoPopulateAuthor).pre('findOne', autoPopulateAuthor)
-
 CommentSchema.methods.deleteComment = async function (userId, commentId) {
   if (this.author.toString() === userId.toString()) {
     if (this._id.toString() === commentId.toString()) {

@@ -4,9 +4,7 @@ const { ObjectId } = Types
 
 const ProfileSchema = new Schema(
   {
-    user: { type: ObjectId, ref: 'User' },
     username: { type: String },
-    name: { type: String, default: null },
     bio: { type: String, default: null },
     image: { type: String, default: null },
     favorites: [{ type: ObjectId, ref: 'Article', default: [] }],

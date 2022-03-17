@@ -9,15 +9,14 @@ const crypto = require('crypto')
  */
 
 const makeAuthUser = user => {
-  const { id, username, email, role } = user
-  return { id, username, email, role }
+  const { id, username, fullname, email, role } = user
+  return { id, username, fullname, email, role }
 }
 
 const makeUserProfile = async (profile, user) => {
   return {
     id: profile._id,
     username: profile.username,
-    name: profile.name,
     bio: profile.bio,
     avatar: profile.image,
     favorites: profile.favorites,
@@ -48,8 +47,6 @@ const signAndSetCookie = (res, value) => {
     httpOnly: true, // The cookie only accessible by the web server
     signed: true, // Indicates if the cookie should be signed
     sameSite: 'strict' // prevents against xss attacks
-
-    // secure: true // request must come from webserver
   }
   res.cookie('refresh-token', value, options)
 }

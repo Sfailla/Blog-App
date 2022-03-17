@@ -8,6 +8,7 @@ const {
   formatFavorites,
   makeCommentObj
 } = require('../helpers/article')
+const { isValidObjectId } = require('mongoose')
 
 module.exports = class ArticleDatabaseService {
   constructor(articleModel, userModel, profileModel, commentModel) {
@@ -21,8 +22,8 @@ module.exports = class ArticleDatabaseService {
   articleError = errMsg => ({ err: new ValidationError(400, errMsg) })
 
   // create article
-  createArticle = async (userId, articleFields) => {
-    const profile = await this.profile.findOne({ user: userId })
+  createArticle = async (user, articleFields) => {
+    const profile = await this.profile.findOne({ username: user.username })
 
     if (!profile) {
       return this.articleError('error fetching user')
@@ -36,7 +37,7 @@ module.exports = class ArticleDatabaseService {
     const updatedArticle = await this.article.findOne(article._id).populate({
       path: 'author',
       model: 'Profile',
-      select: ['username', 'name', 'bio', 'image']
+      select: ['username', 'bio', 'image']
     })
 
     if (!article) {
@@ -85,10 +86,8 @@ module.exports = class ArticleDatabaseService {
     const articles = await this.article.find(query, null, options).populate({
       path: 'author',
       model: 'Profile',
-      select: ['username', 'name', 'bio', 'image']
+      select: ['username', 'bio', 'image']
     })
-
-    console.log({ articles })
 
     if (!articles) {
       return this.articleError('error fetching all articles')
@@ -122,7 +121,7 @@ module.exports = class ArticleDatabaseService {
       const articles = await this.article.find(sorting.query, null, sorting.options).populate({
         path: 'author',
         model: 'Profile',
-        select: ['username', 'name', 'bio', 'image']
+        select: ['username', 'bio', 'image']
       })
 
       if (!articles) {
@@ -145,7 +144,7 @@ module.exports = class ArticleDatabaseService {
     const article = await this.article.findOne({ slug }).populate({
       path: 'author',
       model: 'Profile',
-      select: ['username', 'name', 'bio', 'image']
+      select: ['username', 'bio', 'image']
     })
     if (!article) {
       return this.articleError('error fetching article slug')
@@ -159,7 +158,7 @@ module.exports = class ArticleDatabaseService {
     const article = await this.article.findOne({ slug }).populate({
       path: 'author',
       model: 'Profile',
-      select: ['username', 'name', 'bio', 'image']
+      select: ['username', 'bio', 'image']
     })
 
     if (!article) {
@@ -230,7 +229,7 @@ module.exports = class ArticleDatabaseService {
     let article = await this.article.findOneAndUpdate(query, update, { new: true }).populate({
       path: 'author',
       model: 'Profile',
-      select: ['username', 'name', 'bio', 'image']
+      select: ['username', 'bio', 'image']
     })
 
     if (!article) {
@@ -259,7 +258,6 @@ module.exports = class ArticleDatabaseService {
   }
 
   createCommentForArticle = async (authUser, articleSlug, commentFields) => {
-    console.log({ authUser })
     const profile = await this.profile.findOne({ user: authUser.id })
 
     if (!profile) {
@@ -277,12 +275,13 @@ module.exports = class ArticleDatabaseService {
       this.articleError('error initializing create comment')
     }
 
-    const comment = await this.comment.create({ ...createComment })
-    // return comment.populate({
-    //   path: 'author',
-    //   model: 'Profile',
-    //   select: ['username', 'name', 'bio', 'image']
-    // })
+    const createdComment = await this.comment.create({ ...createComment })
+
+    const comment = await this.comment.findOne({ _id: createdComment._id }).populate({
+      path: 'author',
+      model: 'User',
+      select: ['username', 'name', 'email']
+    })
 
     if (!comment) return this.articleError('error creating comment')
     // await article.addComment(article._id, comment)
@@ -302,24 +301,17 @@ module.exports = class ArticleDatabaseService {
       )
     }
 
-    const getComments = await this.comment.find({ article: article._id }, null, {
-      sort: { createdAt: -1 },
-      limit: 10,
-      skip: 0
-    })
-    // .populate({
-    //   path: 'author',
-    //   model: 'Profile',
-    //   select: ['username', 'name', 'bio', 'image']
-    // })
-
-    // populate getComments author field with Profile model
-
-    // const populateComments = await Promise.all(
-    //   getComments.map(comment => comment.populate({ path: 'author', model: 'Profile' }))
-    // )
-
-    console.log({ getComments })
+    const getComments = await this.comment
+      .find({ article: article._id }, null, {
+        sort: { createdAt: -1 },
+        limit: 10,
+        skip: 0
+      })
+      .populate({
+        path: 'author',
+        model: 'User',
+        select: ['username', 'name', 'email']
+      })
 
     if (!getComments) {
       return this.articleError(`error fetching comments for ${article.title}`)

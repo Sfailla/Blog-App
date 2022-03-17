@@ -33,10 +33,7 @@ class UserDatabaseService {
   }
 
   createProfile = async user => {
-    const profile = await this.profileModel.create({
-      user: user.id,
-      username: user.username
-    })
+    const profile = await this.profileModel.create({ username: user.username })
     return { profile }
   }
 

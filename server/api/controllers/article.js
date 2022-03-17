@@ -5,7 +5,7 @@ module.exports = class ArticleController {
 
   createArticle = async (req, res, next) => {
     try {
-      const { article, err } = await this.service.createArticle(req.user.id, req.body)
+      const { article, err } = await this.service.createArticle(req.user, req.body)
       if (err) throw err
       return await res.status(200).json({
         message: 'successfully created article',
