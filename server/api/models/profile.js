@@ -9,7 +9,8 @@ const ProfileSchema = new Schema(
     avatar: { type: String, default: null },
     bio: { type: String, default: null },
     favorites: [{ type: ObjectId, ref: 'Article', default: [] }],
-    following: [{ type: ObjectId, ref: 'User', default: [] }]
+    following: [{ type: ObjectId, ref: 'User', default: [] }],
+    updatedAt: { type: Date, default: Date.now }
   },
   {
     toJSON: {

@@ -101,7 +101,7 @@ module.exports = class ArticleDatabaseService {
 
   // get all articles by logged in user
   getUserArticles = async (authUser, filters) => {
-    const profile = await this.profile.findOne({ user: authUser.id })
+    const profile = await this.profile.findOne({ username: authUser.username })
 
     if (!profile) {
       return this.articleError('error retrieving user')
