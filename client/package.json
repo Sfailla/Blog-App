@@ -61,10 +61,11 @@
   },
   "jest": {
     "transformIgnorePatterns": [
-      "/node_modules/(?!(react-markdown)/)"
+      "/node_modules/(?!(react-markdown)/)",
+      "/node_modules/(?!(react-syntax-highlighter)/)",
+      "/node_modules/(?!(a11yDark)/)"
     ],
     "transform": {
-      "^.+\\.ts?$": "ts-jest",
       "^.+\\.(js|jsx)$": "babel-jest"
     }
   }
