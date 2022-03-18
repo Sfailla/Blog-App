@@ -349,9 +349,7 @@ module.exports = class ArticleDatabaseService {
     const article = await this.article.findOne({ slug: articleSlug })
 
     if (!article) {
-      return this.articleError(
-        "error fetching article. It's possible that you accidentally entered the wrong article name"
-      )
+      return this.articleError('error fetching article')
     }
 
     const comment = await this.comment.findOne({ _id: commentId })
