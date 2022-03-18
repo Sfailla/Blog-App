@@ -6,6 +6,7 @@ import { validateArticle } from './validation'
 import { CloseIcon, MarkdownIcon } from '../../assets/svg'
 import { CreateArticleFields } from '../../types/forms'
 import { useTags, useMarkdownPreview } from '../hooks'
+import { useArticleContext } from '../../context/articleContext'
 import {
   LayoutWrapper,
   PageTitle,
@@ -34,11 +35,8 @@ import {
   ActiveText
 } from './style'
 
-interface Props {
-  createArticle: (articleFields: CreateArticleFields) => void
-}
-
-export default function CreateArticlePage({ createArticle }: Props): ReactElement {
+export default function CreateArticlePage(): ReactElement {
+  const { createArticle } = useArticleContext()
   const { tagList, tagName, handleTagChange, addTag, removeTag } = useTags()
   const { values, handleChange, handleSubmit } = useFormValidation(
     { title: '', description: '', body: '' },

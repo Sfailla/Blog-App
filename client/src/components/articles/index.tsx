@@ -1,5 +1,4 @@
 import { ReactElement } from 'react'
-import { Article, Tag } from '../../types/shared'
 import { TabbedArticleFeed, ArticleList } from '../../components'
 import { CreateArticleButton } from '../buttons'
 import { PlusIcon } from '../../assets/svg'
@@ -15,15 +14,11 @@ import {
 } from './style'
 
 import { useAuthContext } from '../../context/authContext'
+import { useArticleContext } from '../../context/articleContext'
 
-interface Props {
-  articles: Article[]
-  userArticles?: Article[] | undefined
-  tags: Tag[]
-}
-
-export default function ArticleFeed({ articles, userArticles, tags }: Props): ReactElement {
+export default function ArticleFeed(): ReactElement {
   const { user } = useAuthContext()
+  const { articles, userArticles, tags } = useArticleContext()
 
   return (
     <Container>

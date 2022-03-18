@@ -17,6 +17,7 @@ interface ArticleContextValues {
 }
 
 const ArticleContext = createContext<ArticleContextValues>({} as ArticleContextValues)
+ArticleContext.displayName = 'ArticleContext'
 
 export function useArticleContext() {
   const context = useContext(ArticleContext)
@@ -37,7 +38,14 @@ export function ArticleProvider(props: Props): ReactElement {
   } = useArticles()
 
   const contextValues = useMemo(
-    () => ({ tags, articles, userArticles, createArticle, loadingArticles, articleError }),
+    () => ({
+      tags,
+      articles,
+      userArticles,
+      createArticle,
+      loadingArticles,
+      articleError
+    }),
     [tags, articles, userArticles, createArticle, loadingArticles, articleError]
   )
 

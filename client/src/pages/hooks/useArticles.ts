@@ -9,11 +9,11 @@ import { CreateArticleFields } from '../../types/forms'
 
 interface UseArticles {
   loading: boolean
+  error: string
   tags: Tag[]
   articles: Article[]
   userArticles: Article[]
   createArticle: (articleFields: CreateArticleFields) => Await<void>
-  error: string
 }
 
 export default function useArticles(): UseArticles {
@@ -103,6 +103,29 @@ export default function useArticles(): UseArticles {
           setTags(prevState =>
             [...response.data.article.tags, ...prevState].sort((a, b) => a.localeCompare(b))
           )
+        }
+      } catch (error: TryCatchError) {
+        setError(error.message)
+      } finally {
+        setLoading(false)
+      }
+    },
+    [axiosInstance]
+  )
+
+  const fetchArticleComments: (articleSlug: string) => Await<void> = useCallback(
+    async articleSlug => {
+      setLoading(true)
+      try {
+        const request: AxiosRequestConfig = {
+          url: `${endpoints.articles}/${articleSlug}/comments`,
+          method: 'GET'
+        }
+        const response: AxiosResponse = await axiosInstance(request)
+        if (response.data?.error) {
+          setError(response.data.error.message)
+        } else {
+          console.log({ response })
         }
       } catch (error: TryCatchError) {
         setError(error.message)

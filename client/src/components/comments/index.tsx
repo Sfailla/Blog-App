@@ -1,5 +1,6 @@
 import { ReactElement } from 'react'
 import { Comment } from '../../types/shared'
+import { useAuthContext } from '../../context/authContext'
 import {
   Container,
   Title,
@@ -14,27 +15,29 @@ import {
 } from './style'
 
 interface Props {
-  comment: Comment
+  comments: Comment[]
 }
 
-export default function ArticleComments({ comment }: Props): ReactElement {
+export default function ArticleComments({ comments }: Props): ReactElement {
   return (
     <Container>
       <Title>Comments section</Title>
       <Divider />
-      <CommentPostSection comment={comment} />
+      <CommentPostSection />
     </Container>
   )
 }
 
-function CommentPostSection({ comment }: Props): ReactElement {
+function CommentPostSection(): ReactElement {
+  const { user } = useAuthContext()
+
   return (
     <Form>
       <FormGroup>
         <GridContainer>
           <Avatar />
           <Wrapper>
-            <Author>{comment.author.username}</Author>
+            <Author>{user && user.username}</Author>
             <TextArea name="comment" placeholder="Write a comment..." />
             <button>post</button>
             {/* <PostCommentButton>Post</PostCommentButton> */}
