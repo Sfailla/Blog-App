@@ -34,14 +34,10 @@ export default function useRippleEffect({
     const newRipple: Ripple = {
       key: event.timeStamp,
       style: {
-        display: 'block',
         width: rippleSize,
         height: rippleSize,
-        position: 'absolute',
         left: x - rippleSize / 2,
         top: y - rippleSize / 2,
-        borderRadius: '50%',
-        pointerEvents: 'none',
         ...styles
       }
     }

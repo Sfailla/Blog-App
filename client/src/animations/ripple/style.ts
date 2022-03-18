@@ -8,6 +8,10 @@ const RippleAnimation = keyframes`
 `
 
 export const Span = styled.span`
+  display: block;
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
   animation: ${RippleAnimation} 0.7s linear;
   opacity: 0.6;
   background-color: white;
