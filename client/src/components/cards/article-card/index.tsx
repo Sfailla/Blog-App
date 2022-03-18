@@ -1,3 +1,4 @@
+import useRippleEffect from '../../../animations/ripple'
 import { Article } from '../../../types/shared'
 import { convertToReadableDate } from '../../../utils/helperFns'
 import {
@@ -24,6 +25,8 @@ interface Props {
 }
 
 export default function ArticleCard({ article }: Props) {
+  const [makeRipples, ripples] = useRippleEffect()
+
   return (
     <Container>
       <ArticlePreview>
@@ -35,8 +38,9 @@ export default function ArticleCard({ article }: Props) {
               <CreatedDate>{convertToReadableDate(article.createdAt)}</CreatedDate>
             </ContentWrapper>
           </ArticleMeta>
-          <Favorites>
-            <FavoriteCount>{article.favoritedCount}</FavoriteCount>
+          <Favorites onMouseDown={makeRipples}>
+            {ripples}
+            {/* <FavoriteCount>{article.favoritedCount}</FavoriteCount> */}
           </Favorites>
         </Wrapper>
         <ArticleBody>
