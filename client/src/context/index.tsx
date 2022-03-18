@@ -2,6 +2,7 @@ import { ReactElement, ReactNode } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { ThemeProvider } from './themeContext'
 import { AuthProvider } from './authContext'
+import { ArticleProvider } from './articleContext'
 import ScrollRestore from '../app/scrollRestore'
 
 interface Props {
@@ -13,7 +14,9 @@ export function AppProviders({ children }: Props): ReactElement {
     <Router>
       <ScrollRestore>
         <ThemeProvider>
-          <AuthProvider>{children}</AuthProvider>
+          <AuthProvider>
+            <ArticleProvider>{children}</ArticleProvider>
+          </AuthProvider>
         </ThemeProvider>
       </ScrollRestore>
     </Router>

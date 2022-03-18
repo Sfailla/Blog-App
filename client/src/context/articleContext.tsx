@@ -1,13 +1,22 @@
-import { createContext, useContext, useMemo, ReactElement } from 'react'
+import { createContext, useContext, useMemo, ReactElement, ReactNode } from 'react'
+import { Article, Tag } from '../types/shared'
+import { CreateArticleFields } from '../types/forms'
 import { useArticles } from '../pages/hooks'
 
 interface Props {
-  children: ReactElement
+  children: ReactNode
 }
 
-interface ArticleContextValues {}
+interface ArticleContextValues {
+  tags: Tag[]
+  articles: Article[]
+  userArticles: Article[]
+  createArticle: (articleFields: CreateArticleFields) => void
+  loadingArticles: boolean
+  articleError: string
+}
 
-const ArticleContext = createContext({})
+const ArticleContext = createContext<ArticleContextValues>({} as ArticleContextValues)
 
 export function useArticleContext() {
   const context = useContext(ArticleContext)
@@ -18,11 +27,18 @@ export function useArticleContext() {
 }
 
 export function ArticleProvider(props: Props): ReactElement {
-  const { articles, userArticles, loading: loadingArticle, error: articleError } = useArticles()
+  const {
+    tags,
+    articles,
+    userArticles,
+    createArticle,
+    loading: loadingArticles,
+    error: articleError
+  } = useArticles()
 
   const contextValues = useMemo(
-    () => ({ articles, userArticles, loadingArticle, articleError }),
-    [articles, userArticles, loadingArticle, articleError]
+    () => ({ tags, articles, userArticles, createArticle, loadingArticles, articleError }),
+    [tags, articles, userArticles, createArticle, loadingArticles, articleError]
   )
 
   return <ArticleContext.Provider value={contextValues} {...props} />
