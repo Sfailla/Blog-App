@@ -3,31 +3,20 @@ import { useLocation } from 'react-router-dom'
 import { PageContainer, LayoutWrapper } from '../../styles/shared'
 import { ArticlePageCard, CommentSection } from '../../components'
 
-import {} from './style'
+import { useComments } from '../hooks'
 
 export default function ArticleDetails(): ReactElement {
   const {
     state: { article }
   } = useLocation()
 
-  const comment = {
-    id: '',
-    author: {
-      username: '',
-      avatar: null,
-      id: ''
-    },
-    comment: '',
-    article: '',
-    createdAt: '',
-    updatedAt: ''
-  }
+  const { comments } = useComments(article)
 
   return (
     <PageContainer>
       <LayoutWrapper>
         <ArticlePageCard article={article} />
-        <CommentSection comment={comment} />
+        <CommentSection comments={comments} />
       </LayoutWrapper>
     </PageContainer>
   )
