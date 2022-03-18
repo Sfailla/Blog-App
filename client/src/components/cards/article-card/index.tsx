@@ -40,7 +40,7 @@ export default function ArticleCard({ article }: Props) {
           </ArticleMeta>
           <Favorites onMouseDown={makeRipples}>
             {ripples}
-            {/* <FavoriteCount>{article.favoritedCount}</FavoriteCount> */}
+            <FavoriteCount>{article.favoritedCount}</FavoriteCount>
           </Favorites>
         </Wrapper>
         <ArticleBody>

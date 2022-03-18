@@ -1,16 +1,16 @@
 import { ReactElement } from 'react'
 import { Container } from './style'
 import { ArticleCard } from '../../components'
-import { ArticleOrUndefined } from '../../types/shared'
+import { Article } from '../../types/shared'
 
 interface Props {
-  articles: ArticleOrUndefined
+  articles?: Article[] | undefined
 }
 
 export default function ArticleList({ articles }: Props): ReactElement {
   return (
     <Container>
-      {articles && articles.length > 0 ? (
+      {articles ? (
         articles.map(article => {
           return <ArticleCard key={article.id} article={article} />
         })

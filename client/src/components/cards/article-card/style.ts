@@ -63,8 +63,9 @@ export const Favorites = styled.div`
   border-radius: 5px;
   position: relative;
   overflow: hidden;
-  background-color: ${color.neon.blue};
-  /* &:hover { } */
+  &:hover {
+    background-color: ${color.neon.blue};
+  }
 `
 export const FavoriteCount = styled.span``
 

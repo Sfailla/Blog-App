@@ -8,7 +8,6 @@ const {
 export const Container = styled.div`
   width: 100%;
   margin-top: 4rem;
-  /* background-color: lightpink; */
 `
 
 export const Title = styled.h2`
@@ -31,12 +30,12 @@ export const FormGroup = styled.div`
 export const TextArea = styled.textarea`
   width: 100%;
   max-width: 60rem;
-  height: 10rem;
-  border: none;
+  height: 15rem;
+  border: 2px solid lightgray;
   outline: none;
   padding: 2rem;
   border-radius: 8px;
-  background-color: lightgray;
+  background-color: transparent;
   resize: none;
 `
 
