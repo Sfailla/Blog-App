@@ -17,7 +17,7 @@ export function useArticleContext() {
   return context
 }
 
-function ArticleProvider(props: Props): ReactElement {
+export function ArticleProvider(props: Props): ReactElement {
   const { articles, userArticles, loading: loadingArticle, error: articleError } = useArticles()
 
   const contextValues = useMemo(
