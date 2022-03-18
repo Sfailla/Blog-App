@@ -6,7 +6,6 @@ import { FullPageSpinner } from '../components'
 
 interface Props {
   children: ReactNode
-  [key: string]: any
 }
 
 interface AuthContextValues {
