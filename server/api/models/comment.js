@@ -6,7 +6,7 @@ const CommentSchema = new Schema(
   {
     author: { type: ObjectId, ref: 'Profile' },
     article: { type: ObjectId, ref: 'Article' },
-    comment: { type: String, required: true, trim: true },
+    body: { type: String, required: true, trim: true },
     updatedAt: { type: Date, default: Date.now },
     createdAt: { type: Date, default: Date.now }
   },

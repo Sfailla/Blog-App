@@ -24,8 +24,8 @@ const makeArticleObj = async (article, profile = null) => {
 }
 
 const makeCommentObj = comments => {
-  const { id, comment, author, article, updatedAt, createdAt } = comments
-  return { id, comment, author, article, updatedAt, createdAt }
+  const { id, body, author, article, updatedAt, createdAt } = comments
+  return { id, body, author, article, updatedAt, createdAt }
 }
 
 const formatTags = tags => {
