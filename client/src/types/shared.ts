@@ -50,7 +50,7 @@ export interface Article {
 export interface Comment {
   id: string
   author: Author
-  comment: string
+  body: string
   article: string
   createdAt: string
   updatedAt: string
