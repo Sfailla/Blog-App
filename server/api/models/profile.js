@@ -6,7 +6,7 @@ const ProfileSchema = new Schema(
   {
     username: { type: String, required: true },
     fullname: { type: String, default: null },
-    avatar: { type: String, default: null },
+    avatar: { type: String, default: '' },
     bio: { type: String, default: null },
     favorites: [{ type: ObjectId, ref: 'Article', default: [] }],
     following: [{ type: ObjectId, ref: 'User', default: [] }],
