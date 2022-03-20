@@ -16,8 +16,8 @@ function AppRoutes(): ReactElement {
     <Routes>
       <Route path="/" element={<ArticlesPage />} />
       <Route path="/article/:slug" element={<ArticleDetails />} />
-      <Route path="/signup" element={<SignUpPage />} />
-      <Route path="/signin" element={<SignInPage />} />
+      <Route path="/register" element={<SignUpPage />} />
+      <Route path="/login" element={<SignInPage />} />
       <Route path="*" element={<ArticlesPage />} />
     </Routes>
   )

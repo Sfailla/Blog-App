@@ -19,8 +19,8 @@ export default function Navigation(): ReactElement {
       ) : (
         <NavList>
           <NavLink to="/">Home</NavLink>
-          <NavLink to="/signup">Sign up</NavLink>
-          <NavLink to="/signin">Sign in</NavLink>
+          <NavLink to="/register">Sign up</NavLink>
+          <NavLink to="/login">Sign in</NavLink>
         </NavList>
       )}
     </NavContainer>
