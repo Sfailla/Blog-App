@@ -113,29 +113,6 @@ export default function useArticles(): UseArticles {
     [axiosInstance]
   )
 
-  const fetchArticleComments: (articleSlug: string) => Await<void> = useCallback(
-    async articleSlug => {
-      setLoading(true)
-      try {
-        const request: AxiosRequestConfig = {
-          url: `${endpoints.articles}/${articleSlug}/comments`,
-          method: 'GET'
-        }
-        const response: AxiosResponse = await axiosInstance(request)
-        if (response.data?.error) {
-          setError(response.data.error.message)
-        } else {
-          console.log({ response })
-        }
-      } catch (error: TryCatchError) {
-        setError(error.message)
-      } finally {
-        setLoading(false)
-      }
-    },
-    [axiosInstance]
-  )
-
   useEffect(() => {
     let isMounted = true
 
