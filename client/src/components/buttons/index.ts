@@ -3,5 +3,6 @@ export {
   LogoutButton,
   CreateArticleButton,
   AddTagButton,
-  DeleteTagButton
+  DeleteTagButton,
+  PostCommentButton
 } from './style'

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { flex } from '../../styles/mixins'
 import { DesignSystem } from '../../styles/shared'
 
-const { shadow } = DesignSystem
+const { shadow, color } = DesignSystem
 
 const Button = styled.button`
   width: auto;
@@ -64,4 +64,11 @@ export const DeleteTagButton = styled.button`
   background-color: transparent;
   ${flex()};
   color: ${({ theme }) => theme.tag.small};
+`
+
+export const PostCommentButton = styled(Button)`
+  width: 100%;
+  height: 5rem;
+  border-radius: 5px;
+  background-color: ${color.neon.blue};
 `
