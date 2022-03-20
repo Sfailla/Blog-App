@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { Comment, User } from '../../types/shared'
+import { Comment } from '../../types/shared'
 import { useAuthContext } from '../../context/authContext'
 import { PostCommentButton } from '../../components/buttons'
 import {
@@ -15,7 +15,8 @@ import {
   Author,
   FeedContainer,
   CommentContainer,
-  CommentBody
+  CommentBody,
+  CommentLayoutWrapper
 } from './style'
 
 interface Props {
@@ -23,23 +24,26 @@ interface Props {
 }
 
 export default function ArticleComments({ comments }: Props): ReactElement {
-  const { profile } = useAuthContext()
+  const { user, profile } = useAuthContext()
+
   return (
     <Container>
       <Divider />
       <Title>Comment section</Title>
-      <CommentPostSection avatar={profile!.avatar} />
-      <CommentFeed comments={comments} />
+      <CommentLayoutWrapper>
+        {user && profile && <CommentPostSection avatar={profile!.avatar} />}
+        <CommentFeed comments={comments} />
+      </CommentLayoutWrapper>
     </Container>
   )
 }
 
-function CommentPostSection({ avatar }: { avatar: string }): ReactElement {
+function CommentPostSection({ avatar }: { avatar: string | undefined }): ReactElement {
   return (
     <Form>
       <FormGroup>
         <GridContainer>
-          <Avatar />
+          <Avatar src={avatar} />
           <Wrapper>
             <TextArea name="comment" placeholder="Write a comment..." />
             <PostCommentButton>Post</PostCommentButton>
@@ -66,7 +70,7 @@ function ArticleComment({ comment }: { comment: Comment }): ReactElement {
       <GridContainer>
         <Avatar />
         <Wrapper>
-          <Author>{comment.author}</Author>
+          <Author>{comment.author.username}</Author>
           <CommentBody>{comment.body}</CommentBody>
         </Wrapper>
       </GridContainer>

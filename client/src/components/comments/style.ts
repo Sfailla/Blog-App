@@ -20,9 +20,8 @@ export const Title = styled.h4`
 export const Form = styled.form`
   width: 100%;
   height: auto;
-  padding-top: 5rem;
-  max-width: 70rem;
-  margin: 0 auto;
+  border-bottom: 1px solid lightgray;
+  padding-bottom: 3rem;
 `
 
 export const FormGroup = styled.div`
@@ -54,6 +53,13 @@ export const GridContainer = styled.div`
   grid-template-columns: 6rem 1fr;
 `
 
+export const CommentLayoutWrapper = styled.div`
+  width: 100%;
+  max-width: 70rem;
+  margin: 0 auto;
+  padding-top: 5rem;
+`
+
 export const Wrapper = styled.div`
   ${flex('center', 'flex-start', 'column')};
   row-gap: 1rem;
@@ -70,6 +76,10 @@ export const Author = styled.h4``
 
 export const FeedContainer = styled.div``
 
-export const CommentContainer = styled.div``
+export const CommentContainer = styled.div`
+  padding-top: 1rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid lightgray;
+`
 
 export const CommentBody = styled.p``
