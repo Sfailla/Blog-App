@@ -12,6 +12,7 @@ import {
   Article,
   AuthCredentials
 } from '../types/tests'
+import { Profile } from '../types/shared'
 
 export const handlers = [
   rest.get<Article[]>(`${baseUrl}${endpoints.articles}`, (req, res, ctx) => {
@@ -33,12 +34,24 @@ export const handlers = [
       let user
       try {
         user = await UsersDB.createUser({ username, email, password })
+        await UsersDB.createUserProfile({ email })
       } catch (error: Error | any) {
         return res(ctx.status(400), ctx.json({ error }))
       }
       return res(ctx.status(200), ctx.json({ user }))
     }
   ),
+
+  rest.get<Profile>(`${baseUrl}${endpoints.profiles}/:username`, async (req, res, ctx) => {
+    const { username } = req.params
+    let profile
+    try {
+      profile = await UsersDB.retrieveUserProfile(username as string)
+    } catch (error: Error | any) {
+      return res(ctx.status(400), ctx.json({ error }))
+    }
+    return res(ctx.status(200), ctx.json(profile))
+  }),
 
   rest.post<LoginBody, LoginResponse>(
     `${baseUrl}${endpoints.auth}/login`,
@@ -47,6 +60,7 @@ export const handlers = [
       let user
       try {
         user = await UsersDB.authenticate({ email, password })
+        await UsersDB.createUserProfile({ email })
       } catch (error: Error | any) {
         return res(ctx.status(400), ctx.json({ error }))
       }

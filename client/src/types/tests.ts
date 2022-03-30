@@ -12,6 +12,10 @@ export interface UserDatabase {
   [id: string]: StoredTestUser
 }
 
+export interface ProfileDatabase {
+  [id: string]: TestProfile
+}
+
 export interface ResponseError extends Error {
   status?: number
   message: string
@@ -21,7 +25,6 @@ export interface LoginBody {
   email: string
   password: string
 }
-
 export interface LoginResponse {
   [index: string]: string
 }
@@ -29,8 +32,12 @@ export interface LoginResponse {
 export interface RegisterBody extends LoginBody {
   username: string
 }
-
 export interface RegisterResponse extends LoginResponse {}
+
+export interface ProfileBody extends RegisterBody {
+  email: string
+}
+export interface ProfileResponse extends LoginResponse {}
 
 export interface AuthCredentials {
   user: TestUser
@@ -65,3 +72,14 @@ export interface Article {
 }
 
 export type Tag = string
+
+export interface TestProfile {
+  id: string
+  username: string
+  bio: string
+  avatar: string
+  fullname: string
+  isFollowing: boolean
+  favorites: string[]
+  following: string[]
+}

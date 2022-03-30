@@ -55,7 +55,7 @@ describe('Login component tests', () => {
     expect(passwordInput.textContent).toBe('')
   })
 
-  test('login with invalid credentials should render error message', async () => {
+  test.skip('login with invalid credentials should render error message', async () => {
     const { getByRole, getByText, debug } = render(<SignIn />)
 
     const submitButton = getByRole('button', { name: /sign in/i })

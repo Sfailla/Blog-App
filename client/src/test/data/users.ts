@@ -1,19 +1,30 @@
 import {
   AuthFields,
   UserDatabase,
+  ProfileDatabase,
   StoredTestUser,
   TestUser,
+  TestProfile,
   ResponseError
 } from '../../types/tests'
 
 const usersKey: string = 'test_users'
+const profilesKey: string = 'test_profiles'
 
 let users = {} as UserDatabase
+let profiles = {} as ProfileDatabase
 
-const persist = (): void => window.localStorage.setItem(usersKey, JSON.stringify(users))
+const persist = (): void => {
+  window.localStorage.setItem(usersKey, JSON.stringify(users))
+  window.localStorage.setItem(profilesKey, JSON.stringify(profiles))
+}
 const load = () => {
   const data = window.localStorage.getItem(usersKey) || '{}'
+  const profile = window.localStorage.getItem(profilesKey) || '{}'
   Object.assign(users, JSON.parse(data))
+  Object.assign(profiles, JSON.parse(profile))
+
+  console.log({ data, profile })
 }
 
 // initialize users
@@ -40,6 +51,36 @@ async function authenticate({
   throw error
 }
 
+async function createUserProfile({ email }: { email: string }): Promise<TestProfile> {
+  const id: string = await hash(email)
+  if (profiles[id]) {
+    const error: ResponseError = new Error()
+    error.status = 400
+    error.message = 'Profile already exists'
+    throw error
+  }
+
+  const profile: TestProfile = {
+    id,
+    username: email,
+    fullname: '',
+    bio: '',
+    avatar: '',
+    isFollowing: false,
+    favorites: [],
+    following: []
+  }
+
+  profiles[id] = profile
+  persist()
+  return await retrieveUserProfile(id)
+}
+
+async function retrieveUserProfile(userId: string): Promise<TestProfile> {
+  validate({ type: 'PROFILE', userId })
+  return profiles[userId]
+}
+
 async function createUser({ username, email, password }: AuthFields): Promise<TestUser> {
   const id: string = await hash(email)
   if (users[id]) {
@@ -63,30 +104,51 @@ async function createUser({ username, email, password }: AuthFields): Promise<Te
 }
 
 async function updateUser(userId: string, updates: Partial<StoredTestUser>): Promise<TestUser> {
-  await validateUser(userId)
+  await validate({ type: 'USER', userId })
   Object.assign(users[userId], updates)
   persist()
   return await retrieveUser(userId)
 }
 
 async function removeUser(userId: string): Promise<void> {
-  await validateUser(userId)
+  await validate({ type: 'USER', userId })
   delete users[userId]
   persist()
 }
 
 async function retrieveUser(userId: string): Promise<TestUser> {
-  validateUser(userId)
+  validate({ type: 'USER', userId })
   return await sanitizeUser(users[userId])
 }
 
-async function validateUser(userId: string): Promise<void> {
-  if (!users[userId]) {
-    const error: ResponseError = new Error()
-    error.status = 400
-    error.message = `user with id of: ${userId} does not exist`
-    throw error
+async function validate({ type, userId }: { type: string; userId: string }): Promise<void> {
+  switch (type) {
+    case 'USER': {
+      if (!users[userId]) {
+        const error: ResponseError = new Error()
+        error.status = 404
+        error.message = 'User not found'
+        throw error
+      }
+      break
+    }
+    case 'PROFILE': {
+      if (!profiles[userId]) {
+        const error: ResponseError = new Error()
+        error.status = 404
+        error.message = 'Profile not found'
+        throw error
+      }
+      break
+    }
+    default: {
+      const error: ResponseError = new Error()
+      error.status = 400
+      error.message = 'Invalid type'
+      throw error
+    }
   }
+
   load()
 }
 
@@ -110,4 +172,13 @@ async function resetDatabase(): Promise<void> {
   persist()
 }
 
-export { authenticate, createUser, updateUser, removeUser, retrieveUser, resetDatabase }
+export {
+  authenticate,
+  createUser,
+  createUserProfile,
+  updateUser,
+  removeUser,
+  retrieveUser,
+  retrieveUserProfile,
+  resetDatabase
+}
