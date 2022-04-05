@@ -16,6 +16,7 @@ const makeAuthUser = user => {
 const makeUserProfile = async (profile, user) => {
   return {
     id: profile._id,
+    userId: profile.userId,
     username: profile.username,
     bio: profile.bio,
     fullname: profile.fullname,

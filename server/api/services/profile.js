@@ -8,8 +8,9 @@ module.exports = class ProfileDatabaseService {
     this.user = userModel
   }
 
-  fetchUserProfile = async username => {
-    const profile = await this.profile.findOne({ username })
+  fetchUserProfile = async email => {
+    const user = await this.user.findOne({ email })
+    const profile = await this.profile.findOne({ username: user.username, userId: user._id })
 
     if (!profile) {
       const errMsg = 'error fetching user profile'

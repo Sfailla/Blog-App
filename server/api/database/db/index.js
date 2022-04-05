@@ -15,7 +15,7 @@ const makeDbConnection = async () => {
 
   const url = process.env.MONGOOSE_URL
 
-  console.log(url)
+  // console.log(url)
 
   mongoose.connection.on('connected', () => {
     const msg = `Mongoose connection established to MLAB database`

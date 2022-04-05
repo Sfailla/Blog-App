@@ -12,7 +12,7 @@ const profileController = new ProfileController(profileService)
 
 const { getProfile, followUser, unfollowUser, updateUserProfile } = profileController
 
-router.get('/:username', getProfile)
+router.get('/:email', getProfile)
 
 router.post('/:username/follow', auth.required, followUser)
 

@@ -5,6 +5,7 @@ const { ObjectId } = Types
 const ProfileSchema = new Schema(
   {
     username: { type: String, required: true },
+    userId: { type: ObjectId, ref: 'User', required: true },
     fullname: { type: String, default: null },
     avatar: { type: String, default: '' },
     bio: { type: String, default: null },

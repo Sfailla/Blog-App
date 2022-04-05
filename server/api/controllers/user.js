@@ -30,11 +30,6 @@ module.exports = class AuthController {
   loginUser = async (req, res, next) => {
     try {
       const { user, err } = await this.service.getUserByEmailAndPassword(req.body, req)
-      // if (err) {
-      //   return res.status(400).json({
-      //     message: err.message
-      //   })
-      // }
 
       if (err) throw err
 

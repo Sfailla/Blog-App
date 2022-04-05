@@ -5,7 +5,7 @@ module.exports = class ProfileController {
 
   getProfile = async (req, res, next) => {
     try {
-      const { profile, err } = await this.service.fetchUserProfile(req.params.username)
+      const { profile, err } = await this.service.fetchUserProfile(req.params.email)
       if (err) throw err
       return await res.status(200).json({ profile })
     } catch (error) {
