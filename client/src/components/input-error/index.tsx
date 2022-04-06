@@ -6,5 +6,9 @@ interface Props {
 }
 
 export default function InputFieldError({ errorMessage }: Props): ReactElement {
-  return <Error>{errorMessage}</Error>
+  return (
+    <Error aria-label="input-error" role="alert">
+      {errorMessage}
+    </Error>
+  )
 }

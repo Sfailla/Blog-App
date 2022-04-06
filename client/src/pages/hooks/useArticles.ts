@@ -1,7 +1,6 @@
-import { useEffect, useCallback, useState } from 'react'
-import { AxiosRequestConfig, AxiosResponse } from 'axios'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Tag, Article, TryCatchError, Await } from '../../types/shared'
+import { useEffect, useCallback, useState, useRef, MutableRefObject } from 'react'
+import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
+import { Tag, Article, Await } from '../../types/shared'
 import { useAxiosInstance } from '../../hooks/'
 import { endpoints } from '../../axios/constants'
 import { useAuthContext } from '../../context/authContext'
@@ -33,14 +32,15 @@ export default function useArticles(): UseArticles {
         method: 'GET'
       }
       const response: AxiosResponse = await axiosInstance(request)
+
       if (response.data?.error) {
         setError(response.data.error.message)
       } else {
         setTags(response.data.tags)
       }
-    } catch (error: TryCatchError) {
-      console.log(error)
-      setError(error.message)
+    } catch (error) {
+      const err = error as AxiosError
+      setError(err.message)
     } finally {
       setLoading(false)
     }
@@ -59,8 +59,9 @@ export default function useArticles(): UseArticles {
       } else {
         setArticles(response.data.articles)
       }
-    } catch (error: TryCatchError) {
-      setError(error.message)
+    } catch (error) {
+      const err = error as AxiosError
+      setError(err.message)
     } finally {
       setLoading(false)
     }
@@ -79,8 +80,9 @@ export default function useArticles(): UseArticles {
       } else {
         setUserArticles(response.data.articles)
       }
-    } catch (error: TryCatchError) {
-      setError(error.message)
+    } catch (error) {
+      const err = error as AxiosError
+      setError(err.message)
     } finally {
       setLoading(false)
     }
@@ -104,8 +106,9 @@ export default function useArticles(): UseArticles {
             [...response.data.article.tags, ...prevState].sort((a, b) => a.localeCompare(b))
           )
         }
-      } catch (error: TryCatchError) {
-        setError(error.message)
+      } catch (error) {
+        const err = error as AxiosError
+        setError(err.message)
       } finally {
         setLoading(false)
       }
@@ -118,19 +121,25 @@ export default function useArticles(): UseArticles {
 
     if (isMounted) {
       fetchTags()
+      fetchArticles()
     }
 
     return () => {
       isMounted = false
       setTags([])
+      setArticles([])
     }
-  }, [fetchTags])
-
-  useEffect(() => fetchArticles(), [fetchArticles])
+  }, [fetchTags, fetchArticles])
 
   useEffect(() => {
-    if (!user) return
-    fetchUserArticles()
+    let isMounted = true
+
+    if (user && isMounted) fetchUserArticles()
+
+    return () => {
+      isMounted = false
+      setUserArticles([])
+    }
   }, [fetchUserArticles, user])
 
   return {

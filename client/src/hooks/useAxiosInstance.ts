@@ -11,6 +11,7 @@ export default function useAxiosInstance() {
         if (config.headers && !config.headers['x-auth-token']) {
           config.headers['x-auth-token'] = accessToken
         }
+
         return config
       },
       error => Promise.reject(error)
