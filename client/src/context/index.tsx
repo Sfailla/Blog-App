@@ -6,7 +6,7 @@ import { ArticleProvider } from './articleContext'
 import ScrollRestore from '../app/scrollRestore'
 
 interface Props {
-  children: ReactNode
+  children?: ReactNode
 }
 
 export function AppProviders({ children }: Props): ReactElement {

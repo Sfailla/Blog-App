@@ -14,15 +14,16 @@ interface AuthContextValues {
   register: (fields: FieldValues) => void
   login: (fields: FieldValues) => void
   logout: () => void
+  loading: boolean
   error: string
 }
 
-const AuthContext = createContext<AuthContextValues>({} as AuthContextValues)
+const AuthContext = createContext<AuthContextValues | null>(null)
 AuthContext.displayName = 'AuthContext'
 
-export function useAuthContext() {
+export function useAuthContext(): AuthContextValues {
   const context = React.useContext(AuthContext)
-  if (context === undefined) {
+  if (context === undefined || context === null) {
     throw new Error(`useAuth must be used within a AuthProvider`)
   }
   return context
@@ -34,7 +35,7 @@ export function AuthProvider(props: Props): ReactElement {
   const contextValues = useMemo(
     () => ({ user, profile, register, login, logout, loading, error }),
     [user, profile, register, login, logout, loading, error]
-  )
+  ) as AuthContextValues
 
   if (loading) {
     return <FullPageSpinner />

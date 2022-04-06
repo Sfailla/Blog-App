@@ -2,6 +2,7 @@ import { createContext, useContext, useMemo, ReactElement, ReactNode } from 'rea
 import { Article, Tag } from '../types/shared'
 import { CreateArticleFields } from '../types/forms'
 import { useArticles } from '../pages/hooks'
+import { FullPageSpinner } from '../components'
 
 interface Props {
   children: ReactNode
@@ -16,12 +17,12 @@ interface ArticleContextValues {
   articleError: string
 }
 
-const ArticleContext = createContext<ArticleContextValues>({} as ArticleContextValues)
+const ArticleContext = createContext<ArticleContextValues | null>(null)
 ArticleContext.displayName = 'ArticleContext'
 
-export function useArticleContext() {
+export function useArticleContext(): ArticleContextValues {
   const context = useContext(ArticleContext)
-  if (context === undefined) {
+  if (context === undefined || context === null) {
     throw new Error(`useArticleContext must be used within a ArticleContextProvider`)
   }
   return context
@@ -47,7 +48,11 @@ export function ArticleProvider(props: Props): ReactElement {
       articleError
     }),
     [tags, articles, userArticles, createArticle, loadingArticles, articleError]
-  )
+  ) as ArticleContextValues
+
+  // if (loadingArticles) {
+  //   return <FullPageSpinner />
+  // }
 
   return <ArticleContext.Provider value={contextValues} {...props} />
 }

@@ -1,9 +1,8 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
-import { AxiosRequestConfig, AxiosResponse } from 'axios'
+import { useState, useEffect, useRef, useCallback, MutableRefObject } from 'react'
+import { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { useAxiosInstance } from '../hooks'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { TryCatchError, User, Profile } from '../types/shared'
+import { User, Profile } from '../types/shared'
 import { FieldValues } from '../types/forms'
 import { endpoints } from '../axios/constants'
 import { useLocation } from 'react-router-dom'
@@ -16,6 +15,10 @@ export interface UseAuth {
   logout: () => void
   loading: boolean
   error: string
+}
+
+type CustomAxiosError = AxiosError & {
+  response: AxiosResponse
 }
 
 export function useAuth(): UseAuth {
@@ -40,17 +43,19 @@ export function useAuth(): UseAuth {
       }
 
       const response: AxiosResponse = await axiosInstance(request)
-      if (response.data.error) {
-        setError(response.data.error.message)
-      } else {
-        const user = response.data.user
+
+      if (response.data?.error) {
+        setError(response.data?.error?.message)
+      } else if (response.data.user) {
+        const user: User = response.data.user
         setUser(user)
-        await getUserProfile(user.username)
-        localStorage.setItem('auth-flag', response.data.user.id)
+        await getUserProfile(user.email)
+        localStorage.setItem('auth-flag', user.id)
         navigate('/')
       }
-    } catch (error: TryCatchError) {
-      setError(error.response.data.error)
+    } catch (error) {
+      const err = error as CustomAxiosError
+      setError(err.response.data.error)
     } finally {
       setLoading(false)
     }
@@ -65,17 +70,19 @@ export function useAuth(): UseAuth {
         method: 'POST'
       }
       const response: AxiosResponse = await axiosInstance(request)
+
       if (response.data.error) {
         setError(response.data.error.message)
       } else {
-        const user = response.data.user
+        const user: User = response.data.user
         setUser(user)
-        await getUserProfile(user.username)
+        await getUserProfile(user.email)
         localStorage.setItem('auth-flag', response.data.user.id)
         navigate('/')
       }
-    } catch (error: TryCatchError) {
-      setError(error.response.data.error)
+    } catch (error) {
+      const err = error as CustomAxiosError
+      setError(err.response.data.error)
     } finally {
       setLoading(false)
     }
@@ -98,27 +105,30 @@ export function useAuth(): UseAuth {
         localStorage.removeItem('auth-flag')
         setLoading(false)
       }
-    } catch (error: TryCatchError) {
-      setError(error.message)
+    } catch (error) {
+      const err = error as CustomAxiosError
+      setError(err.response.data.error)
     } finally {
       setLoading(false)
     }
   }
 
-  async function getUserProfile(username: string): Promise<void> {
+  async function getUserProfile(email: string): Promise<void> {
     try {
       const request: AxiosRequestConfig = {
-        url: `${endpoints.profiles}/${username}`,
+        url: `${endpoints.profiles}/${email}`,
         method: 'GET'
       }
       const response: AxiosResponse = await axiosInstance(request)
+
       if (response.data.error) {
         setError(response.data.error.message)
       } else {
         setProfile(response.data.profile)
       }
-    } catch (error: TryCatchError) {
-      setError(error.message)
+    } catch (error) {
+      const err = error as CustomAxiosError
+      setError(err.response.data.error)
     }
   }
 
@@ -132,16 +142,23 @@ export function useAuth(): UseAuth {
       const response: AxiosResponse = await axiosInstance(request)
       setUser(response.data.user)
       setLoading(false)
-    } catch (error: TryCatchError) {
-      setError(error.message)
+    } catch (error) {
+      const err = error as CustomAxiosError
+      setError(err.response.data.error)
     } finally {
       setLoading(false)
     }
   }, [axiosInstance])
 
   useEffect(() => {
-    if (isAuthenticated) checkUserSession()
-    return () => setUser(null)
+    let mounted = true
+
+    if (isAuthenticated && mounted) checkUserSession()
+
+    return () => {
+      mounted = false
+      setUser(null)
+    }
   }, [isAuthenticated, checkUserSession])
 
   useEffect(() => {
