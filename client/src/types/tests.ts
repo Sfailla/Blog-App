@@ -1,6 +1,6 @@
 export interface StoredTestUser {
   id: string
-  username?: string
+  username: string
   hashedPassword: string
   email: string
   role: string
@@ -45,11 +45,8 @@ export interface AuthCredentials {
   token: string
 }
 
-export interface AuthFields {
-  username?: string
-  email: string
-  password: string
-}
+export type TestFields = Pick<TestUser, 'username' | 'email'> & { password: string }
+export type PartialTestFields = Omit<TestFields, 'username'>
 
 export interface Article {
   id: string
