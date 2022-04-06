@@ -30,6 +30,7 @@
     "start:dev": "concurrently --kill-others \"cd ../server & npm run start\" \"npm run start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --watch --runInBand",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
