@@ -1,5 +1,4 @@
-import { FieldValues } from '../types/forms'
-import { FormEvent, ChangeEvent } from 'react'
+import { TestFields, PartialTestFields } from '../types/tests'
 
 export interface CustomEventFields {
   name: string
@@ -29,7 +28,7 @@ export function changeEvent({ name, value }: CustomEventFields): CustomEvent {
  * @returns an object of form fields similar to what would be obtained from a register form
  */
 
-export function buildRegisterForm(): FieldValues {
+export function buildRegisterForm(): TestFields {
   return {
     username: 'test-user',
     email: 'test@test.com',
@@ -43,7 +42,7 @@ export function buildRegisterForm(): FieldValues {
  * @returns an object of form fields similar to what would be obtained from a login form
  */
 
-export function buildLoginForm(): FieldValues {
+export function buildLoginForm(): PartialTestFields {
   return {
     email: 'test@test.com',
     password: '1234'

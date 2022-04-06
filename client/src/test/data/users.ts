@@ -1,9 +1,10 @@
 import {
-  AuthFields,
+  PartialTestFields,
   UserDatabase,
   ProfileDatabase,
   StoredTestUser,
   TestUser,
+  TestFields,
   TestProfile,
   ResponseError
 } from '../../types/tests'
@@ -23,8 +24,6 @@ const load = () => {
   const profile = window.localStorage.getItem(profilesKey) || '{}'
   Object.assign(users, JSON.parse(data))
   Object.assign(profiles, JSON.parse(profile))
-
-  console.log({ data, profile })
 }
 
 // initialize users
@@ -34,15 +33,12 @@ try {
   persist()
 }
 
-async function authenticate({
-  email,
-  password
-}: AuthFields): Promise<{ user: TestUser; token: string }> {
+async function authenticate({ email, password }: PartialTestFields): Promise<TestUser> {
   const id: string = await hash(email)
   const user: StoredTestUser = users[id] || {}
   const hashedPassword = await hash(password)
   if (user.hashedPassword === hashedPassword) {
-    return { user: await sanitizeUser(user), token: id }
+    return await sanitizeUser(user)
   }
 
   const error: ResponseError = new Error()
@@ -53,6 +49,8 @@ async function authenticate({
 
 async function createUserProfile({ email }: { email: string }): Promise<TestProfile> {
   const id: string = await hash(email)
+  const user: TestUser = await retrieveUser(id)
+
   if (profiles[id]) {
     const error: ResponseError = new Error()
     error.status = 400
@@ -60,9 +58,16 @@ async function createUserProfile({ email }: { email: string }): Promise<TestProf
     throw error
   }
 
+  if (!user) {
+    const error: ResponseError = new Error()
+    error.status = 400
+    error.message = 'User does not exist'
+    throw error
+  }
+
   const profile: TestProfile = {
     id,
-    username: email,
+    username: user.username,
     fullname: '',
     bio: '',
     avatar: '',
@@ -76,12 +81,18 @@ async function createUserProfile({ email }: { email: string }): Promise<TestProf
   return await retrieveUserProfile(id)
 }
 
+async function authenticateUserProfile(email: string): Promise<TestProfile> {
+  const id: string = await hash(email)
+  const profile = await retrieveUserProfile(id)
+  return profile
+}
+
 async function retrieveUserProfile(userId: string): Promise<TestProfile> {
   validate({ type: 'PROFILE', userId })
   return profiles[userId]
 }
 
-async function createUser({ username, email, password }: AuthFields): Promise<TestUser> {
+async function createUser({ username, email, password }: TestFields): Promise<TestUser> {
   const id: string = await hash(email)
   if (users[id]) {
     const error: ResponseError = new Error()
@@ -169,6 +180,7 @@ async function sanitizeUser(user: StoredTestUser): Promise<TestUser> {
 
 async function resetDatabase(): Promise<void> {
   users = {}
+  profiles = {}
   persist()
 }
 
@@ -179,6 +191,6 @@ export {
   updateUser,
   removeUser,
   retrieveUser,
-  retrieveUserProfile,
+  authenticateUserProfile,
   resetDatabase
 }

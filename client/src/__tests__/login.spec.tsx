@@ -1,17 +1,23 @@
-import { render, userEvent, waitFor, waitForElementToBeRemoved } from '../test/test-utils'
+import { render, userEvent, waitFor, waitForLoadingToFinish } from '../test/test-utils'
 import * as UsersDB from '../test/data/users'
 import SignIn from '../pages/signin'
 
-// mocking localstorage to reset values after tests
-jest.spyOn(window.localStorage.__proto__, 'setItem')
-jest.spyOn(window.localStorage.__proto__, 'getItem')
+// mock out articleContext
+jest.mock('../context/articleContext', () => ({
+  __esModule: true,
+  useArticleContext: jest.fn(() => ({
+    tags: [],
+    articles: [],
+    userArticles: [],
+    createArticle: jest.fn(),
+    loadingArticles: false,
+    articleError: ''
+  })),
+  ArticleProvider: ({ children }: { children: React.ReactNode }) => children
+}))
 
-beforeEach(async () => {
+afterEach(async () => {
   await UsersDB.resetDatabase()
-})
-
-afterAll(() => {
-  jest.resetAllMocks()
 })
 
 describe('Login component tests', () => {
@@ -19,8 +25,8 @@ describe('Login component tests', () => {
     render(<SignIn />)
   })
 
-  test('login form displays error message if fields are empty', () => {
-    const { getByText, getByRole } = render(<SignIn />)
+  test('login form displays error message if fields are empty', async () => {
+    const { getByText, getByRole } = await render(<SignIn />)
     const submitButton = getByRole('button', { name: /sign in/i })
 
     userEvent.click(submitButton)
@@ -30,7 +36,7 @@ describe('Login component tests', () => {
   })
 
   test('login should be successful and return to initial ui state', async () => {
-    const { getByRole } = render(<SignIn />)
+    const { getByRole, queryByRole } = await render(<SignIn />)
 
     const submitButton = getByRole('button', { name: /sign in/i })
 
@@ -43,20 +49,28 @@ describe('Login component tests', () => {
       password: '1234'
     })
 
+    await UsersDB.createUserProfile({
+      email: 'testUser@gmail.com'
+    })
+
     userEvent.type(emailInput, 'testUser@gmail.com')
     userEvent.type(passwordInput, '1234')
 
     userEvent.click(submitButton)
 
-    await waitFor(() => expect(getByRole('status')).toBeInTheDocument())
-    await waitFor(() => expect(getByRole('heading', { name: /sign in/i })).toBeInTheDocument())
+    await waitFor(() => {
+      expect(queryByRole('textbox', { name: /email/i })).toBeNull()
+      expect(queryByRole('textbox', { name: /password/i })).toBeNull()
+    })
+
+    await waitForLoadingToFinish()
 
     expect(emailInput.textContent).toBe('')
     expect(passwordInput.textContent).toBe('')
   })
 
-  test.skip('login with invalid credentials should render error message', async () => {
-    const { getByRole, getByText, debug } = render(<SignIn />)
+  test('login with invalid credentials should render error message', async () => {
+    const { getByRole, queryByRole, getByText } = await render(<SignIn />)
 
     const submitButton = getByRole('button', { name: /sign in/i })
 
@@ -74,10 +88,12 @@ describe('Login component tests', () => {
 
     userEvent.click(submitButton)
 
-    await waitFor(() => expect(getByRole('status')).toBeInTheDocument())
-    await waitForElementToBeRemoved(() => getByRole('status'))
-    await waitFor(() => expect(getByRole('alert')).toBeInTheDocument())
+    await waitFor(() => {
+      expect(queryByRole('alert')).toBeInTheDocument()
+      expect(getByText(/invalid username or password/i)).toBeInTheDocument()
+    })
 
-    expect(getByText(/invalid username or password/i)).toBeInTheDocument()
+    expect(emailInput.textContent).toBe('')
+    expect(passwordInput.textContent).toBe('')
   })
 })

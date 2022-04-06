@@ -2,6 +2,39 @@ import { render, userEvent, waitFor } from '../test/test-utils'
 import { TabbedArticleFeed } from '../components'
 import { ReactElement } from 'react'
 
+// mock out articleContext
+jest.mock('../context/articleContext', () => ({
+  __esModule: true,
+  useArticleContext: jest.fn(() => ({
+    tags: [],
+    articles: [],
+    userArticles: [],
+    createArticle: jest.fn(),
+    loadingArticles: false,
+    articleError: ''
+  })),
+  ArticleProvider: ({ children }: { children: React.ReactNode }) => children
+}))
+
+// mock authContext
+jest.mock('../context/authContext', () => ({
+  __esModule: true,
+  useAuthContext: jest.fn(() => ({
+    user: {
+      username: '',
+      email: '',
+      password: '',
+      role: '',
+      error: '',
+      loading: false,
+      register: jest.fn(),
+      login: jest.fn(),
+      logout: jest.fn()
+    }
+  })),
+  AuthProvider: ({ children }: { children: React.ReactNode }) => children
+}))
+
 describe('TabbedArticleFeed component tests', () => {
   const TabComponentOne = (): ReactElement => <div>Tab Component One</div>
   const TabComponentTwo = (): ReactElement => <div>Tab Component Two</div>
@@ -9,8 +42,10 @@ describe('TabbedArticleFeed component tests', () => {
   const titleList = ['tab-title-1', 'tab-title-2']
   const componentList = [<TabComponentOne />, <TabComponentTwo />]
 
-  test('warn if titleList and/or componentList props are not provided', () => {
-    const { getByText, rerender } = render(<TabbedArticleFeed titleList={[]} componentList={[]} />)
+  test('warn if titleList and/or componentList props are not provided', async () => {
+    const { getByText, rerender } = await render(
+      <TabbedArticleFeed titleList={[]} componentList={[]} />
+    )
 
     expect(
       getByText(/Please provide a tab to render and a component to render/i)
@@ -27,7 +62,7 @@ describe('TabbedArticleFeed component tests', () => {
   })
 
   test('clicking tabs should switch between components', async () => {
-    const { queryByText, getByText, getByRole } = render(
+    const { queryByText, getByText, getByRole } = await render(
       <TabbedArticleFeed titleList={titleList} componentList={componentList} />
     )
 
@@ -40,12 +75,14 @@ describe('TabbedArticleFeed component tests', () => {
 
     toggle()
 
-    await waitFor(() => {
+    await waitFor(() =>
       expect(getByRole('listitem', { name: 'tab' })).toHaveTextContent('tab-title-1')
-      expect(getByRole('listitem', { name: 'active-tab' })).toHaveTextContent('tab-title-2')
-      expect(getByText(/tab component two/i)).toBeInTheDocument()
-      expect(queryByText(/tab component one/i)).not.toBeInTheDocument()
-    })
+    )
+
+    expect(getByRole('listitem', { name: 'active-tab' })).toHaveTextContent('tab-title-2')
+    expect(getByText(/tab component two/i)).toBeInTheDocument()
+
+    expect(queryByText(/tab component one/i)).not.toBeInTheDocument()
 
     toggle()
 

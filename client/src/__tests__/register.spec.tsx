@@ -1,62 +1,70 @@
-import { render, userEvent, waitFor, waitForElementToBeRemoved } from '../test/test-utils'
+import { render, userEvent, waitFor, waitForLoadingToFinish } from '../test/test-utils'
 import * as UsersDB from '../test/data/users'
 import Signup from '../pages/signup'
 
-// mocking localstorage to
-jest.spyOn(window.localStorage.__proto__, 'setItem')
-jest.spyOn(window.localStorage.__proto__, 'getItem')
+// mock out articleContext
+jest.mock('../context/articleContext', () => ({
+  __esModule: true,
+  useArticleContext: jest.fn(() => ({
+    tags: [],
+    articles: [],
+    userArticles: [],
+    createArticle: jest.fn(),
+    loadingArticles: false,
+    articleError: ''
+  })),
+  ArticleProvider: ({ children }: { children: React.ReactNode }) => children
+}))
 
-afterEach(async () => {
-  await UsersDB.resetDatabase()
-})
-
-afterAll(() => {
-  jest.resetAllMocks()
-})
+afterEach(async () => await UsersDB.resetDatabase())
 
 describe('Signup component tests', () => {
-  test('register form displays error message if fields are empty', () => {
-    const { getByText, getByRole } = render(<Signup />)
+  test('register form displays error message if fields are empty', async () => {
+    const { getByRole, queryByText } = await render(<Signup />)
+
     const submitButton = getByRole('button', { name: /sign up/i })
 
     userEvent.click(submitButton)
 
-    expect(getByText(/email is required/i)).toBeInTheDocument()
-    expect(getByText(/password is required/i)).toBeInTheDocument()
-    expect(getByText(/username is required/i)).toBeInTheDocument()
+    expect(queryByText(/email is required/i)).toBeInTheDocument()
+    expect(queryByText(/password is required/i)).toBeInTheDocument()
+    expect(queryByText(/username is required/i)).toBeInTheDocument()
   })
 
-  test('register component should create user and return to previous ui state', async () => {
-    const { getByRole, queryByRole } = render(<Signup />)
+  test('register component should create user and return to initial component state', async () => {
+    // register component should create user and redirect to homepage
 
-    const submitButton = getByRole('button', { name: /sign up/i })
-    const usernameInput = getByRole('textbox', { name: /username/i })
+    const { getByRole, queryByRole, queryByText, debug } = await render(<Signup />)
+
     const emailInput = getByRole('textbox', { name: /email/i })
     const passwordInput = getByRole('textbox', { name: /password/i })
+    const usernameInput = getByRole('textbox', { name: /username/i })
 
-    userEvent.type(usernameInput, 'testUser')
-    userEvent.type(emailInput, 'testUser@gmail.com')
-    userEvent.type(passwordInput, '1234')
+    userEvent.type(emailInput, 'test@gmail.com')
+    userEvent.type(passwordInput, '123')
+    userEvent.type(usernameInput, 'test')
+
+    const submitButton = getByRole('button', { name: /sign up/i })
 
     userEvent.click(submitButton)
 
-    await waitFor(() => expect(getByRole('status')).toBeInTheDocument())
-    await waitFor(() => expect(getByRole('heading', { name: /sign up/i })).toBeInTheDocument())
+    await waitFor(() => {
+      expect(queryByText(/email is required/i)).toBeNull()
+      expect(queryByText(/password is required/i)).toBeNull()
+      expect(queryByText(/username is required/i)).toBeNull()
+    })
 
-    expect(usernameInput.textContent).toBe('')
-    expect(emailInput.textContent).toBe('')
-    expect(passwordInput.textContent).toBe('')
+    await waitForLoadingToFinish()
 
-    expect(queryByRole('alert')).not.toBeInTheDocument()
+    expect(queryByRole('heading', { name: /sign up/i })).toBeInTheDocument()
   })
 
   test('registration with already registered user should render error message', async () => {
-    const { getByRole, getByText } = render(<Signup />)
+    const { getByRole, queryByText } = await render(<Signup />)
 
-    const submitButton = getByRole('button', { name: /sign up/i })
-    const usernameInput = getByRole('textbox', { name: /username/i })
     const emailInput = getByRole('textbox', { name: /email/i })
     const passwordInput = getByRole('textbox', { name: /password/i })
+    const usernameInput = getByRole('textbox', { name: /username/i })
 
     await UsersDB.createUser({
       username: 'testUser',
@@ -64,16 +72,22 @@ describe('Signup component tests', () => {
       password: '1234'
     })
 
-    userEvent.type(usernameInput, 'testUser')
     userEvent.type(emailInput, 'TestUser@gmail.com')
     userEvent.type(passwordInput, '1234')
+    userEvent.type(usernameInput, 'TestUser')
+
+    const submitButton = getByRole('button', { name: /sign up/i })
 
     userEvent.click(submitButton)
 
-    await waitFor(() => expect(getByRole('status')).toBeInTheDocument())
-    await waitForElementToBeRemoved(() => getByRole('status'))
-    await waitFor(() => expect(getByRole('alert')).toBeInTheDocument())
+    await waitFor(() => {
+      expect(queryByText(/email is required/i)).toBeNull()
+      expect(queryByText(/password is required/i)).toBeNull()
+      expect(queryByText(/username is required/i)).toBeNull()
+    })
 
-    expect(getByText(/user already exists/i)).toBeInTheDocument()
+    await waitForLoadingToFinish()
+
+    expect(queryByText(/user testuser already exists/i)).toBeInTheDocument()
   })
 })
