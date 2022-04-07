@@ -326,7 +326,8 @@ module.exports = class ArticleDatabaseService {
   }
 
   findAndUpdateComment = async (authUser, updateField, commentId) => {
-    const query = { _id: commentId, author: authUser.id }
+    const profile = await this.profile.findOne({ username: authUser.username })
+    const query = { _id: commentId, author: profile._id }
     const updates = {
       ...trimRequest(updateField),
       updatedAt: Date.now()

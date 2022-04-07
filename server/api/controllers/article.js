@@ -159,6 +159,7 @@ module.exports = class ArticleController {
         req.body,
         req.params.comment
       )
+
       if (err) throw err
       return await res.status(200).json({
         message: `successfully updated comment`,
