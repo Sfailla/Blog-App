@@ -3,7 +3,7 @@ import { ValidationErrors, FieldValues, InputOrTextarea } from '../../types/form
 import { changeEvent, buildRegisterForm, CustomEventFields } from '../../test/helpers'
 import { mockArticle, mockUser } from '../../test/data/mockData'
 import { renderHook, act } from '@testing-library/react-hooks'
-import useFormValidation from '../../hooks/useFormValidation'
+import useFormValidation from '../useFormValidation'
 
 // mock out articleContext
 jest.mock('../../context/articleContext', () => ({
