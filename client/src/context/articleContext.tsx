@@ -1,8 +1,6 @@
 import { createContext, useContext, useMemo, ReactElement, ReactNode } from 'react'
-import { Article, Tag } from '../types/shared'
-import { CreateArticleFields } from '../types/forms'
+import { Article, Tag, CreateArticle } from '../types/shared'
 import { useArticles } from '../pages/hooks'
-import { FullPageSpinner } from '../components'
 
 interface Props {
   children: ReactNode
@@ -12,7 +10,7 @@ interface ArticleContextValues {
   tags: Tag[]
   articles: Article[]
   userArticles: Article[]
-  createArticle: (articleFields: CreateArticleFields) => void
+  createArticle: (article: CreateArticle) => void
   loadingArticles: boolean
   articleError: string
 }
@@ -49,10 +47,6 @@ export function ArticleProvider(props: Props): ReactElement {
     }),
     [tags, articles, userArticles, createArticle, loadingArticles, articleError]
   ) as ArticleContextValues
-
-  // if (loadingArticles) {
-  //   return <FullPageSpinner />
-  // }
 
   return <ArticleContext.Provider value={contextValues} {...props} />
 }

@@ -47,6 +47,8 @@ export interface Article {
   updatedAt: string
 }
 
+export type CreateArticle = Partial<Article>
+
 export interface Comment {
   id: string
   author: Author

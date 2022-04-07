@@ -1,10 +1,9 @@
-import { useEffect, useCallback, useState, useRef, MutableRefObject } from 'react'
+import { useEffect, useCallback, useState } from 'react'
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
-import { Tag, Article, Await } from '../../types/shared'
+import { Tag, Article, CreateArticle, Await } from '../../types/shared'
 import { useAxiosInstance } from '../../hooks/'
 import { endpoints } from '../../axios/constants'
 import { useAuthContext } from '../../context/authContext'
-import { CreateArticleFields } from '../../types/forms'
 
 interface UseArticles {
   loading: boolean
@@ -12,7 +11,7 @@ interface UseArticles {
   tags: Tag[]
   articles: Article[]
   userArticles: Article[]
-  createArticle: (articleFields: CreateArticleFields) => Await<void>
+  createArticle: (article: CreateArticle) => Await<void>
 }
 
 export default function useArticles(): UseArticles {
@@ -88,14 +87,14 @@ export default function useArticles(): UseArticles {
     }
   }, [axiosInstance])
 
-  const createArticle: (articleFields: CreateArticleFields) => Await<void> = useCallback(
-    async (articleFields: CreateArticleFields) => {
+  const createArticle: (article: CreateArticle) => Await<void> = useCallback(
+    async (article: CreateArticle) => {
       try {
         setLoading(true)
         const request: AxiosRequestConfig = {
           url: `${endpoints.articles}`,
           method: 'POST',
-          data: articleFields
+          data: article
         }
         const response: AxiosResponse = await axiosInstance(request)
 

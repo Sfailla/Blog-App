@@ -1,17 +1,16 @@
-import { useState, useEffect, useRef, useCallback, MutableRefObject } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { useAxiosInstance } from '../hooks'
 import { User, Profile } from '../types/shared'
-import { FieldValues } from '../types/forms'
 import { endpoints } from '../axios/constants'
 import { useLocation } from 'react-router-dom'
 
 export interface UseAuth {
   user: User | null
   profile: Profile | null
-  register: (fields: FieldValues) => void
-  login: (fields: FieldValues) => void
+  register: (user: Partial<User>) => void
+  login: (user: Partial<User>) => void
   logout: () => void
   loading: boolean
   error: string
@@ -33,12 +32,12 @@ export function useAuth(): UseAuth {
   const navigate = useNavigate()
   const location = useLocation()
 
-  async function register(fields: FieldValues): Promise<void> {
+  async function register(user: Partial<User>): Promise<void> {
     setLoading(true)
     try {
       const request: AxiosRequestConfig = {
         url: `${endpoints.auth}/register`,
-        data: fields,
+        data: user,
         method: 'POST'
       }
 
@@ -61,12 +60,12 @@ export function useAuth(): UseAuth {
     }
   }
 
-  async function login(fields: FieldValues): Promise<void> {
+  async function login(user: Partial<User>): Promise<void> {
     setLoading(true)
     try {
       const request: AxiosRequestConfig = {
         url: `${endpoints.auth}/login`,
-        data: fields,
+        data: user,
         method: 'POST'
       }
       const response: AxiosResponse = await axiosInstance(request)

@@ -1,18 +1,12 @@
 import { render, userEvent, waitFor, waitForLoadingToFinish } from '../test/test-utils'
 import * as UsersDB from '../test/data/users'
 import SignIn from '../pages/signin'
+import { mockArticle } from '../test/data/mockData'
 
 // mock out articleContext
 jest.mock('../context/articleContext', () => ({
   __esModule: true,
-  useArticleContext: jest.fn(() => ({
-    tags: [],
-    articles: [],
-    userArticles: [],
-    createArticle: jest.fn(),
-    loadingArticles: false,
-    articleError: ''
-  })),
+  useArticleContext: jest.fn(() => mockArticle),
   ArticleProvider: ({ children }: { children: React.ReactNode }) => children
 }))
 

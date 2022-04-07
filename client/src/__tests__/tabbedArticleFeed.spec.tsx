@@ -1,38 +1,20 @@
 import { render, userEvent, waitFor } from '../test/test-utils'
+import { mockArticle, mockUser } from '../test/data/mockData'
 import { TabbedArticleFeed } from '../components'
 import { ReactElement } from 'react'
 
 // mock out articleContext
 jest.mock('../context/articleContext', () => ({
   __esModule: true,
-  useArticleContext: jest.fn(() => ({
-    tags: [],
-    articles: [],
-    userArticles: [],
-    createArticle: jest.fn(),
-    loadingArticles: false,
-    articleError: ''
-  })),
-  ArticleProvider: ({ children }: { children: React.ReactNode }) => children
+  useArticleContext: jest.fn(() => mockArticle),
+  ArticleProvider: ({ children }: { children: ReactElement }) => children
 }))
 
 // mock authContext
 jest.mock('../context/authContext', () => ({
   __esModule: true,
-  useAuthContext: jest.fn(() => ({
-    user: {
-      username: '',
-      email: '',
-      password: '',
-      role: '',
-      error: '',
-      loading: false,
-      register: jest.fn(),
-      login: jest.fn(),
-      logout: jest.fn()
-    }
-  })),
-  AuthProvider: ({ children }: { children: React.ReactNode }) => children
+  useAuthContext: jest.fn(() => mockUser),
+  AuthProvider: ({ children }: { children: ReactElement }) => children
 }))
 
 describe('TabbedArticleFeed component tests', () => {

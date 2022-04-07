@@ -1,18 +1,12 @@
 import { render, userEvent, waitFor, waitForLoadingToFinish } from '../test/test-utils'
 import * as UsersDB from '../test/data/users'
 import Signup from '../pages/signup'
+import { mockArticle } from '../test/data/mockData'
 
 // mock out articleContext
 jest.mock('../context/articleContext', () => ({
   __esModule: true,
-  useArticleContext: jest.fn(() => ({
-    tags: [],
-    articles: [],
-    userArticles: [],
-    createArticle: jest.fn(),
-    loadingArticles: false,
-    articleError: ''
-  })),
+  useArticleContext: jest.fn(() => mockArticle),
   ArticleProvider: ({ children }: { children: React.ReactNode }) => children
 }))
 
@@ -32,9 +26,7 @@ describe('Signup component tests', () => {
   })
 
   test('register component should create user and return to initial component state', async () => {
-    // register component should create user and redirect to homepage
-
-    const { getByRole, queryByRole, queryByText, debug } = await render(<Signup />)
+    const { getByRole, queryByRole, queryByText } = await render(<Signup />)
 
     const emailInput = getByRole('textbox', { name: /email/i })
     const passwordInput = getByRole('textbox', { name: /password/i })

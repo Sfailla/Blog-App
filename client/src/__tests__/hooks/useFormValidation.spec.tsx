@@ -1,39 +1,21 @@
 import { FormEvent, ChangeEvent, KeyboardEvent } from 'react'
 import { ValidationErrors, FieldValues, InputOrTextarea } from '../../types/forms'
 import { changeEvent, buildRegisterForm, CustomEventFields } from '../../test/helpers'
+import { mockArticle, mockUser } from '../../test/data/mockData'
 import { renderHook, act } from '@testing-library/react-hooks'
 import useFormValidation from '../../hooks/useFormValidation'
 
 // mock out articleContext
 jest.mock('../../context/articleContext', () => ({
   __esModule: true,
-  useArticleContext: jest.fn(() => ({
-    tags: [],
-    articles: [],
-    userArticles: [],
-    createArticle: jest.fn(),
-    loadingArticles: false,
-    articleError: ''
-  })),
+  useArticleContext: jest.fn(() => mockArticle),
   ArticleProvider: ({ children }: { children: React.ReactNode }) => children
 }))
 
 // mock authContext
 jest.mock('../../context/authContext', () => ({
   __esModule: true,
-  useAuthContext: jest.fn(() => ({
-    user: {
-      username: '',
-      email: '',
-      password: '',
-      role: '',
-      error: '',
-      loading: false,
-      register: jest.fn(),
-      login: jest.fn(),
-      logout: jest.fn()
-    }
-  })),
+  useAuthContext: jest.fn(() => mockUser),
   AuthProvider: ({ children }: { children: React.ReactNode }) => children
 }))
 

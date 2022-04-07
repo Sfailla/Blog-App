@@ -1,37 +1,19 @@
 // TOGGLE COMPONENT IMPORTS
 import { render, userEvent } from '../test/test-utils'
 import Toggle from '../components/toggle/index'
+import { mockArticle, mockUser } from '../test/data/mockData'
 
 // mock out articleContext
 jest.mock('../context/articleContext', () => ({
   __esModule: true,
-  useArticleContext: jest.fn(() => ({
-    tags: [],
-    articles: [],
-    userArticles: [],
-    createArticle: jest.fn(),
-    loadingArticles: false,
-    articleError: ''
-  })),
+  useArticleContext: jest.fn(() => mockArticle),
   ArticleProvider: ({ children }: { children: React.ReactNode }) => children
 }))
 
 // mock authContext
 jest.mock('../context/authContext', () => ({
   __esModule: true,
-  useAuthContext: jest.fn(() => ({
-    user: {
-      username: '',
-      email: '',
-      password: '',
-      role: '',
-      error: '',
-      loading: false,
-      register: jest.fn(),
-      login: jest.fn(),
-      logout: jest.fn()
-    }
-  })),
+  useAuthContext: jest.fn(() => mockUser),
   AuthProvider: ({ children }: { children: React.ReactNode }) => children
 }))
 
