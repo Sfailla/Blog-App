@@ -14,7 +14,8 @@ export const theme = {
       secondary: '#105151',
       secondaryLight: '#105151',
       heading: '#1f3b6f',
-      gray: 'darkgray'
+      gray: 'darkgray',
+      comment: 'darkgray'
     },
     tag: {
       small: '#0085FF'
@@ -26,6 +27,9 @@ export const theme = {
     button: {
       normal: '#105151',
       preview: '#000000'
+    },
+    border: {
+      light: 'darkgray'
     }
   },
   dark: {
@@ -41,7 +45,8 @@ export const theme = {
       secondary: '#61B3FB',
       secondaryLight: '#64ffda',
       heading: '#FFFFFF',
-      gray: '#19202D'
+      gray: '#19202D',
+      comment: '#787878'
     },
     tag: {
       small: '#0085FF'
@@ -53,6 +58,9 @@ export const theme = {
     button: {
       normal: '#0f8fff',
       preview: '#e9e9e9'
+    },
+    border: {
+      light: '#464646'
     }
   }
 }

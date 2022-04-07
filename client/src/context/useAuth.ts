@@ -112,24 +112,27 @@ export function useAuth(): UseAuth {
     }
   }
 
-  async function getUserProfile(email: string): Promise<void> {
-    try {
-      const request: AxiosRequestConfig = {
-        url: `${endpoints.profiles}/${email}`,
-        method: 'GET'
-      }
-      const response: AxiosResponse = await axiosInstance(request)
+  const getUserProfile = useCallback(
+    async (email: string): Promise<void> => {
+      try {
+        const request: AxiosRequestConfig = {
+          url: `${endpoints.profiles}/${email}`,
+          method: 'GET'
+        }
+        const response: AxiosResponse = await axiosInstance(request)
 
-      if (response.data.error) {
-        setError(response.data.error.message)
-      } else {
-        setProfile(response.data.profile)
+        if (response.data.error) {
+          setError(response.data.error.message)
+        } else {
+          setProfile(response.data.profile)
+        }
+      } catch (error) {
+        const err = error as CustomAxiosError
+        setError(err.response.data.error)
       }
-    } catch (error) {
-      const err = error as CustomAxiosError
-      setError(err.response.data.error)
-    }
-  }
+    },
+    [axiosInstance]
+  )
 
   const checkUserSession: () => Promise<void> = useCallback(async () => {
     setLoading(true)
@@ -140,6 +143,7 @@ export function useAuth(): UseAuth {
       }
       const response: AxiosResponse = await axiosInstance(request)
       setUser(response.data.user)
+      await getUserProfile(response.data.user.email)
       setLoading(false)
     } catch (error) {
       const err = error as CustomAxiosError
@@ -147,7 +151,7 @@ export function useAuth(): UseAuth {
     } finally {
       setLoading(false)
     }
-  }, [axiosInstance])
+  }, [axiosInstance, getUserProfile])
 
   useEffect(() => {
     let mounted = true

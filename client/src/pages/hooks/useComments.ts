@@ -1,20 +1,19 @@
 import { useCallback, useEffect, useState } from 'react'
-import { AxiosRequestConfig, AxiosResponse } from 'axios'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Await, Article, Comment, TryCatchError } from '../../types/shared'
+import { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios'
+import { Await, Article, Comment } from '../../types/shared'
 import { useAxiosInstance } from '../../hooks'
 import { endpoints } from '../../axios/constants'
 
 interface UseComments {
   loadingComments: boolean
-  commentError: string
+  commentError: string | null
   comments: Comment[]
 }
 
 export default function useComments(article: Article): UseComments {
   const [loading, setLoading] = useState<boolean>(false)
   const [comments, setComments] = useState<Comment[]>([])
-  const [error, setError] = useState<string>('')
+  const [error, setError] = useState<string | null>(null)
   const axiosInstance = useAxiosInstance()
 
   const fetchComments: (articleSlug: string) => Await<void> = useCallback(
@@ -32,8 +31,9 @@ export default function useComments(article: Article): UseComments {
           console.log({ response })
           setComments(response.data.comments)
         }
-      } catch (error: TryCatchError) {
-        setError(error.message)
+      } catch (error) {
+        const err = error as AxiosError
+        setError(err.message)
       } finally {
         setLoading(false)
       }
@@ -42,7 +42,15 @@ export default function useComments(article: Article): UseComments {
   )
 
   useEffect(() => {
-    if (article) fetchComments(article.slug)
+    let mounted = true
+
+    if (article && mounted) fetchComments(article.slug)
+
+    return () => {
+      mounted = false
+      setComments([])
+      setError(null)
+    }
   }, [article, fetchComments])
 
   return {
