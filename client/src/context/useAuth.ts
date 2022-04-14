@@ -9,6 +9,7 @@ import { useLocation } from 'react-router-dom'
 export interface UseAuth {
   user: User | null
   profile: Profile | null
+  updateProfile: (username: string, updates: Partial<Profile>) => Promise<void>
   register: (user: Partial<User>) => void
   login: (user: Partial<User>) => void
   logout: () => void
@@ -134,7 +135,28 @@ export function useAuth(): UseAuth {
     [axiosInstance]
   )
 
-  const updateUserProfile = useCallback(() => {}, [axiosInstance])
+  const updateProfile = useCallback(
+    async (username: string, updates: Partial<Profile>) => {
+      try {
+        const request: AxiosRequestConfig = {
+          url: `${endpoints.profiles}/${username}`,
+          method: 'POST',
+          data: updates
+        }
+        const response: AxiosResponse = await axiosInstance(request)
+
+        if (response.data.error) {
+          setError(response.data.error.message)
+        } else {
+          setProfile(response.data.profile)
+        }
+      } catch (error) {
+        const err = error as CustomAxiosError
+        setError(err.response.data.error)
+      }
+    },
+    [axiosInstance]
+  )
 
   const checkUserSession: () => Promise<void> = useCallback(async () => {
     setLoading(true)
@@ -179,6 +201,7 @@ export function useAuth(): UseAuth {
   return {
     user,
     profile,
+    updateProfile,
     register,
     login,
     logout,
