@@ -1,5 +1,6 @@
 import useRippleEffect from '../../../animations/ripple'
 import { Article } from '../../../types/shared'
+import { Avatar } from '../../../components'
 import { convertToReadableDate } from '../../../utils/helperFns'
 import {
   Container,
@@ -14,7 +15,6 @@ import {
   ArticleLink,
   TagsContainer,
   SmallTag,
-  Avatar,
   CreatedDate,
   Favorites,
   FavoriteCount
@@ -32,7 +32,7 @@ export default function ArticleCard({ article }: Props) {
       <ArticlePreview>
         <Wrapper>
           <ArticleMeta>
-            <Avatar src={article.avatar} />
+            <Avatar user={article.author} />
             <ContentWrapper>
               <AuthorName>{article.author.username}</AuthorName>
               <CreatedDate>{convertToReadableDate(article.createdAt)}</CreatedDate>

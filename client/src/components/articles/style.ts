@@ -84,8 +84,8 @@ export const TagLink = styled.li`
   cursor: pointer;
 
   &:hover {
-    color: ${color.neon.red};
-    border: 1px solid ${color.neon.red};
+    color: ${color.neon.magenta};
+    border: 1px solid ${color.neon.magenta};
   }
 
   &:not(:last-child) {

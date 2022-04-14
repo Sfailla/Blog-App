@@ -2,6 +2,7 @@ import { ReactElement } from 'react'
 import { Article, Comment, Profile } from '../../types/shared'
 import { useAuthContext } from '../../context/authContext'
 import { PostCommentButton } from '../../components/buttons'
+import { Avatar } from '../'
 import {
   Container,
   Title,
@@ -11,9 +12,6 @@ import {
   Divider,
   GridContainer,
   Wrapper,
-  Avatar,
-  AvatarContainer,
-  AvatarLetter,
   Author,
   FeedContainer,
   CommentContainer,
@@ -21,7 +19,6 @@ import {
   CommentLayoutWrapper
 } from './style'
 import { useFormValidation } from '../../hooks'
-import { getRandomHexColor } from '../../utils/helperFns'
 
 interface Props {
   comments: Comment[]
@@ -70,11 +67,7 @@ function CommentPostSection({ profile, article, createComment }: PostCommentProp
     <Form onSubmit={handleSubmit}>
       <FormGroup>
         <GridContainer>
-          {profile.avatar ? (
-            <Avatar src={profile.avatar} />
-          ) : (
-            <DefaultAvatar username={profile.username} />
-          )}
+          <Avatar user={profile} />
           <Wrapper>
             <TextArea
               name="comment"
@@ -104,25 +97,12 @@ function ArticleComment({ comment }: { comment: Comment }): ReactElement {
   return (
     <CommentContainer>
       <GridContainer>
-        {comment.author.avatar ? (
-          <Avatar src={comment.author.avatar} />
-        ) : (
-          <DefaultAvatar username={comment.author.username} />
-        )}
+        <Avatar user={comment.author} />
         <Wrapper>
           <Author>{comment.author.username}</Author>
           <CommentBody>{comment.body}</CommentBody>
         </Wrapper>
       </GridContainer>
     </CommentContainer>
-  )
-}
-
-function DefaultAvatar({ username }: { username: string }): ReactElement {
-  const hexcode = getRandomHexColor()
-  return (
-    <AvatarContainer background={hexcode}>
-      <AvatarLetter>{username.charAt(0).toUpperCase()}</AvatarLetter>
-    </AvatarContainer>
   )
 }

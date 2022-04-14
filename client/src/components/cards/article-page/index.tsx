@@ -4,12 +4,12 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 import { Article } from '../../../types/shared'
 import { convertToReadableDate } from '../../../utils/helperFns'
+import { Avatar } from '../../../components'
 import {
   ArticleTitle,
   ArticleMeta,
   ContentWrapper,
   AuthorName,
-  Avatar,
   CreatedDate,
   ArticleBody,
   MarkdownContainer
@@ -27,7 +27,7 @@ export default function ArticlePageCard({ article }: Props): ReactElement {
       </ArticleTitle>
 
       <ArticleMeta>
-        <Avatar src={article.avatar} />
+        <Avatar user={article.author} />
         <ContentWrapper>
           <AuthorName>{article.author.username}</AuthorName>
           <CreatedDate>{convertToReadableDate(article.createdAt)}</CreatedDate>

@@ -34,7 +34,9 @@ export const Wrapper = styled.div`
     `};
   }
 `
-export const ContentWrapper = styled.div``
+export const ContentWrapper = styled.div`
+  margin-left: 1rem;
+`
 
 export const AuthorName = styled.h4`
   font-size: 1.4rem;
@@ -92,7 +94,7 @@ export const ArticleLink = styled(Link)`
   text-decoration: none;
   color: ${color.neon.blue};
   &:hover {
-    color: ${({ theme }) => theme.link.hover};
+    color: ${color.neon.magenta};
   }
 `
 

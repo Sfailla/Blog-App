@@ -21,7 +21,9 @@ export const ArticleMeta = styled.div`
   display: flex;
 `
 
-export const ContentWrapper = styled.div``
+export const ContentWrapper = styled.div`
+  margin-left: 1rem;
+`
 
 export const AuthorName = styled.h4`
   font-size: 1.4rem;
@@ -31,14 +33,6 @@ export const AuthorName = styled.h4`
   &:hover {
     color: ${({ theme }) => theme.link.hover};
   }
-`
-
-export const Avatar = styled.img`
-  width: 35px;
-  height: 35px;
-  margin-right: 1rem;
-  border-radius: 50%;
-  background-color: lightblue;
 `
 
 export const CreatedDate = styled.span`

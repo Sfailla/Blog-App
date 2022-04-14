@@ -99,6 +99,7 @@ export const DesignSystem = {
       blue: '#0085FF',
       // green: '#a3a0a0',
       green: '#3fb950',
+      magenta: '#ff0097',
       // red: '#e92c2c'
       red: '#da3633',
       purple: '#8860d2'
