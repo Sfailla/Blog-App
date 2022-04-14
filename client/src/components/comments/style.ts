@@ -2,6 +2,10 @@ import styled from 'styled-components/macro'
 import { DesignSystem } from '../../styles/shared'
 import { flex } from '../../styles/mixins'
 
+interface StyledProps {
+  background: string
+}
+
 const {
   typography: { heading_lg },
   color
@@ -72,6 +76,19 @@ export const Avatar = styled.img`
   height: 4rem;
   border-radius: 50%;
   background-color: lightblue;
+`
+
+export const AvatarContainer = styled.div`
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background-color: ${({ background }: StyledProps) => background};
+  ${flex()};
+`
+
+export const AvatarLetter = styled.span`
+  color: white;
+  font-size: 2rem;
 `
 
 export const Author = styled.h4`

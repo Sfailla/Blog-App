@@ -10,13 +10,13 @@ export default function ArticleDetails(): ReactElement {
     state: { article }
   } = useLocation()
 
-  const { comments } = useComments(article)
+  const { comments, createComment } = useComments(article)
 
   return (
     <PageContainer>
       <LayoutWrapper>
         <ArticlePageCard article={article} />
-        <CommentSection comments={comments} />
+        <CommentSection article={article} comments={comments} createComment={createComment} />
       </LayoutWrapper>
     </PageContainer>
   )

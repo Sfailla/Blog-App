@@ -8,6 +8,7 @@ interface UseComments {
   loadingComments: boolean
   commentError: string | null
   comments: Comment[]
+  createComment: (comment: { body: string }, article: string) => void
 }
 
 export default function useComments(article: Article): UseComments {
@@ -28,8 +29,32 @@ export default function useComments(article: Article): UseComments {
         if (response.data?.error) {
           setError(response.data.error.message)
         } else {
-          console.log({ response })
           setComments(response.data.comments)
+        }
+      } catch (error) {
+        const err = error as AxiosError
+        setError(err.message)
+      } finally {
+        setLoading(false)
+      }
+    },
+    [axiosInstance]
+  )
+
+  const createComment: (comment: { body: string }, article: string) => void = useCallback(
+    async (comment, article) => {
+      setLoading(true)
+      try {
+        const request: AxiosRequestConfig = {
+          url: `${endpoints.articles}/${article}/comment`,
+          method: 'POST',
+          data: comment
+        }
+        const response: AxiosResponse = await axiosInstance(request)
+        if (response.data?.error) {
+          setError(response.data.error.message)
+        } else {
+          setComments(prevComments => [...prevComments, response.data.comment])
         }
       } catch (error) {
         const err = error as AxiosError
@@ -56,6 +81,7 @@ export default function useComments(article: Article): UseComments {
   return {
     loadingComments: loading,
     commentError: error,
-    comments
+    comments,
+    createComment
   }
 }

@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { Comment } from '../../types/shared'
+import { Article, Comment, Profile } from '../../types/shared'
 import { useAuthContext } from '../../context/authContext'
 import { PostCommentButton } from '../../components/buttons'
 import {
@@ -12,41 +12,77 @@ import {
   GridContainer,
   Wrapper,
   Avatar,
+  AvatarContainer,
+  AvatarLetter,
   Author,
   FeedContainer,
   CommentContainer,
   CommentBody,
   CommentLayoutWrapper
 } from './style'
+import { useFormValidation } from '../../hooks'
+import { getRandomHexColor } from '../../utils/helperFns'
 
 interface Props {
   comments: Comment[]
+  article: Article
+  createComment: (comment: { body: string }, article: string) => void
 }
 
-export default function ArticleComments({ comments }: Props): ReactElement {
+interface PostCommentProps {
+  profile: Profile
+  article: Article
+  createComment: (comment: { body: string }, article: string) => void
+}
+
+export default function ArticleComments({ article, comments, createComment }: Props): ReactElement {
   const { user, profile } = useAuthContext()
+
+  console.log({ comments })
 
   return (
     <Container>
       <Divider />
       <Title>Comment section</Title>
       <CommentLayoutWrapper>
-        {user && profile && <CommentPostSection avatar={profile!.avatar} />}
+        {user && profile && (
+          <CommentPostSection profile={profile} article={article} createComment={createComment} />
+        )}
         <CommentFeed comments={comments} />
       </CommentLayoutWrapper>
     </Container>
   )
 }
 
-function CommentPostSection({ avatar }: { avatar: string | undefined }): ReactElement {
+function CommentPostSection({ profile, article, createComment }: PostCommentProps): ReactElement {
+  const noop = () => ({})
+  const initialValues = { comment: '' }
+  const { values, handleChange, handleSubmit } = useFormValidation(initialValues, noop, submitFn, {
+    resetFormValuesOnSubmit: true
+  })
+
+  function submitFn() {
+    console.log({ comment: values.comment, article: article.slug })
+    createComment({ body: values.comment }, article.slug)
+  }
+
   return (
-    <Form>
+    <Form onSubmit={handleSubmit}>
       <FormGroup>
         <GridContainer>
-          <Avatar src={avatar} />
+          {profile.avatar ? (
+            <Avatar src={profile.avatar} />
+          ) : (
+            <DefaultAvatar username={profile.username} />
+          )}
           <Wrapper>
-            <TextArea name="comment" placeholder="Write a comment..." />
-            <PostCommentButton>Post</PostCommentButton>
+            <TextArea
+              name="comment"
+              onChange={handleChange}
+              value={values.comment}
+              placeholder="Write a comment..."
+            />
+            <PostCommentButton type="submit">Post</PostCommentButton>
           </Wrapper>
         </GridContainer>
       </FormGroup>
@@ -68,12 +104,25 @@ function ArticleComment({ comment }: { comment: Comment }): ReactElement {
   return (
     <CommentContainer>
       <GridContainer>
-        <Avatar />
+        {comment.author.avatar ? (
+          <Avatar src={comment.author.avatar} />
+        ) : (
+          <DefaultAvatar username={comment.author.username} />
+        )}
         <Wrapper>
           <Author>{comment.author.username}</Author>
           <CommentBody>{comment.body}</CommentBody>
         </Wrapper>
       </GridContainer>
     </CommentContainer>
+  )
+}
+
+function DefaultAvatar({ username }: { username: string }): ReactElement {
+  const hexcode = getRandomHexColor()
+  return (
+    <AvatarContainer background={hexcode}>
+      <AvatarLetter>{username.charAt(0).toUpperCase()}</AvatarLetter>
+    </AvatarContainer>
   )
 }
