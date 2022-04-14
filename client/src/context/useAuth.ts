@@ -134,6 +134,8 @@ export function useAuth(): UseAuth {
     [axiosInstance]
   )
 
+  const updateUserProfile = useCallback(() => {}, [axiosInstance])
+
   const checkUserSession: () => Promise<void> = useCallback(async () => {
     setLoading(true)
     try {
@@ -142,11 +144,16 @@ export function useAuth(): UseAuth {
         method: 'GET'
       }
       const response: AxiosResponse = await axiosInstance(request)
-      setUser(response.data.user)
-      await getUserProfile(response.data.user.email)
+      if (response.data.user) {
+        setUser(response.data.user)
+        await getUserProfile(response.data.user.email)
+      } else if (response.data.error) {
+        setError(response.data.error.message)
+      }
       setLoading(false)
     } catch (error) {
       const err = error as CustomAxiosError
+      console.log({ err })
       setError(err.response.data.error)
     } finally {
       setLoading(false)
