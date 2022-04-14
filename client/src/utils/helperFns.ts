@@ -23,3 +23,19 @@ export const convertToReadableDate = (date: Date | string): string => {
   }
   return d.toLocaleDateString('en-US', options)
 }
+
+const hexColorArray: string[] = [
+  '#FF00FF',
+  '#F5511E',
+  '#7A1FA2',
+  '#004C3F',
+  '#0288D1',
+  '#465A65',
+  '#00887A',
+  '#33691E'
+]
+
+export const getRandomHexColor = (): string => {
+  const randomIndex: number = Math.floor(Math.random() * hexColorArray.length)
+  return hexColorArray[randomIndex]
+}
