@@ -1,6 +1,10 @@
 import { FormEvent, ChangeEvent, KeyboardEvent, useState, useEffect } from 'react'
 import { FieldValues, Validate, ValidationErrors, InputOrTextarea } from '../types/forms'
 
+interface FormOptions {
+  resetFormValuesOnSubmit?: boolean
+}
+
 interface UseFormValidation {
   values: FieldValues
   formErrors: ValidationErrors
@@ -15,7 +19,8 @@ interface UseFormValidation {
 export default function useFormValidation(
   initialValues: FieldValues,
   validate: Validate,
-  authenticate: () => void
+  authenticate: () => void,
+  { ...options }: FormOptions = {}
 ): UseFormValidation {
   const [values, setValues] = useState<FieldValues>(initialValues)
   const [errors, setErrors] = useState<ValidationErrors>({})
@@ -26,10 +31,13 @@ export default function useFormValidation(
       const noErrors: boolean = Object.keys(errors).length === 0
       if (noErrors) {
         authenticate()
+        if (options.resetFormValuesOnSubmit) {
+          setValues(initialValues)
+        }
       }
       setIsSubmitting(false)
     }
-  }, [values, errors, isSubmitting, authenticate])
+  }, [values, errors, isSubmitting, authenticate, initialValues, options.resetFormValuesOnSubmit])
 
   function handleChange(event: ChangeEvent<InputOrTextarea>): void {
     setValues(prevState => ({
